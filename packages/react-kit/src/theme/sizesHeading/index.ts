@@ -1,0 +1,52 @@
+export const HeadingTheme = {
+  sizes: {
+    '2XL': {
+      fontSize: '60px',
+      fontKerning: '-10px',
+      letterSpacing: '-0.6px',
+      fontWeight: 'black',
+      cursor: 'default',
+      caretColor: 'transparent',
+    },
+    XL: {
+      fontSize: '40px',
+      fontKerning: '-10px',
+      letterSpacing: '-0.4px',
+      fontWeight: 'black',
+      cursor: 'default',
+      caretColor: 'transparent',
+    },
+    lg: {
+      fontSize: '30px',
+      fontKerning: '-25px',
+      letterSpacing: '-0.75px',
+      fontWeight: 'bold',
+      cursor: 'default',
+      caretColor: 'transparent',
+    },
+    md: {
+      fontSize: '24px',
+      fontKerning: '-25px',
+      letterSpacing: '-0.6px',
+      fontWeight: 'bold',
+      cursor: 'default',
+      caretColor: 'transparent',
+    },
+    sm: {
+      fontSize: '20px',
+      fontKerning: '-10px',
+      letterSpacing: '-0.2px',
+      fontWeight: 'black',
+      cursor: 'default',
+      caretColor: 'transparent',
+    },
+    xs: {
+      fontSize: '14px',
+      fontKerning: '-25px',
+      letterSpacing: '-0.35px',
+      fontWeight: 'bold',
+      cursor: 'default',
+      caretColor: 'transparent',
+    },
+  },
+};

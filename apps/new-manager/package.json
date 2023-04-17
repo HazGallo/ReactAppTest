@@ -1,0 +1,40 @@
+{
+  "name": "@iseazy/main-app-two",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^2.5.1",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@fontsource/roboto": "^4.5.8",
+    "@hello-pangea/dnd": "^16.2.0",
+    "@hookform/resolvers": "^3.0.1",
+    "@iseazy/react-kit": "workspace:^0.0.1",
+    "@types/yup": "^0.32.0",
+    "framer-motion": "^3.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-gesture-responder": "^2.1.0",
+    "react-grid-dnd": "^2.1.2",
+    "react-hook-form": "^7.41.5",
+    "react-icons": "^4.7.1",
+    "react-lazy-load-image-component": "^1.5.6",
+    "styled-components": "^5.3.9",
+    "yup": "^1.1.0",
+    "zustand": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "@types/react-lazy-load-image-component": "^1.5.2",
+    "@vitejs/plugin-react": "^3.1.0",
+    "typescript": "^4.9.3",
+    "vite": "^4.1.0"
+  }
+}
