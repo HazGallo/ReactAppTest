@@ -1,29 +1,24 @@
 import {
   Box,
-  Button,
   Drawer,
   DrawerOverlay,
   DrawerContent,
   DrawerHeader,
   DrawerBody,
-  Text,
   Flex,
 } from '@chakra-ui/react';
-import { ReactNode } from 'react';
-import { IoIosArrowBack } from 'react-icons/io'
-import { useNavSize } from '../../store/BtnMenu';
+import { Button } from '@iseazy/react-kit';
+import { IoIosArrowBack } from 'react-icons/io';
+import { sliceInformation } from '../../store/sliceInformation';
+import { propsDrawer } from './interfaces/propsDrawer';
 
-interface Props {
-  isOpen?: boolean;
-  setIsOpen?: () => void;
-  children: ReactNode
-}
-const CustomDrawer = (props: Props) => {
-  const { isOpen, setIsOpen } = useNavSize()
+
+const CustomDrawer = (props: propsDrawer) => {
+  const { isOpen, setIsOpen, readonly } = sliceInformation();
 
   const onClickSave = () => {
-    alert('Save Changes!')
-  }
+    alert('Save Changes!');
+  };
 
   return (
     <Box>
@@ -34,7 +29,6 @@ const CustomDrawer = (props: Props) => {
           bg="neWhite.500"
           _dark={{ bg: 'neBlack.800' }}
         >
-
           <DrawerHeader
             borderBottomWidth="1px"
             display="flex"
@@ -43,44 +37,24 @@ const CustomDrawer = (props: Props) => {
             paddingY={17}
             justifyContent="space-between"
           >
-            <button onClick={setIsOpen} style={{ background: 'none', outline: 'none' }} >
+            <button
+              onClick={setIsOpen}
+              style={{ background: 'none', outline: 'none' }}
+            >
               <IoIosArrowBack size={20} />
             </button>
             <Flex gap="3">
-              {/* <ButtonIco
-                warning={true}
-                disabled={false}
-                sizeName="sm"
-                type='IconChallenge'
-              /> */}
               <Button
-                w="90px"
-                bg="neAccent.500"
-                _hover={{
-                  bg: 'neAccent.400',
-                }}
-                _dark={{
-                  bg: 'neAccent.400',
-                  _hover: {
-                    bg: 'neAccent.500',
-                  },
-                }}
                 onClick={onClickSave}
-                rounded="25px"
-                fontSize="16px"
-              >
-                <Text color="neWhite.500">Save</Text>
-              </Button>
+                isDisabled={readonly}
+                label="Save"
+              />
             </Flex>
           </DrawerHeader>
-
-          <DrawerBody width="full">
-            {props.children}
-          </DrawerBody>
+          <DrawerBody width="full">{props.children}</DrawerBody>
         </DrawerContent>
-
       </Drawer>
-    </Box >
+    </Box>
   );
 };
 

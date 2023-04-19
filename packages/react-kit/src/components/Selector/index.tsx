@@ -1,19 +1,31 @@
-import { Box, CheckboxProps } from '@chakra-ui/react';
+import { Box, BoxProps } from '@chakra-ui/react';
 import { SelectorLg } from './components/SelectorLg';
 import { SelectorMd } from './components/SelectorMd';
 import { SelectorSm } from './components/SelectorSm';
 
-interface Props {
+interface Props extends BoxProps {
   icon?: any;
   title: string;
   description?: string;
   disabled: boolean;
   warning: boolean;
   type: 'lg' | 'md' | 'sm';
+  isSelected?: boolean;
+  onClick?: () => void;
 }
 
 export const Selector = (props: Props) => {
-  const { disabled, title, description, warning, icon, type, ...rest } = props;
+  const {
+    isSelected,
+    onClick,
+    disabled,
+    title,
+    description,
+    warning,
+    icon,
+    type,
+    ...rest
+  } = props;
 
   return (
     <Box {...rest}>
@@ -24,6 +36,8 @@ export const Selector = (props: Props) => {
           description={description}
           disabled={disabled}
           warning={warning}
+          isSelected={isSelected}
+          onClick={onClick}
         />
       ) : type === 'md' ? (
         <SelectorMd
@@ -32,6 +46,8 @@ export const Selector = (props: Props) => {
           description={description}
           disabled={disabled}
           warning={warning}
+          isSelected={isSelected}
+          onClick={onClick}
         />
       ) : (
         <SelectorSm
@@ -39,6 +55,8 @@ export const Selector = (props: Props) => {
           title={title}
           disabled={disabled}
           warning={warning}
+          isSelected={isSelected}
+          onClick={onClick}
         />
       )}
     </Box>

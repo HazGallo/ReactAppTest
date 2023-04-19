@@ -1,4 +1,4 @@
-import { Box, Icon, IconButton } from '@chakra-ui/react';
+import { Box, Icon, IconButton as CustomIconButton } from '@chakra-ui/react';
 import { useState } from 'react';
 import { IconWarningMark } from '../../assets/customIcons';
 import { TypesSize } from './types/buttonIcoTypes';
@@ -22,7 +22,7 @@ export const ButtonIco = (props: Props) => {
 
   return (
     <Box height={x?.background} width={x?.background} position="relative">
-      <IconButton
+      <CustomIconButton
         isDisabled={disabled}
         borderRadius={x?.borderRadius}
         width="full"

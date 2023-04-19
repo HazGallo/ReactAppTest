@@ -1,10 +1,10 @@
-import { Flex, useColorModeValue } from '@chakra-ui/react';
-import { useNavSize } from '../../store/BtnMenu';
+import { Flex } from '@chakra-ui/react';
+import { sliceInformation } from '../../store/sliceInformation';
 import FlexSidevarLeft from '../FlexSidevarLeft';
 import FlexSidevarRight from '../FlexSidevarRight';
 
 const Sidebar = () => {
-  const { navSize } = useNavSize();
+  const { navSize } = sliceInformation();
   return (
     <Flex
       zIndex={4}

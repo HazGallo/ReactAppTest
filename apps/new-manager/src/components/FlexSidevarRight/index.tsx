@@ -1,12 +1,11 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 import NavItem from '../NavItem';
-import { useNavSize } from '../../store/BtnMenu';
+import { sliceInformation } from '../../store/sliceInformation';
 import { FiHome, FiCalendar, FiUser, FiDollarSign } from 'react-icons/fi';
 import { IoPawOutline } from 'react-icons/io5';
-import CustomDrawer from '../CustomDrawer';
 
 const FlexSidevarRight = () => {
-  const { navSize } = useNavSize();
+  const { navSize } = sliceInformation();
 
   return (
     <Flex
@@ -36,10 +35,6 @@ const FlexSidevarRight = () => {
           <NavItem navSize={navSize} icon={FiDollarSign} title="Stocks" />
         </Box>
       </Box>
-
-      <Flex paddingTop={40} paddingLeft={8}>
-        <CustomDrawer />
-      </Flex>
     </Flex>
   );
 };

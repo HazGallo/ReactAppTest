@@ -1,22 +1,23 @@
 import { useState, useRef, useEffect } from 'react';
-import { Box, Heading, Icon, Text } from '@chakra-ui/react';
+import { Box, BoxProps, Heading, Icon, Text } from '@chakra-ui/react';
 import { Ico } from '../../Ico';
 import { IconWarningMark } from '../../../assets/customIcons';
 
-interface Props {
+interface Props extends BoxProps {
   icon?: any;
   title: string;
   description?: string;
   disabled: boolean;
   warning: boolean;
+  isSelected?: boolean;
+  onClick?: () => void; 
 }
 
 export const SelectorLg = (props: Props) => {
-  const { disabled, warning, title, description, icon } = props;
+  const { onClick, isSelected, disabled, warning, title, description, icon, ...rest } = props;
 
   const titleRef = useRef<HTMLDivElement>({} as HTMLDivElement);
   const [titleLines, setTitleLines] = useState(1);
-  const [isSelected, setIsSelected] = useState(false);
 
   useEffect(() => {
     const element = titleRef?.current;
@@ -69,11 +70,12 @@ export const SelectorLg = (props: Props) => {
         }}
         width="full"
         height="full"
-        onClick={() => setIsSelected((prev) => !prev)}
+        onClick={onClick}
         display="flex"
         flexDir="column"
         alignItems="center"
         justifyContent="center"
+        {...rest}
       >
         {icon ? (
           <Box marginBottom="2px">

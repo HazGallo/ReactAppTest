@@ -18,7 +18,8 @@ import {
   IconSend,
   IconDotsHorizontal,
   IconCheck,
-  IconDraft
+  IconDraft,
+  IconGhost
 } from '../../../assets/customIcons';
 
 export const contentTypes = {
@@ -41,7 +42,8 @@ export const contentTypes = {
   SEND: 'IconSend',
   DOTSHORIZONTAL: 'IconDotsHorizontal',
   CHECK: 'IconCheck',
-  DRAFT: 'IconDraft'
+  DRAFT: 'IconDraft',
+  GHOST: 'IconGhost'
 };
 
 export const IconsTypes = [
@@ -124,5 +126,9 @@ export const IconsTypes = [
   {
     type: contentTypes.DRAFT,
     icon: IconDraft,
+  },
+  {
+    type: contentTypes.GHOST,
+    icon: IconGhost,
   },
 ];

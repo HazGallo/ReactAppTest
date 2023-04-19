@@ -35,23 +35,32 @@ export const Badge = ({ type, size, sizeCard, skeleton }: Props) => {
         >
           {x?.icon && <Icon as={x?.icon} fontSize={24} color="neWhite.500" />}
 
-          <Box fontWeight="600" fontSize="12px" textTransform="uppercase" color="neWhite.500">
+          <Box textTransform="uppercase" color="neWhite.500">
             {size === 'sm' || sizeCard === 'sm' ? (
-              <Box display={['none', 'block']} paddingX={x?.icon ? '0' : '1'}>
+              <Text
+                textStyle="sm"
+                display={['none', 'block']}
+                paddingX={x?.icon ? '0' : '1'}
+              >
                 {y?.acronym}
-              </Box>
+              </Text>
             ) : (
-              <Box
+              <Text
+                textStyle="sm"
                 display={['none', 'block']}
                 paddingLeft={['0', y?.type ? '0' : '4px']}
               >
                 {x?.type ?? y?.type}
-              </Box>
+              </Text>
             )}
             {
-              <Box display={['block', 'none']} paddingX={x?.icon ? '0' : '<'}>
+              <Text
+                textStyle="sm"
+                display={['block', 'none']}
+                paddingX={x?.icon ? '0' : '<'}
+              >
                 {y?.acronym}
-              </Box>
+              </Text>
             }
           </Box>
         </Flex>

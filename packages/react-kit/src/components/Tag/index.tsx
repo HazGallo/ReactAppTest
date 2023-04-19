@@ -1,4 +1,4 @@
-import { Box, Tag as CustomTag, Text } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import { typesVersion } from './types/typesVersion';
 import { useState } from 'react';
 import { Ico } from '../Ico';
@@ -94,6 +94,8 @@ export const Tag = (props: Props) => {
       {icon && <Ico icon={icon} sizeName="xs" mr="5px" ml="-5px" />}
 
       <Text
+        mt="2px"
+        fontWeight="normal"
         textStyle="sm"
         sx={{
           cursor: disabled ? 'not-allowed' : 'pointer',

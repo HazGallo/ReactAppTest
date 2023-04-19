@@ -25,7 +25,10 @@
     "react-hook-form": "^7.41.5",
     "react-icons": "^4.7.1",
     "react-lazy-load-image-component": "^1.5.6",
+    "react-query": "^3.39.3",
+    "react-router-dom": "^6.10.0",
     "styled-components": "^5.3.9",
+    "sweetalert2": "^11.7.3",
     "yup": "^1.1.0",
     "zustand": "^4.3.6"
   },

@@ -10,7 +10,7 @@ export const TextTheme = {
   XL: {
     fontSize: '20px',
     fontKerning: '0px',
-    letterSpacing: '0px',
+    letterSpacing: '32',
     fontWeight: 'regular',
     cursor: 'default',
     caretColor: 'transparent',
@@ -18,7 +18,7 @@ export const TextTheme = {
   lg: {
     fontSize: '16px',
     fontKerning: '-10px',
-    letterSpacing: '-0.16px',
+    letterSpacing: '18',
     fontWeight: 'medium',
     cursor: 'default',
     caretColor: 'transparent',
@@ -26,7 +26,7 @@ export const TextTheme = {
   md: {
     fontSize: '14px',
     fontKerning: '-0px',
-    letterSpacing: '0px',
+    letterSpacing: '19',
     fontWeight: 'regular',
     cursor: 'default',
     caretColor: 'transparent',
@@ -34,7 +34,7 @@ export const TextTheme = {
   sm: {
     fontSize: '12px',
     fontKerning: '0px',
-    letterSpacing: '0px',
+    letterSpacing: '16',
     fontWeight: 'medium',
     cursor: 'default',
     caretColor: 'transparent',
@@ -42,7 +42,7 @@ export const TextTheme = {
   xs: {
     fontSize: '10px',
     fontKerning: '0px',
-    letterSpacing: '0px',
+    letterSpacing: '13',
     fontWeight: 'medium',
     cursor: 'default',
     caretColor: 'transparent',

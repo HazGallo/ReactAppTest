@@ -1,20 +1,21 @@
-import { Box, Heading, Icon, Text } from '@chakra-ui/react';
+import { Box, BoxProps, Heading, Icon, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 import { IconWarningMark } from '../../../assets/customIcons';
 import { Ico } from '../../Ico';
 
-interface Props {
+interface Props extends BoxProps {
   icon?: any;
   title: string;
   description?: string;
   disabled: boolean;
   warning: boolean;
+  isSelected?: boolean;
+  onClick?: () => void; 
 }
 
 export const SelectorMd = (props: Props) => {
-  const { disabled, warning, title, icon, description } = props;
+  const { isSelected, onClick, disabled, warning, title, icon, description, ...rest } = props;
 
-  const [isSelected, setIsSelected] = useState(false);
 
   return (
     <Box height="95px" width="76px" position="relative">
@@ -48,11 +49,12 @@ export const SelectorMd = (props: Props) => {
         }}
         width="full"
         height="full"
-        onClick={() => setIsSelected((prev) => !prev)}
+        onClick={onClick}
         display="flex"
         flexDir="column"
         alignItems="center"
         justifyContent="center"
+        {...rest}
       >
         {icon ? (
           <Box marginBottom="1px">

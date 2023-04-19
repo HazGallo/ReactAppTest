@@ -1,18 +1,12 @@
 import { Flex, Text, Icon, Link } from '@chakra-ui/react';
+import { propsNavItem } from './interfaces/propsNavItem';
 
-interface Props {
-  icon?: any;
-  title?: any;
-  description?: any;
-  active?: any;
-  navSize: any;
-}
 const NavItem = ({
   icon,
   title,
   active,
   navSize,
-}: Props) => {
+}: propsNavItem) => {
   return (
     <Flex mt={2} paddingX={4} flexDir="column" w="100%">
       <Link

@@ -3,6 +3,7 @@ import { AiFillFire } from 'react-icons/ai';
 import { Box, Flex, Icon } from '@chakra-ui/react';
 
 const FlexSidevarLeft = () => {
+
   const Menu = [
     {
       icon: AiFillFire,
@@ -26,6 +27,7 @@ const FlexSidevarLeft = () => {
       icon: FiCalendar,
     },
   ];
+
   return (
     <Flex
       flexDir="column"

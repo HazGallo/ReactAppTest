@@ -1,14 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { IconGhost } from '../../assets/customIcons';
-import { Selector } from '../../components/Selector';
+import { ExampleSelector } from './ExampleSelector';
 
 const meta = {
   title: 'Components/Selector',
-  component: Selector,
+  component: ExampleSelector,
   parameters: {
     layout: 'centered',
   },
-} satisfies Meta<typeof Selector>;
+} satisfies Meta<typeof ExampleSelector>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

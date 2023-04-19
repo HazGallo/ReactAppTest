@@ -35,6 +35,7 @@ export const TextEditable = (props: Props) => {
     maxRows,
     scrollbar = false,
     sizeCard,
+    ...rest
   } = props;
 
   const [focusTextarea, setFocusTextarea] = useState(autoFocus);

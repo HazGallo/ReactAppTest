@@ -14,12 +14,11 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const TagComplete: Story = {
+export const content: Story = {
   args: {
     label: 'label',
     icon: IconGhost,
-    disabled: false,
-    typeVersion: 'add'
+    disabled: false
   },
   argTypes: {
     typeVersion: {

@@ -1,12 +1,7 @@
 import { Flex, Heading, Icon, Text } from '@chakra-ui/react';
+import { propsNavHover } from './interfaces/propsNavHover';
 
-interface Props {
-  title: any;
-  icon: any;
-  description: any;
-}
-
-const NavHoverBox = ({ title, icon, description }: Props) => {
+const NavHoverBox = ({ title, icon, description }: propsNavHover) => {
   return (
     <>
       <Flex

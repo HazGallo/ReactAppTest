@@ -3,10 +3,14 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
-type FormValues = {
-  name: string;
-  age: number;
-  message: string
+type Field = {
+  type: any;
+  label: any;
+  defaultValue: any;
+};
+
+export type FormValues = {
+  [key: string]: Field;
 };
 
 type HookProps = {
@@ -17,7 +21,7 @@ type HookProps = {
 export const useCustomHook = ({ schema, initialState }: HookProps) => {
   const { register, handleSubmit, formState } = useForm<FormValues>({
     resolver: yupResolver(schema),
-    defaultValues: initialState,
+    defaultValues: initialState ?? {},
   });
 
   // handle form state
@@ -25,6 +29,7 @@ export const useCustomHook = ({ schema, initialState }: HookProps) => {
 
   const onSubmit = (data: FormValues) => {
     // handle form submission
+    console.log(data);
   };
 
   return {

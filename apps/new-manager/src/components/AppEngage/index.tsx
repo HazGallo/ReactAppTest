@@ -11,14 +11,22 @@ import {
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import Sidebar from '../Sidebar';
 import { BiFilterAlt } from 'react-icons/bi';
-import { useNavSize } from '../../store/BtnMenu';
+import { sliceInformation } from '../../store/sliceInformation';
 import DrapAndDrop from '../DrapAndDrop';
 
 const AppEngage = () => {
-  const { navSize, setIsSizeCard, cardSize, setReadonly, readonly } = useNavSize();
+  const { navSize, setIsSizeCard, cardSize, setReadonly, readonly, setIsOpen, setIsInfoCardDrawer } = sliceInformation();
+
+  const fun = () => {
+    setIsOpen()
+    setIsInfoCardDrawer({ text: 'New Video' })
+  }
 
   return (
-    <Box>
+    <Box bg="neWhite.500"
+    _dark={{
+      bg: 'neGrey.800',
+    }}>
       <Navbar />
       <Flex paddingTop="70px">
         <Flex>
@@ -54,6 +62,7 @@ const AppEngage = () => {
 
               <Button onClick={setIsSizeCard}>{cardSize ? 'sm' : 'md'}</Button>
               <Button onClick={setReadonly}>{!readonly ? 'reading mode' : 'Edit Mode'}</Button>
+              <Button onClick={fun} >Create</Button>
             </Flex>
           </Flex>
 

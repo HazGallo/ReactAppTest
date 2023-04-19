@@ -28,6 +28,12 @@ import { HeadingTheme } from './sizesHeading';
 import { TextTheme } from './SizesText';
 import { blackAlpha, whiteAlpha } from './colors/blackAndWhiteAlphas';
 import '@fontsource/roboto';
+import '@fontsource/roboto/900.css';
+import '@fontsource/roboto/700.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/100.css';
 
 export const theme = extendTheme({
   styles: {
@@ -35,6 +41,9 @@ export const theme = extendTheme({
       body: {
         transitionProperty: 'all',
         transitionDuration: 'normal',
+      },
+      '.chakra-heading': {
+        fontFamily: 'inherit',
       },
     },
   },
@@ -153,21 +162,42 @@ export const theme = extendTheme({
 
       //Component colors
       compBackgroundRest: { default: 'transparent', _dark: 'transparent' },
-      compBackgroundHover: { default: 'blackAlpha.50',  _dark: 'whiteAlpha.200'},
-      compBackgroundSelected: { default: 'transparent', _dark: 'transparent'},
-      compBackgroundSelectedHover: { default: 'blackAlpha.50', _dark: 'whiteAlpha.200'},
-      compBackgroundDisabled: { default: 'blackAlpha.50', _dark: 'blackAlpha.200'},
+      compBackgroundHover: {
+        default: 'blackAlpha.50',
+        _dark: 'whiteAlpha.200',
+      },
+      compBackgroundSelected: { default: 'transparent', _dark: 'transparent' },
+      compBackgroundSelectedHover: {
+        default: 'blackAlpha.50',
+        _dark: 'whiteAlpha.200',
+      },
+      compBackgroundDisabled: {
+        default: 'blackAlpha.50',
+        _dark: 'blackAlpha.200',
+      },
       compBackgroundError: { default: 'transparent', _dark: 'transparent' },
       compBorderRest: { default: 'transparent', _dark: 'transparent' },
       compBorderHover: { default: 'transparent', _dark: 'transparent' },
-      compBorderSelected: { default: 'blackAlpha.200', _dark: 'whiteAlpha.300' },
-      compBorderSelectedHover: { default: 'blackAlpha.200', _dark: 'whiteAlpha.300' },
+      compBorderSelected: {
+        default: 'blackAlpha.200',
+        _dark: 'whiteAlpha.300',
+      },
+      compBorderSelectedHover: {
+        default: 'blackAlpha.200',
+        _dark: 'whiteAlpha.300',
+      },
       compBorderDisabled: { default: 'transparent', _dark: 'transparent' },
       compBorderError: { default: 'stError.500', _dark: 'stError.400' },
 
       //special cases
-      compBackgroundFilled: { default: 'blackAlpha.50', _dark: 'whiteAlpha.200' },
-      compBackgroundFilledHover: { default: 'blackAlpha.200', _dark: 'whiteAlpha.300' },
+      compBackgroundFilled: {
+        default: 'blackAlpha.50',
+        _dark: 'whiteAlpha.200',
+      },
+      compBackgroundFilledHover: {
+        default: 'blackAlpha.200',
+        _dark: 'whiteAlpha.300',
+      },
     },
     shadows: {
       plus: { default: '10px 10px 10px blue', _dark: '10px 10px 10px green' },

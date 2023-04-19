@@ -1,8 +1,3 @@
-import { Box, useMediaQuery } from '@chakra-ui/react';
-import 'react-lazy-load-image-component/src/effects/blur.css';
-import { useNavSize } from '../../store/BtnMenu';
-import { useEffect, useRef, useState } from 'react';
-import GridCards from '../GridCards';
 import {
   GridContextProvider,
   GridDropZone,
@@ -10,9 +5,15 @@ import {
   swap,
 } from 'react-grid-dnd';
 import { DataCard } from '../../data/dataCard';
+import { Box, useMediaQuery } from '@chakra-ui/react';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+import { sliceInformation } from '../../store/sliceInformation';
+import { useEffect, useRef, useState } from 'react';
+import GridCards from '../GridCards';
 
 const DrapAndDrop = () => {
-  const { cardSize } = useNavSize();
+
+  const { cardSize } = sliceInformation();
   const [card, setCard] = useState(DataCard);
   function onChange(
     sourceId: string,
@@ -47,8 +48,8 @@ const DrapAndDrop = () => {
       const cardHeight = adaptedSizeSm
         ? cardHeightSm
         : cardSize
-        ? cardHeightMd
-        : cardHeightSm;
+          ? cardHeightMd
+          : cardHeightSm;
       setRow(Math.trunc(cardHeight));
 
     });

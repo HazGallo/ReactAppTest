@@ -21,7 +21,8 @@ export type contentType =
   | 'IconSend'
   | 'IconDotsHorizontal'
   | 'IconCheck'
-  | 'IconDraft';
+  | 'IconDraft'
+  | 'IconGhost';
 
 interface Props {
   size: '16px' | '24px' | '32px' | '48px' | '64px';

@@ -1,19 +1,9 @@
 import { Box, useMediaQuery } from '@chakra-ui/react';
-import { CardItem } from '@iseazy/react-kit';
 import { useState } from 'react';
-import { useNavSize } from '../../store/BtnMenu';
+import { sliceInformation } from '../../store/sliceInformation';
 import { DrawerParent } from '../DrawerParent/DrawerParent';
-
-export interface props {
-  id: any;
-  coverimage: any;
-  type: any;
-  checked: any;
-  sizeCard: any;
-  text: any;
-  typeStatus: any;
-  placeholderSrc: any;
-}
+import { CardItem } from '../../../../../packages/react-kit/src/components/CardItem/index';
+import { propertiesCard } from './interfaces/propertiesCard';
 
 const GridCards = ({
   checked,
@@ -22,10 +12,11 @@ const GridCards = ({
   typeStatus,
   text,
   placeholderSrc,
-}: props) => {
+  title
+}: propertiesCard) => {
   const [adaptedSizeSm] = useMediaQuery('(max-width: 768px)');
   const [isLoaded, setIsLoaded] = useState(true);
-  const { setIsOpen, cardSize, setIsInfoCardDrawer, readonly } = useNavSize();
+  const { setIsOpen, cardSize, setIsInfoCardDrawer, readonly } = sliceInformation();
 
   const OnclickCardDrawer = (event: any) => {
     if (event.detail === 2) {
@@ -33,6 +24,7 @@ const GridCards = ({
         coverimage,
         typeStatus,
         text,
+        title
       });
       setIsOpen();
     }
@@ -67,8 +59,8 @@ const GridCards = ({
           sizeCard={adaptedSizeSm ? 'sm' : cardSize ? 'md' : 'sm'}
           typeStatus={typeStatus}
           typeBadge={type}
-          InfoAndActionBar="5min"
-          editableTitle="Meet the team in the office"
+          InfoAndActionBar={text}
+          editableTitle={title}
           placeholder="title"
           date="april 10, 2002 03:24:00"
           skeleton={isLoaded}
