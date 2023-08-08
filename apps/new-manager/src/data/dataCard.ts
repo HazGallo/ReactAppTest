@@ -1,10 +1,10 @@
-import { contentType } from "../../../../packages/react-kit/src/components/CardItem/components/BodyCard/Badge/ContentBadge";
-import { pathType } from "../../../../packages/react-kit/src/components/CardItem/components/BodyCard/Badge/PathBadge";
-import { ContentTypeStatus } from "../../../../packages/react-kit/src/components/CardItem/components/ItemPublicationStatus";
+import { contentType } from '../../../../packages/react-kit/src/components/Badge/ContentBadge';
+import { pathType } from '../../../../packages/react-kit/src/components/Badge/PathBadge';
+import { ContentTypeStatus } from '../../../../packages/react-kit/src/components/cards/CardItem/components/ItemPublicationStatus';
 
 export const DataCard = [
   {
-    id: 1,
+    id: '1',
     placeholderSrc:
       'https://ik.imagekit.io/s8b2ycrch/image__5_.png?updatedAt=1679594378559',
     type: 'audio' as contentType,
@@ -14,10 +14,9 @@ export const DataCard = [
     typeStatus: 'Published' as ContentTypeStatus,
     coverimage:
       'https://ik.imagekit.io/s8b2ycrch/imagen.jpg?updatedAt=1679594373657',
-    title: 'Meet the team in the office'
   },
   {
-    id: 2,
+    id: '2',
     coverimage:
       'https://ik.imagekit.io/s8b2ycrch/x.jpg?updatedAt=1679594374016',
     type: 'video' as contentType,
@@ -27,10 +26,9 @@ export const DataCard = [
     typeStatus: 'Draft' as ContentTypeStatus,
     placeholderSrc:
       'https://ik.imagekit.io/s8b2ycrch/x__1_.jpg?updatedAt=1679596375374',
-    title: 'future group agent'
   },
   {
-    id: 3,
+    id: '3',
     coverimage:
       'https://ik.imagekit.io/s8b2ycrch/image2.jpeg?updatedAt=1679594373855',
     type: 'article' as contentType,
@@ -40,10 +38,9 @@ export const DataCard = [
     typeStatus: 'Planned' as ContentTypeStatus,
     placeholderSrc:
       'https://ik.imagekit.io/s8b2ycrch/image3.jpg?updatedAt=1679600359717',
-    title: 'International configuration strategis'
   },
   {
-    id: 4,
+    id: '4',
     coverimage:
       'https://ik.imagekit.io/s8b2ycrch/image3.jpeg?updatedAt=1679594369326',
     type: 'instagram' as pathType,
@@ -53,10 +50,9 @@ export const DataCard = [
     typeStatus: 'Planned' as ContentTypeStatus,
     placeholderSrc:
       'https://ik.imagekit.io/s8b2ycrch/image5.jpg?updatedAt=1679600359948',
-    title: 'senior marketing designer'
   },
   {
-    id: 5,
+    id: '5',
     coverimage:
       'https://ik.imagekit.io/s8b2ycrch/image5.jpeg?updatedAt=1679594369199',
     type: 'task' as contentType,
@@ -66,10 +62,9 @@ export const DataCard = [
     typeStatus: 'Published' as ContentTypeStatus,
     placeholderSrc:
       'https://ik.imagekit.io/s8b2ycrch/image__4_.png?updatedAt=1679594370190',
-    title: 'Meet the team in the office'
   },
   {
-    id: 6,
+    id: '6',
     placeholderSrc:
       'https://ik.imagekit.io/s8b2ycrch/image__5_.png?updatedAt=1679594378559',
     type: 'audio' as contentType,
@@ -79,10 +74,9 @@ export const DataCard = [
     typeStatus: 'Published' as ContentTypeStatus,
     coverimage:
       'https://ik.imagekit.io/s8b2ycrch/imagen.jpg?updatedAt=1679594373657',
-    title: 'Meet the team in the office'
   },
   {
-    id: 7,
+    id: '7',
     coverimage:
       'https://ik.imagekit.io/s8b2ycrch/x.jpg?updatedAt=1679594374016',
     type: 'video' as contentType,
@@ -92,10 +86,9 @@ export const DataCard = [
     typeStatus: 'Draft' as ContentTypeStatus,
     placeholderSrc:
       'https://ik.imagekit.io/s8b2ycrch/x__1_.jpg?updatedAt=1679596375374',
-    title: 'Future applications adminstrator'
   },
   {
-    id: 8,
+    id: '8',
     coverimage:
       'https://ik.imagekit.io/s8b2ycrch/image2.jpeg?updatedAt=1679594373855',
     type: 'article' as contentType,
@@ -105,10 +98,9 @@ export const DataCard = [
     typeStatus: 'Planned' as ContentTypeStatus,
     placeholderSrc:
       'https://ik.imagekit.io/s8b2ycrch/image3.jpg?updatedAt=1679600359717',
-    title: 'Central data execute'
   },
   {
-    id: 9,
+    id: '9',
     coverimage:
       'https://ik.imagekit.io/s8b2ycrch/image3.jpeg?updatedAt=1679594369326',
     type: 'instagram' as pathType,
@@ -118,10 +110,9 @@ export const DataCard = [
     typeStatus: 'Planned' as ContentTypeStatus,
     placeholderSrc:
       'https://ik.imagekit.io/s8b2ycrch/image5.jpg?updatedAt=1679600359948',
-    title: 'Meet the team in the office'
   },
   {
-    id: 10,
+    id: '10',
     coverimage:
       'https://ik.imagekit.io/s8b2ycrch/image5.jpeg?updatedAt=1679594369199',
     type: 'task' as contentType,
@@ -131,10 +122,9 @@ export const DataCard = [
     typeStatus: 'Published' as ContentTypeStatus,
     placeholderSrc:
       'https://ik.imagekit.io/s8b2ycrch/image__4_.png?updatedAt=1679594370190',
-    title: 'Meet the team in the office'
   },
   {
-    id: 11,
+    id: '11',
     placeholderSrc:
       'https://ik.imagekit.io/s8b2ycrch/image__5_.png?updatedAt=1679594378559',
     type: 'audio' as contentType,
@@ -144,10 +134,9 @@ export const DataCard = [
     typeStatus: 'Published' as ContentTypeStatus,
     coverimage:
       'https://ik.imagekit.io/s8b2ycrch/imagen.jpg?updatedAt=1679594373657',
-    title: 'Central data execute'
   },
   {
-    id: 12,
+    id: '12',
     coverimage:
       'https://ik.imagekit.io/s8b2ycrch/x.jpg?updatedAt=1679594374016',
     type: 'video' as contentType,
@@ -157,10 +146,9 @@ export const DataCard = [
     typeStatus: 'Draft' as ContentTypeStatus,
     placeholderSrc:
       'https://ik.imagekit.io/s8b2ycrch/x__1_.jpg?updatedAt=1679596375374',
-    title: 'Meet the team in the office'
   },
   {
-    id: 13,
+    id: '13',
     coverimage:
       'https://ik.imagekit.io/s8b2ycrch/image2.jpeg?updatedAt=1679594373855',
     type: 'article' as contentType,
@@ -170,10 +158,9 @@ export const DataCard = [
     typeStatus: 'Planned' as ContentTypeStatus,
     placeholderSrc:
       'https://ik.imagekit.io/s8b2ycrch/image3.jpg?updatedAt=1679600359717',
-    title: 'Meet the team in the office'
   },
   {
-    id: 14,
+    id: '14',
     coverimage:
       'https://ik.imagekit.io/s8b2ycrch/image3.jpeg?updatedAt=1679594369326',
     type: 'instagram' as pathType,
@@ -183,10 +170,9 @@ export const DataCard = [
     typeStatus: 'Planned' as ContentTypeStatus,
     placeholderSrc:
       'https://ik.imagekit.io/s8b2ycrch/image5.jpg?updatedAt=1679600359948',
-    title: 'Meet the team in the office'
   },
   {
-    id: 15,
+    id: '15',
     coverimage:
       'https://ik.imagekit.io/s8b2ycrch/image5.jpeg?updatedAt=1679594369199',
     type: 'task' as contentType,
@@ -196,6 +182,10 @@ export const DataCard = [
     typeStatus: 'Published' as ContentTypeStatus,
     placeholderSrc:
       'https://ik.imagekit.io/s8b2ycrch/image__4_.png?updatedAt=1679594370190',
-    title: 'Meet the team in the office'
   },
 ];
+
+export function getRandomObject() {
+  const randomIndex = Math.floor(Math.random() * DataCard.length);
+  return DataCard[randomIndex];
+}

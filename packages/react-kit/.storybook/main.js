@@ -4,13 +4,10 @@ module.exports = {
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
-    '@storybook/addon-interactions'
+    '@storybook/addon-interactions',
   ],
   webpackFinal: async (config, { configType }) => {
-    config.resolve.modules = [
-      path.resolve(__dirname, ".."),
-      "node_modules",
-    ]
+    config.resolve.modules = [path.resolve(__dirname, '..'), 'node_modules'];
 
     return config;
   },
@@ -31,8 +28,4 @@ module.exports = {
   },
   staticDir: ['../public', '../static'],
   // staticDir: ['../storybook-static'],
-}
-
-
-
-
+};

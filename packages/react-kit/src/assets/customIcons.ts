@@ -1,6 +1,44 @@
 // @ts-nocheck rc-icon
 
-import { ReactComponent as IconChevronRight } from './icons/ico-chevron-right.svg'
+import { ReactComponent as IconPointsMidLow } from './icons/icoPointsMidLow.svg';
+import { ReactComponent as IconPointsMidHigh } from './icons/icoPointsMidHigh.svg';
+import { ReactComponent as IconPointsLow } from './icons/icoPointsLow.svg';
+import { ReactComponent as IconPointsHigh } from './icons/icoPointsHigh.svg';
+import { ReactComponent as IconGameNew } from './icons/icoGameNew.svg';
+import { ReactComponent as IconFree } from './icons/icoFree.svg';
+import { ReactComponent as IconBlockedSection } from './icons/icoBlockedSection.svg';
+import { ReactComponent as IconBlockedContent } from './icons/icoBlockedContent.svg';
+import { ReactComponent as IconMoveUp } from './icons/icoMoveUp.svg';
+import { ReactComponent as IconMoveTop } from './icons/icoMoveTop.svg';
+import { ReactComponent as IconMoveDown } from './icons/icoMoveDown.svg';
+import { ReactComponent as IconMoveBottom } from './icons/icoMoveBottom.svg';
+import { ReactComponent as IconList } from './icons/icoList.svg';
+import { ReactComponent as IconDownload } from './icons/icoDownload.svg';
+import { ReactComponent as IconCardBig } from './icons/icoCardBig.svg';
+import { ReactComponent as IconCards } from './icons/icoCards.svg';
+import { ReactComponent as IconCardSmall } from './icons/icoCardSmall.svg';
+import { ReactComponent as IconFilters } from './icons/icoFilters.svg';
+import { ReactComponent as IconPlusNew } from './icons/icoPlusNew.svg';
+import { ReactComponent as IconMaximize } from './icons/icoMaximize.svg';
+import { ReactComponent as IconDelete } from './icons/icoDelete.svg';
+import { ReactComponent as IconAtom } from './icons/icoAtom.svg';
+import { ReactComponent as IconUnsplash } from './icons/icoUnsplash.svg';
+import { ReactComponent as IconUncropped } from './icons/icoUncropped.svg';
+import { ReactComponent as IconFrameUpRight } from './icons/icoFrameUpRight.svg';
+import { ReactComponent as IconFrameUpLeft } from './icons/icoFrameUpLeft.svg';
+import { ReactComponent as IconFrameUp } from './icons/icoFrameUp.svg';
+import { ReactComponent as IconFrameRight } from './icons/icoFrameRight.svg';
+import { ReactComponent as IconFrameLeft } from './icons/icoFrameLeft.svg';
+import { ReactComponent as IconFrameDownRight } from './icons/icoFrameDownRight.svg';
+import { ReactComponent as IconFrameDownLeft } from './icons/icoFrameDownLeft.svg';
+import { ReactComponent as IconFrameDown } from './icons/icoFrameDown.svg';
+import { ReactComponent as IconFrameCentered } from './icons/icoFrameCentered.svg';
+import { ReactComponent as IconEdit } from './icons/icoEdit.svg';
+import { ReactComponent as IconChevronRight } from './icons/icoChevronRight.svg';
+import { ReactComponent as IconChevronLeft } from './icons/icoChevronLeft.svg';
+import { ReactComponent as IconChevronDown } from './icons/icoChevronDown.svg';
+import { ReactComponent as IconChevronUp } from './icons/icoChevronUp.svg';
+import { ReactComponent as IconCloseFilled } from './icons/ico-close-filled.svg';
 import { ReactComponent as IconCheckCircle } from './icons/ico-check-circle.svg';
 import { ReactComponent as IconPlus } from './icons/ico-plus.svg';
 import { ReactComponent as IconWarningMarkSm } from './icons/warningMarkSm.svg';
@@ -38,8 +76,41 @@ import { ReactComponent as IconPlaylist } from './icons/ico-playlist.svg';
 import { ReactComponent as IconPoll } from './icons/ico-content-poll.svg';
 import { ReactComponent as IconTest } from './icons/ico-content-test.svg';
 import { ReactComponent as IconVideo } from './icons/ico-content-video.svg';
+import { ReactComponent as IconUser } from './icons/icoUser.svg';
+import { ReactComponent as IconBullets } from './icons/icoBullets.svg';
+import { ReactComponent as IconPathCourse } from './icons/pathSkeletonCourse.svg';
+import { ReactComponent as IconPathExpress } from './icons/pathSkeletonExpress.svg';
+import { ReactComponent as IconPathInstagram } from './icons/pathSkeletonInstagram.svg';
+import { ReactComponent as IconPathSteps } from './icons/pathSkeletonSteps.svg';
+import { ReactComponent as IconPathWizard } from './icons/pathSkeletonWizard.svg';
+import { ReactComponent as IcoSearch } from './icons/ico-search.svg';
 
 export {
+  IconDelete,
+  IcoSearch,
+  IconMaximize,
+  IconPathCourse,
+  IconPathExpress,
+  IconPathInstagram,
+  IconPathSteps,
+  IconPathWizard,
+  IconAtom,
+  IconUnsplash,
+  IconUser,
+  IconUncropped,
+  IconFrameUpRight,
+  IconFrameUpLeft,
+  IconFrameUp,
+  IconFrameRight,
+  IconFrameLeft,
+  IconFrameDownRight,
+  IconFrameDownLeft,
+  IconFrameDown,
+  IconFrameCentered,
+  IconEdit,
+  IconChevronDown,
+  IconChevronUp,
+  IconChevronLeft,
   IconChevronRight,
   IconPlus,
   IconCheckCircle,
@@ -60,6 +131,7 @@ export {
   IconExplosion,
   IconInfo,
   IconLink,
+  IconBullets,
   IconLocation,
   IconResetHistory,
   IconResources,
@@ -78,4 +150,24 @@ export {
   IconTask,
   IconTest,
   IconVideo,
+  IconCloseFilled,
+  IconPlusNew,
+  IconFilters,
+  IconCards,
+  IconCardBig,
+  IconCardSmall,
+  IconDownload,
+  IconList,
+  IconMoveBottom,
+  IconMoveTop,
+  IconMoveDown,
+  IconMoveUp,
+  IconPointsMidLow,
+  IconPointsMidHigh,
+  IconPointsLow,
+  IconPointsHigh,
+  IconGameNew,
+  IconFree,
+  IconBlockedSection,
+  IconBlockedContent,
 };

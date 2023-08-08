@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+
 import { Content } from './index';
 
 const meta = {
@@ -18,7 +19,8 @@ export const TextEditExampleWithText: Story = {
     errorMessage: 'Error Message',
     sizesType: 'lg',
     hasError: false,
-    scrollbar: false
+    scrollbar: false,
+    placeholder: 'Text Title',
   },
   argTypes: {
     sizesType: {

@@ -1,22 +1,18 @@
 import { Flex, Text, Icon, Link } from '@chakra-ui/react';
+
 import { propsNavItem } from './interfaces/propsNavItem';
 
-const NavItem = ({
-  icon,
-  title,
-  active,
-  navSize,
-}: propsNavItem) => {
+const NavItem = ({ icon, title, active, navSize }: propsNavItem) => {
   return (
     <Flex mt={2} paddingX={4} flexDir="column" w="100%">
       <Link
-        border={active && '2px'}
-        display={navSize == 'small' ? 'none' : 'flex'}
-        borderColor={active && 'neAccent.500'}
         p={2.5}
         borderRadius={8}
-        _hover={{ textDecor: 'none', backgroundColor: 'neGrey.100' }}
+        border={active && '2px'}
         w={navSize == 'large' ? '100%' : ''}
+        borderColor={active && 'neAccent.500'}
+        display={navSize == 'small' ? 'none' : 'flex'}
+        _hover={{ textDecor: 'none', backgroundColor: 'neGrey.100' }}
       >
         <Flex alignItems={'center'}>
           <Icon as={icon} fontSize="md" color={active ? 'neAccent.500' : ''} />
@@ -34,4 +30,4 @@ const NavItem = ({
   );
 };
 
-export default NavItem
+export default NavItem;

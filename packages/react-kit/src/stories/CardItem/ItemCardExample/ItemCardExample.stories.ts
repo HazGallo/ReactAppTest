@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { CardItem } from '../../../components/CardItem';
-import { ContentTypes } from '../../../components/CardItem/components/ItemPublicationStatus/types/TypesStatus';
-import { pathTypes } from '../../../components/CardItem/components/BodyCard/Badge/PathBadge/types/PathBadgeTypes';
-import { contentTypes } from '../../../components/CardItem/components/BodyCard/Badge/ContentBadge/types/BadgeTypes';
 
+import { ContentTypes } from '../../../../src/components/Cards/CardItem/components/ItemPublicationStatus/types/TypesStatus';
+import { contentTypes } from '../../../components/Badge/ContentBadge/types/BadgeTypes';
+import { pathTypes } from '../../../components/Badge/PathBadge/types/PathBadgeTypes';
+import { CardItemExample } from '../ItemCardExample/CardItemExample';
 const meta = {
   title: 'Components/CardItem',
-  component: CardItem,
+  component: CardItemExample,
   parameters: {
     layout: 'centered',
   },
-} satisfies Meta<typeof CardItem>;
+} satisfies Meta<typeof CardItemExample>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -31,9 +31,14 @@ export const cardItemSingle: Story = {
       'https://ik.imagekit.io/s8b2ycrch/image__5_.png?updatedAt=1679594378559',
     skeleton: false,
     errorMessage: 'Error Message',
-    hasError: false
+    hasError: false,
+    newCard: false,
+    readOnly: false,
   },
   argTypes: {
+    onClickEditable: { table: { disable: true } },
+    onClickDrawer: { table: { disable: true } },
+    scrollbar: { table: { disable: true } },
     typeStatus: {
       control: 'select',
       options: ContentTypes,
@@ -50,7 +55,6 @@ export const cardItemSingle: Story = {
     },
     sizeCard: {
       control: 'select',
-      options: { sm: 'sm', md: 'md' },
     },
   },
 };

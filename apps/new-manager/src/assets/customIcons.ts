@@ -1,6 +1,6 @@
 // @ts-nocheck rc-icon
 
-import { ReactComponent as IcoSearch } from './icons/ico-search.svg'
+import { ReactComponent as IcoSearch } from './icons/ico-search.svg';
 import { ReactComponent as IcoBold } from './icons/ico-bold.svg';
 import { ReactComponent as IcoItalic } from './icons/ico-italic.svg';
 import { ReactComponent as IcoContentPath } from './icons/ico-content-path.svg';
@@ -38,5 +38,5 @@ export {
   IconResources,
   IconTask,
   IconZip,
-  IconPlus
+  IconPlus,
 };

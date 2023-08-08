@@ -8,8 +8,9 @@ import {
 export const contentTypes = {
   ADD: 'add',
   REMOVE: 'remove',
-  SELECTED: 'selected', 
-  LINK: 'link'
+  SELECTED: 'selected',
+  LINK: 'link',
+  PRIMARY: 'primary',
 };
 
 export const typesVersion = [
@@ -27,6 +28,6 @@ export const typesVersion = [
   },
   {
     type: contentTypes.SELECTED,
-    icon: IconCheckCircle
+    icon: IconCheckCircle,
   },
 ];

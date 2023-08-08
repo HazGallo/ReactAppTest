@@ -1,0 +1,70 @@
+.ql-container .ql-editor {
+  font-size: 20px;
+  line-height: 32px;
+  letter-spacing: -0.15px;
+  border: none !important;
+}
+.ql-editor {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  line-height: 30px;
+}
+
+.input-textarea .placeholderActive .ql-editor::before {
+  color: var(--chakra-colors-neBlack-500);
+}
+
+.input-textarea .placeholderHover .ql-editor::before {
+  color: var(--chakra-colors-neGrey-700);
+}
+
+.input-textarea:hover .ql-editor::before {
+  color: var(--chakra-colors-neGrey-700);
+}
+
+.input-textarea .placeholderDisabled .ql-editor::before {
+  color: var(--chakra-colors-neGrey-500);
+}
+
+.ql-editor::before {
+  font-style: normal !important; /* Evitar que el placeholder tenga formato cursiva */
+}
+
+.ql-editor ol,
+.ql-editor ul {
+  padding-left: 0.1em;
+}
+
+.ql-editor ol li:not(.ql-direction-rtl),
+.ql-editor ul li:not(.ql-direction-rtl) {
+  padding-left: 1.2em;
+}
+
+.ql-editor li:not(.ql-direction-rtl)::before {
+  padding-right: 0.4em;
+}
+
+.ql-editor li:not(.ql-direction-rtl)::before {
+  font-size: 25px;
+}
+/* Reduce el ancho de la barra de desplazamiento */
+.input-textarea .ql-container ::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Cambia el color de fondo de la barra de desplazamiento */
+.input-textarea .ql-container ::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+/* Cambia el color del "pulgar" de la barra de desplazamiento */
+.input-textarea .ql-container ::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 3px;
+}
+
+/* Cambia el color de fondo al pasar el cursor sobre la barra de desplazamiento */
+.input-textarea .ql-container ::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}

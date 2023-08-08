@@ -1,14 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react';
+
 import { contentTypes } from '../../components/FileDropper/types/iconTypes';
-import { FileDropper } from '../../components/FileDropper/index';
+import FileDropperExample from './FileDropperExample';
 
 const meta = {
   title: 'components/FileDropper',
-  component: FileDropper,
+  component: FileDropperExample,
   parameters: {
     layout: 'centered',
   },
-} satisfies Meta<typeof FileDropper>;
+} satisfies Meta<typeof FileDropperExample>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -24,9 +25,13 @@ export const DropperContent: Story = {
     hasError: false,
     errorMessage: 'Error Message',
     warning: false,
-    disabled: false
+    isDisabled: false,
   },
   argTypes: {
+    onDrop: { table: { disable: true } },
+    progressChange: { table: { disable: true } },
+    onChangeProgress: { table: { disable: true } },
+    onChange: { table: { disable: true } },
     type: {
       control: { type: 'select', options: contentTypes },
     },

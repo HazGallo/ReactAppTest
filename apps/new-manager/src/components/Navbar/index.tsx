@@ -8,9 +8,10 @@ import {
 } from '@chakra-ui/react';
 import { FiTablet } from 'react-icons/fi';
 import { HiInformationCircle } from 'react-icons/hi';
-import BtnMenu from '../BtnMenu';
+
 import { IcoSearch } from '../../assets/customIcons';
 import BtnColorMode from '../BtnColorMode';
+import BtnMenu from './components/BtnMenu';
 
 const Navbar = () => {
   return (
@@ -18,7 +19,7 @@ const Navbar = () => {
       position="fixed"
       left={0}
       top={0}
-      height="70px"
+      height="75px"
       borderBottom="1px"
       borderColor="neGrey.200"
       width="100%"
@@ -35,7 +36,8 @@ const Navbar = () => {
       <Flex alignItems="center" gap="2">
         <BtnMenu />
         <Text fontSize="18px">
-          <strong>iseazy</strong>engage
+          <strong>iseazy</strong>
+          engage
         </Text>
       </Flex>
       <Flex>

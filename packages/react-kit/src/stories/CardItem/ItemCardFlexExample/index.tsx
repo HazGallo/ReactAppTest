@@ -1,5 +1,5 @@
 import { Flex } from '@chakra-ui/react';
-import { CardItem } from '../../../components/CardItem';
+import { CardItem } from '../../../../src/components/Cards/CardItem';
 
 export const Content = () => {
   return (
@@ -11,8 +11,7 @@ export const Content = () => {
       marginTop={8}
     >
       <CardItem
-        placeholderSrc=
-        'https://ik.imagekit.io/s8b2ycrch/image__5_.png?updatedAt=1679594378559'
+        placeholderSrc="https://ik.imagekit.io/s8b2ycrch/image__5_.png?updatedAt=1679594378559"
         typeStatus="Published"
         typeBadge="audio"
         InfoAndActionBar="5min"
@@ -27,8 +26,7 @@ export const Content = () => {
         hasError={false}
       />
       <CardItem
-        placeholderSrc=
-        'https://ik.imagekit.io/s8b2ycrch/image__5_.png?updatedAt=1679594378559'
+        placeholderSrc="https://ik.imagekit.io/s8b2ycrch/image__5_.png?updatedAt=1679594378559"
         typeStatus="Draft"
         typeBadge="external"
         InfoAndActionBar="25min"
@@ -43,8 +41,7 @@ export const Content = () => {
         hasError={false}
       />
       <CardItem
-        placeholderSrc=
-        'https://ik.imagekit.io/s8b2ycrch/image__5_.png?updatedAt=1679594378559'
+        placeholderSrc="https://ik.imagekit.io/s8b2ycrch/image__5_.png?updatedAt=1679594378559"
         typeStatus="Planned"
         typeBadge="image"
         InfoAndActionBar="35min"
@@ -59,8 +56,7 @@ export const Content = () => {
         hasError={false}
       />
       <CardItem
-        placeholderSrc=
-        'https://ik.imagekit.io/s8b2ycrch/image__5_.png?updatedAt=1679594378559'
+        placeholderSrc="https://ik.imagekit.io/s8b2ycrch/image__5_.png?updatedAt=1679594378559"
         typeStatus="Draft"
         typeBadge="instagram"
         InfoAndActionBar="2min"
@@ -75,8 +71,7 @@ export const Content = () => {
         hasError={false}
       />
       <CardItem
-        placeholderSrc=
-        'https://ik.imagekit.io/s8b2ycrch/image__5_.png?updatedAt=1679594378559'
+        placeholderSrc="https://ik.imagekit.io/s8b2ycrch/image__5_.png?updatedAt=1679594378559"
         typeStatus="Published"
         typeBadge="game"
         InfoAndActionBar="50min"
@@ -91,8 +86,7 @@ export const Content = () => {
         hasError={false}
       />
       <CardItem
-        placeholderSrc=
-        'https://ik.imagekit.io/s8b2ycrch/image__5_.png?updatedAt=1679594378559'
+        placeholderSrc="https://ik.imagekit.io/s8b2ycrch/image__5_.png?updatedAt=1679594378559"
         typeStatus="Planned"
         typeBadge="express"
         InfoAndActionBar="50min"

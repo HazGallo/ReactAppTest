@@ -1,4 +1,6 @@
 import { extendTheme } from '@chakra-ui/react';
+
+// Colors
 import {
   baAmber,
   baAtlantis,
@@ -19,14 +21,25 @@ import {
   baViolet,
   baVioletRed,
 } from './colors/basics';
+
 import { neBlack, neAccent, neWhite, neGrey } from './colors/neutral';
+
 import { lkBlue, lkGreen, lkOrange, lkRed, lkYellow } from './colors/likert';
+
 import { rkBronze, rkGold, rkSilver } from './colors/ranking';
+
 import { stError, stProgress, stSuccess, stWarning } from './colors/status';
+
+import { blackAlpha, whiteAlpha } from './colors/blackAndWhiteAlphas';
+
+// Checkbox Component
 import { Checkbox } from './checkboxComponent';
+
+// Heading and Text Sizes
 import { HeadingTheme } from './sizesHeading';
 import { TextTheme } from './SizesText';
-import { blackAlpha, whiteAlpha } from './colors/blackAndWhiteAlphas';
+
+// Font Imports
 import '@fontsource/roboto';
 import '@fontsource/roboto/900.css';
 import '@fontsource/roboto/700.css';
@@ -65,8 +78,17 @@ export const theme = extendTheme({
     //provisional colors
     invisible: '#20202040',
     bgShadow: '#00000029',
+    bgShadowButton: '#FA185980',
     baGrey: '#D9D9D9',
     bgGreyIcon: '#D8D8D8',
+    baGreyTagSystem: '#F5F5F5',
+    baCategoryMenu: '#909090',
+    bgFileHover: '#FFDFE8',
+    borderFileHover: '#FA185933',
+    bgAvatarDisabled: '#F0F0F0',
+    imageLoad: '#F5F5F5',
+    bgDrawer: '#00000066',
+    ItemGroupColor: '#9F9F9F',
 
     //Basics
     baPersianRed: baPersianRed,
@@ -117,15 +139,19 @@ export const theme = extendTheme({
     whiteAlpha,
   },
   semanticTokens: {
-    colors: {
+    colors: { 
       button: { default: 'neAccent.500', _dark: 'baOceanBlue.500' },
       primary: { default: 'neWhite.500', _dark: 'neGrey.800' },
 
       //Text & icon color
       txPrimary: { default: 'neBlack.500', _dark: 'neWhite.500' },
+      txPrimaryHover: { default: 'neGrey.700', _dark: 'neGrey.600' },
       txSecondary: { default: 'neGrey.700', _dark: 'neGrey.600' },
+      txSecondaryHover: { default: 'neGrey.500', _dark: 'neGrey.500' },
       txTertiary: { default: 'neGrey.500', _dark: 'neGrey.900' },
+      txTertiaryHover: { default: 'neGrey.500', _dark: 'neGrey.900' },
       txHighlight: { default: 'neAccent.500', _dark: 'neAccent.400' },
+      txHighlightHover: { default: 'neAccent.400', _dark: 'neAccent.300' },
 
       //Content color
       coArticle: { default: 'baRose.500', _dark: 'baRose.400' },
@@ -172,8 +198,8 @@ export const theme = extendTheme({
         _dark: 'whiteAlpha.200',
       },
       compBackgroundDisabled: {
-        default: 'blackAlpha.50',
-        _dark: 'blackAlpha.200',
+        default: 'transparent',
+        _dark: 'transparent',
       },
       compBackgroundError: { default: 'transparent', _dark: 'transparent' },
       compBorderRest: { default: 'transparent', _dark: 'transparent' },
@@ -197,6 +223,38 @@ export const theme = extendTheme({
       compBackgroundFilledHover: {
         default: 'blackAlpha.200',
         _dark: 'whiteAlpha.300',
+      },
+      compBackgroundFilledDisabled: {
+        default: 'blackAlpha.50',
+        _dark: 'whiteAlpha.200',
+      },
+      compBackgroundTransparent: {
+        default: 'blackAlpha.600',
+        _dark: '',
+      },
+      compBackgroundTrasparentHover: {
+        default: 'blackAlpha.800',
+        _dark: '',
+      },
+      compBackgroundTrasparentSelected: {
+        default: 'whiteAlpha.800',
+        _dark: '',
+      },
+      compBackgroundTrasparentSelectedHover: {
+        default: 'whiteAlpha.900',
+        _dark: '',
+      },
+      compBackgroundTransparentDisabled: {
+        default: 'blackAlpha.300',
+        _dark: '',
+      },
+      compBorderTrasparentSelected: {
+        default: 'whiteAlpha.800',
+        _dark: '',
+      },
+      compBorderTrasparentSelectedHover: {
+        default: 'whiteAlpha.800',
+        _dark: '',
       },
     },
     shadows: {

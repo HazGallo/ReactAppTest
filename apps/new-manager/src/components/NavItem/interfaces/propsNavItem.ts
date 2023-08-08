@@ -1,7 +1,7 @@
 export interface propsNavItem {
     icon?: any;
-    title?: any;
-    description?: any;
+    title?: string;
+    description?: string;
     active?: any;
     navSize: any;
   }

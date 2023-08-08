@@ -1,73 +1,66 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { SelectorSystem } from '../../components/SelectorSystem';
-import {
-  IconArticle,
-  IconAudio,
-  IconChallenge,
-  IconGallery,
-  IconGame,
-  IconGhost,
-} from '../../assets/customIcons';
+
+import { SelectorSystemExample } from './SelectorSystemExample';
 
 const meta = {
   title: 'Components/SelectorSystem',
-  component: SelectorSystem,
+  component: SelectorSystemExample,
   parameters: {
     layout: 'centered',
   },
-} satisfies Meta<typeof SelectorSystem>;
+} satisfies Meta<typeof SelectorSystemExample>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 const selectorData = [
   {
-    icon: IconGhost,
+    typeIcon: 'IconGhost',
     title: 'Individual',
     description: 'Users will compete for the rankings top positions',
   },
   {
-    icon: IconAudio,
+    typeIcon: 'IconAudio',
     title: 'Individual',
     description: 'Users will compete for the rankings top positions',
   },
   {
-    icon: IconChallenge,
+    typeIcon: 'IconChallenge',
     title: 'Individual',
     description: 'Users will compete for the rankings top positions',
   },
   {
-    icon: IconAudio,
+    typeIcon: 'IconAudio',
     title: 'Individual',
     description: 'Users will compete for the rankings top positions',
   },
   {
-    icon: IconArticle,
+    typeIcon: 'IconArticle',
     title: 'Individual',
     description: 'Users will compete for the rankings top positions',
   },
   {
-    icon: IconGallery,
+    typeIcon: 'IconGallery',
     title: 'Individual',
     description: 'Users will compete for the rankings top positions',
   },
   {
-    icon: IconArticle,
+    typeIcon: 'IconArticle',
     title: 'Individual',
     description: 'Users will compete for the rankings top positions',
   },
   {
-    icon: IconGame,
+    typeIcon: 'IconGame',
     title: 'Individual',
     description: 'Users will compete for the rankings top positions',
   },
   {
-    icon: IconGhost,
+    typeIcon: 'IconGhost',
     title: 'Individual',
     description: 'Users will compete for the rankings top positions',
   },
   {
-    icon: IconArticle,
+    typeIcon: 'IconArticle',
     title: 'Individual',
     description: 'Users will compete for the rankings top positions',
   },
@@ -75,15 +68,14 @@ const selectorData = [
 
 export const content: Story = {
   args: {
-    disabled: false,
-    warning: false,
     selectorData: selectorData,
     type: 'lg',
     selectionType: 'multipleChoice',
   },
   argTypes: {
+    selectorData: { table: { disable: true } },
     type: {
-      control: { type: 'select', options: { lg: 'lg', md: 'md', sm: 'sm' } },
+      control: { type: 'select'},
     },
     selectionType: {
       control: {

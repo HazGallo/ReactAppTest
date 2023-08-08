@@ -1,32 +1,42 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ButtonIco } from '../../components/ButtonIco/index';
+
+import { ButtonIconExample } from './ButtonIconExample';
+
 import { Sizes } from '../../components/ButtonIco/types/buttonIcoTypes';
-import { IconsTypes } from '../IconExample/types/IconsTypes';
+import { IconsTypes } from '../../shared/iconsTypes/icons';
 
 const meta = {
   title: 'Components/ButtonIco',
-  component: ButtonIco,
+  component: ButtonIconExample,
   parameters: {
     layout: 'centered',
   },
-} satisfies Meta<typeof ButtonIco>;
+} satisfies Meta<typeof ButtonIconExample>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const ButtonIcoExample: Story = {
+export const content: Story = {
   args: {
     sizeName: 'md',
-    disabled: false,
+    isDisabled: false,
     warning: false,
-    type: 'IconGhost',
+    typeIcon: 'IconGhost',
+    backgroundType: 'backgroundDefault',
+    readOnly: false,
   },
   argTypes: {
+    onClick: { table: { disable: true } },
     sizeName: {
       control: { type: 'select', options: Sizes },
     },
-    type: {
+    typeIcon: {
       control: { type: 'select', options: IconsTypes },
+    },
+    backgroundType: {
+      control: {
+        type: 'select',
+      },
     },
   },
 };

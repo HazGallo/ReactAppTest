@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+
 import { ExampleSelector } from './ExampleSelector';
 
 const meta = {
@@ -14,15 +15,19 @@ type Story = StoryObj<typeof meta>;
 
 export const SelectorWithoutIcon: Story = {
   args: {
-    disabled: false,
+    isDisabled: false,
     warning: false,
     title: 'Individual',
     description: 'Users will compete for the rankings top positions',
-    type: 'lg'
+    type: 'lg',
+    typeIcon: 'noIco',
   },
   argTypes: {
+    typeIcon: { table: { disable: true } },
     type: {
-      control: { type: 'select', options:  { lg: 'lg', md: 'md', sm: 'sm' }, },
-    }
+      control: {
+        type: 'select',
+      },
+    },
   },
 };

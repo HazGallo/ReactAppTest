@@ -1,7 +1,10 @@
 import React from 'react';
+
 import { ChakraProvider, ThemeProvider } from '@chakra-ui/react';
-import '@fontsource/roboto';
+
 import { theme } from './theme';
+import '@fontsource/roboto';
+import './styles/cssReset';
 
 function App({ children }: { children: any }) {
   return (

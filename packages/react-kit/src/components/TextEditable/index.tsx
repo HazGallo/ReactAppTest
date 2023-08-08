@@ -1,23 +1,31 @@
+import React, { useState, useEffect, useRef, ChangeEvent } from 'react';
+
 import { Box } from '@chakra-ui/react';
-import React, { useState, useEffect, useRef } from 'react';
-import { ErrorMessage } from './components/ErrorMessage';
+
 import { CustomTextarea } from './components/CustomTextarea';
+import { ErrorMessage } from './components/ErrorMessage';
+
 export type sizesType = '2XL' | 'XL' | 'lg' | 'md' | 'sm' | 'xs';
 
 interface Props {
   readOnly?: boolean;
   autoFocus?: boolean;
-  errorMessage: string;
+  errorMessage?: string;
+  withoutErrorMessage?: boolean;
   hasError: boolean;
   sizesType: sizesType;
   children: any;
-  value: string;
+  value?: string;
   placeholder?: string;
   maxRows?: number;
   scrollbar?: boolean;
   sizeCard?: string;
   setValue: (event: any) => void;
   onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
+  onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void; // Propiedad onChange agregada
+  fieldName?: string;
+  defaultValue?: string;
+  register?: any;
 }
 
 export const TextEditable = (props: Props) => {
@@ -34,7 +42,12 @@ export const TextEditable = (props: Props) => {
     placeholder,
     maxRows,
     scrollbar = false,
+    fieldName,
+    register,
+    onChange,
+    defaultValue,
     sizeCard,
+    withoutErrorMessage,
     ...rest
   } = props;
 
@@ -73,25 +86,9 @@ export const TextEditable = (props: Props) => {
   };
 
   return (
-    <>
-      <Box>
-        {readOnly === true ? (
-          <Box
-            paddingX={1}
-            paddingY={1.2}
-            borderRadius="4px"
-            lineHeight={
-              sizeCard == 'md'
-                ? ['16px', '22px']
-                : sizeCard == 'sm'
-                ? '16px'
-                : 'unset'
-            }
-            letter-spacing="-0.2px"
-          >
-            {children}
-          </Box>
-        ) : focusTextarea || value === '' ? (
+    <Box width={'full'} height="full">
+      <Box width={'full'} height="full">
+        {focusTextarea ? (
           <CustomTextarea
             value={value}
             setValue={setValue}
@@ -106,14 +103,25 @@ export const TextEditable = (props: Props) => {
             onClick={onClick}
             sizeCard={sizeCard}
             placeholder={placeholder}
+            fieldName={fieldName}
+            register={register}
+            onChange={onChange}
+            defaultValue={defaultValue}
+            {...rest}
           />
         ) : (
           <Box
-            paddingX={1}
-            paddingY={1.2}
+            pointerEvents={readOnly ? 'none' : 'auto'}
+            color="txPrimary"
+            p={'5px'}
             borderRadius="4px"
-            lineHeight={sizeCard == 'md' ? ['16px', '22px'] : sizeCard == 'sm' ? '16px' : 'unset'}
-            letter-spacing="-0.2px"
+            lineHeight={
+              sizeCard == 'md'
+                ? ['16px', '22px']
+                : sizeCard == 'sm'
+                ? '16px'
+                : 'normal'
+            }
             onClick={(event: any) => onClick(event)}
             onBlur={(event: any) => onBlurFunc(event)}
             outline={hasError ? '1px solid' : 'transparent'}
@@ -132,13 +140,14 @@ export const TextEditable = (props: Props) => {
           </Box>
         )}
       </Box>
-
-      <ErrorMessage
-        readOnly={readOnly}
-        errorMessage={errorMessage}
-        hasError={hasError}
-        sizesType={sizesType}
-      />
-    </>
+      {!withoutErrorMessage && (
+        <ErrorMessage
+          readOnly={readOnly}
+          errorMessage={errorMessage}
+          hasError={hasError}
+          sizesType={sizesType}
+        />
+      )}
+    </Box>
   );
 };

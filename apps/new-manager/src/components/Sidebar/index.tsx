@@ -1,24 +1,29 @@
 import { Flex } from '@chakra-ui/react';
-import { sliceInformation } from '../../store/sliceInformation';
-import FlexSidevarLeft from '../FlexSidevarLeft';
-import FlexSidevarRight from '../FlexSidevarRight';
+import { shallow } from 'zustand/shallow';
+import { useSettings } from '../../store/settingsStore';
+
+import { FlexSidevarLeft } from './components/FlexSidevarLeft';
+import { FlexSidevarRight } from './components/FlexSidevarRight';
 
 const Sidebar = () => {
-  const { navSize } = sliceInformation();
+  const { navSize } = useSettings(
+    (state) => ({ navSize: state.navSize }),
+    shallow
+  );
+
   return (
     <Flex
-      zIndex={4}
-      minHeight="100%"
       h="100%"
-      flexDir="column"
-      background={'primary'}
       pos="fixed"
-      justifyContent="space-between"
-      left={[navSize === 'large' ? '0' : '-100%', '0']}
+      zIndex={4}
+      flexDir="column"
+      minHeight="100%"
       w={[
         navSize == 'small' ? '75px' : '100%',
         navSize == 'small' ? '75px' : '246px',
       ]}
+      justifyContent="space-between"
+      left={[navSize === 'large' ? '0' : '-100%', '0']}
     >
       <Flex w="100%" h="100%">
         <FlexSidevarLeft />

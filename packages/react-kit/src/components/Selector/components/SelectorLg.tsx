@@ -1,20 +1,33 @@
 import { useState, useRef, useEffect } from 'react';
 import { Box, BoxProps, Heading, Icon, Text } from '@chakra-ui/react';
+
 import { Ico } from '../../Ico';
 import { IconWarningMark } from '../../../assets/customIcons';
+import { IconsTypes, types, noIcoType } from '../../../shared/iconsTypes/icons';
 
 interface Props extends BoxProps {
-  icon?: any;
+  typeIcon?: types | noIcoType; //It is optional, but for as long as it is not, until they send the new icons
   title: string;
   description?: string;
-  disabled: boolean;
-  warning: boolean;
+  isDisabled?: boolean;
+  warning?: boolean;
   isSelected?: boolean;
-  onClick?: () => void; 
+  onClick?: () => void;
 }
 
 export const SelectorLg = (props: Props) => {
-  const { onClick, isSelected, disabled, warning, title, description, icon, ...rest } = props;
+  const {
+    onClick,
+    isSelected,
+    isDisabled,
+    warning,
+    title,
+    description,
+    typeIcon,
+    ...rest
+  } = props;
+
+  const y = IconsTypes.find((x) => x.type === typeIcon);
 
   const titleRef = useRef<HTMLDivElement>({} as HTMLDivElement);
   const [titleLines, setTitleLines] = useState(1);
@@ -42,31 +55,62 @@ export const SelectorLg = (props: Props) => {
     <Box height="195px" width="172px" position="relative">
       <Box
         borderRadius="8px"
+        border="2px"
+        borderColor={
+          isDisabled
+            ? 'compBorderDisabled'
+            : isSelected
+            ? 'compBorderSelected'
+            : 'compBorderRest'
+        }
         color={
-          disabled ? 'bgGreyIcon' : isSelected ? 'neAccent.500' : 'neBlack'
+          isDisabled ? 'txTertiary' : isSelected ? 'txHighlight' : 'txPrimary'
         }
         background={
-          disabled
-            ? 'compBackgroundHover'
+          isDisabled
+            ? 'compBackgroundFilledDisabled'
             : isSelected
-            ? 'compBackgroundHover'
-            : 'compBackgroundHover'
+            ? 'compBackgroundRest'
+            : 'compBackgroundFilled'
         }
-        _dark={{
-          color: disabled
-            ? 'neGrey.500'
-            : isSelected
-            ? 'neAccent.400'
-            : 'neBlack',
-        }}
-        sx={{
-          cursor: disabled ? 'not-allowed' : 'pointer',
+        _isdisabled={{
+          color: 'bgGreyIcon',
+          background: 'transparent',
+          cursor: 'not-allowed',
+          _hover: {
+            color: 'none',
+            background: 'transparent',
+          },
+          _dark: {
+            color: 'neGrey.500',
+          },
         }}
         _hover={{
-          background: disabled
-            ? 'compBackgroundHover'
+          background: isDisabled
+            ? ''
+            : isSelected
+            ? 'compBackgroundSelectedHover'
             : 'compBackgroundFilledHover',
+
+          color: isDisabled
+            ? 'none'
+            : isSelected
+            ? 'txHighlightHover'
+            : 'txPrimaryHover',
+          borderColor: isDisabled
+            ? 'compBorderDisabled'
+            : isSelected
+            ? 'compBorderSelectedHover'
+            : 'compBackgroundRest',
+
           transition: '.3 ease',
+        }}
+        sx={{
+          cursor: isDisabled ? 'not-allowed' : 'pointer',
+        }}
+        _selection={{
+          background: 'none',
+          color: 'none',
         }}
         width="full"
         height="full"
@@ -77,12 +121,10 @@ export const SelectorLg = (props: Props) => {
         justifyContent="center"
         {...rest}
       >
-        {icon ? (
+        {y?.icon && y?.icon !== 'noIco' && (
           <Box marginBottom="2px">
-            <Ico icon={icon} sizeName="md" />
+            <Ico icon={y?.icon} sizeName="md" />
           </Box>
-        ) : (
-          <></>
         )}
 
         <Heading
@@ -93,7 +135,11 @@ export const SelectorLg = (props: Props) => {
           size="md"
           marginBottom="10px"
           sx={{
-            cursor: disabled ? 'not-allowed' : 'pointer',
+            cursor: isDisabled ? 'not-allowed' : 'pointer',
+          }}
+          _selection={{
+            background: 'none',
+            color: 'none',
           }}
           noOfLines={2}
         >
@@ -105,7 +151,11 @@ export const SelectorLg = (props: Props) => {
           letterSpacing="-0.35px"
           w="122px"
           sx={{
-            cursor: disabled ? 'not-allowed' : 'pointer',
+            cursor: isDisabled ? 'not-allowed' : 'pointer',
+          }}
+          _selection={{
+            background: 'none',
+            color: 'none',
           }}
           noOfLines={titleLines > 1 ? 2 : 3}
         >
@@ -115,13 +165,13 @@ export const SelectorLg = (props: Props) => {
       <Box
         position="absolute"
         right="0.5em"
-        color={disabled ? 'stWarning.300' : 'stWarning.500'}
+        color={isDisabled ? 'stWarning.300' : 'stWarning.500'}
         _dark={{
-          color: disabled ? 'stWarning.300' : 'stWarning.400',
+          color: isDisabled ? 'stWarning.300' : 'stWarning.400',
         }}
         top={'0.1em'}
       >
-        {warning ? <Icon as={IconWarningMark} w="10px" h="10px" /> : <></>}
+        {warning && <Icon as={IconWarningMark} w="10px" h="10px" />}
       </Box>
     </Box>
   );

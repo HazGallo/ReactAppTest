@@ -1,30 +1,39 @@
-import { Flex, FlexProps } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
+
 import { Selector } from '../Selector';
+import { types } from '../../shared/iconsTypes/icons';
 
 interface SelectorData {
-  icon?: any;
+  typeIcon?: string; //It is optional, but for as long as it is not, until they send the new icons
   title: string;
   description?: string;
+  isDisabled?: boolean;
+  warning?: boolean;
 }
 
-interface Props extends FlexProps {
+interface Props {
   selectorData: SelectorData[];
-  disabled: boolean;
-  warning: boolean;
-  type: 'lg' | 'md' | 'sm';
+  type: 'lg' | 'md' | 'sm' | 'selectorBig';
   selectionType: 'single' | 'multipleChoice';
+  selectedDefault?: number;
 }
 
 export const SelectorSystem = (props: Props) => {
-  const { selectionType, disabled, warning, type, selectorData, ...rest } =
-    props;
+  const {
+    selectionType,
+    type,
+    selectorData,
+    selectedDefault = 0,
+    ...rest
+  } = props;
 
-  const [selectedItems, setSelectedItems] = useState<number[]>([]);
+  const [selectedItems, setSelectedItems] = useState<number[]>([
+    selectedDefault,
+  ]);
 
   useEffect(() => {
     if (selectionType === 'single') {
-      setSelectedItems([]);
+      setSelectedItems([selectedDefault]);
     }
   }, [selectionType]);
 
@@ -43,26 +52,20 @@ export const SelectorSystem = (props: Props) => {
   };
 
   return (
-    <Flex
-      justifyContent="center"
-      alignItems="center"
-      flexWrap="wrap"
-      gap="4"
-      marginTop={8}
-      {...rest}
-    >
+    <>
       {selectorData.map((value, index) => (
         <Selector
+          key={index}
           type={type}
-          icon={value.icon}
+          typeIcon={value.typeIcon as types}
           title={value.title}
           description={value.description}
-          disabled={disabled}
-          warning={warning}
+          isDisabled={value.isDisabled}
+          warning={value.warning}
           isSelected={selectedItems.includes(index)}
           onClick={() => handleSelect(index)}
         />
       ))}
-    </Flex>
+    </>
   );
 };

@@ -1,17 +1,13 @@
-import { Box } from '@chakra-ui/react';
-import AppEngage from './components/AppEngage';
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Login from './components/Login/Login';
+import './translations/i18n';
+
+import { BrowserRouter } from 'react-router-dom';
+import { ManagerRoutes } from './routes';
+import '../src/styles/style.css';
 
 function App() {
   return (
     <BrowserRouter>
-      <Box>
-        <Routes>
-          <Route path='/login' element={<Login />} />
-          <Route path='/' element={<AppEngage />} />
-        </Routes>
-      </Box>
+      <ManagerRoutes />
     </BrowserRouter>
   );
 }

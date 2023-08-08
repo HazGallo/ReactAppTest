@@ -13,6 +13,5 @@ export const Ico = (props: Props) => {
 
   const x = TypesSizesIcons.find((x) => x.sizeName === sizeName);
 
-  return <Icon as={icon} fontSize={x?.size} {...rest}/>
-  ;
+  return <Icon as={icon} fontSize={x?.size} {...rest} />;
 };

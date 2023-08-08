@@ -1,7 +1,8 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 export interface propsDrawer {
-    isOpen?: boolean;
-    setIsOpen?: () => void;
-    children: ReactNode;
+  isOpen: boolean;
+  onClose: () => void;
+  onOpen: () => void;
+  children?: ReactNode;
 }

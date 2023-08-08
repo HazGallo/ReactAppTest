@@ -1,4 +1,12 @@
 export const TextTheme = {
+  textButton: {
+    fontWeight: 'bold',
+    fontSize: '16px',
+    letterSpacing: '0px',
+    lineSpacing: '21',
+    cursor: 'default',
+    caretColor: 'transparent',
+  },
   '2XL': {
     fontSize: '40px',
     fontKerning: '0px',

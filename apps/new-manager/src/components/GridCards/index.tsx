@@ -1,45 +1,86 @@
+import { useEffect, useMemo, useState } from 'react';
+import { shallow } from 'zustand/shallow';
+
 import { Box, useMediaQuery } from '@chakra-ui/react';
-import { useState } from 'react';
-import { sliceInformation } from '../../store/sliceInformation';
-import { DrawerParent } from '../DrawerParent/DrawerParent';
-import { CardItem } from '../../../../../packages/react-kit/src/components/CardItem/index';
-import { propertiesCard } from './interfaces/propertiesCard';
+
+import { CardItem } from '@iseazy/react-kit';
+
+import { DataCardItem } from './interfaces/propertiesCard';
+import { getRandomObject } from '../../data/dataCard';
+
+import { useSettings } from '../../store/settingsStore';
 
 const GridCards = ({
-  checked,
-  coverimage,
+  description,
+  isDragging,
+  title,
+  text,
   type,
   typeStatus,
-  text,
-  placeholderSrc,
-  title
-}: propertiesCard) => {
+  uid,
+  isOpen,
+  onClose,
+  onOpen,
+}: DataCardItem & { isDragging: boolean }) => {
   const [adaptedSizeSm] = useMediaQuery('(max-width: 768px)');
   const [isLoaded, setIsLoaded] = useState(true);
-  const { setIsOpen, cardSize, setIsInfoCardDrawer, readonly } = sliceInformation();
+  const { cardSize, setIsInfoCardDrawer, readonly, setVideo } = useSettings(
+    (state) => ({
+      cardSize: state.cardSize,
+      setIsInfoCardDrawer: state.setIsInfoCardDrawer,
+      readonly: state.readonly,
+      setVideo: state.setVideo,
+    }),
+    shallow
+  );
 
-  const OnclickCardDrawer = (event: any) => {
-    if (event.detail === 2) {
-      setIsInfoCardDrawer({
-        coverimage,
-        typeStatus,
-        text,
-        title
-      });
-      setIsOpen();
+  const memoizedProps = useMemo(
+    () => ({
+      typeStatus,
+      text,
+      title,
+      uid,
+      description,
+    }),
+    [typeStatus, text, title, uid, description]
+  );
+
+  const [randomObject, setRandomObject] = useState(() => getRandomObject());
+  // const { data, error, isError, isLoading, getVideoById } = useGetVideo();
+  const [showDrawer, setShowDrawer] = useState(false);
+
+  const handleClickCard = (event: any) => {
+    if (event.detail === 1 && !isDragging) {
+      setIsInfoCardDrawer(memoizedProps);
+      // getVideoById(uid);
+      setShowDrawer(onOpen);
     }
   };
 
-  setTimeout(function () {
-    setIsLoaded(false);
-  }, 5000);
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setIsLoaded(false);
+    }, 5000);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, []);
+
+  // useEffect(() => {
+  //   if (data) {
+  //     setVideo(data);
+  //   }
+  // }, [data]);
+
+  useEffect(() => {
+    setShowDrawer(showDrawer);
+  }, [onOpen]);
 
   return (
     <>
-      <DrawerParent />
       <Box
         padding="0 0.5em"
-        onClick={OnclickCardDrawer}
         transition="all ease-in-out .2s"
         _hover={{
           transform: 'scale(1.04)',
@@ -48,18 +89,15 @@ const GridCards = ({
         }}
       >
         <CardItem
+          onClickDrawer={handleClickCard}
           width="inherit"
-          minWidth={[
-            'inherit',
-            adaptedSizeSm ? '140px' : cardSize ? '220px' : '140px',
-          ]}
-          placeholderSrc={placeholderSrc}
-          coverImage={coverimage}
-          checked={checked}
+          placeholderSrc={randomObject.placeholderSrc}
+          coverImage={randomObject.coverimage}
+          checked={randomObject.checked}
           sizeCard={adaptedSizeSm ? 'sm' : cardSize ? 'md' : 'sm'}
-          typeStatus={typeStatus}
-          typeBadge={type}
-          InfoAndActionBar={text}
+          typeStatus={randomObject.typeStatus}
+          typeBadge={randomObject.type}
+          InfoAndActionBar={randomObject.text}
           editableTitle={title}
           placeholder="title"
           date="april 10, 2002 03:24:00"
@@ -67,6 +105,10 @@ const GridCards = ({
           errorMessage={'Error Message'}
           hasError={false}
           readOnly={readonly}
+          minWidth={[
+            'inherit',
+            adaptedSizeSm ? '140px' : cardSize ? '220px' : '140px',
+          ]}
         />
       </Box>
     </>

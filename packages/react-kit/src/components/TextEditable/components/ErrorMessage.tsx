@@ -1,8 +1,9 @@
 import { Box, Text } from '@chakra-ui/react';
+import { ERROR_MESSAGE } from '../../../shared/constants';
 
 interface Props {
   readOnly: boolean;
-  errorMessage: string;
+  errorMessage?: string;
   hasError: boolean;
   sizesType?: string;
 }
@@ -12,24 +13,20 @@ export const ErrorMessage = (props: Props) => {
 
   return (
     <Box width="full" minHeight="26px">
-      {readOnly === false ? (
+      {readOnly === false && (
         <Box>
-          {hasError ? (
+          {hasError && (
             <Text
-              textStyle={sizesType ? sizesType : 'sm'}
+              textStyle={'sm'}
               paddingLeft=".4em"
-              paddingTop=".4em"
-              letter-spacing="0px"
+              paddingTop=".5em"
+              letterSpacing="0px"
               color="compBorderError"
             >
-              {errorMessage}
+              {errorMessage ? errorMessage : ERROR_MESSAGE}
             </Text>
-          ) : (
-            <></>
           )}
         </Box>
-      ) : (
-        <></>
       )}
     </Box>
   );

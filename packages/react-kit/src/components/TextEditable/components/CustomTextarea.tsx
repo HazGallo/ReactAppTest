@@ -1,14 +1,19 @@
-import React, { ChangeEvent, useEffect, useRef } from 'react';
-import { Textarea, Box } from '@chakra-ui/react';
+import React, { ChangeEvent } from 'react';
+
+import { Box, Textarea } from '@chakra-ui/react';
 import ResizeTextarea from 'react-textarea-autosize';
+
 import { HeadingTheme } from '../../../theme/sizesHeading/index';
 import { TextTheme } from '../../../theme/SizesText/index';
-import { textTareaCss } from '../textTarea.type';
+
+import { textTareaCss } from '../types/textTarea.type';
+import { PLACEHOLDER_TEXTAREA } from '../../../shared/constants';
 
 export type sizesType = '2XL' | 'XL' | 'lg' | 'md' | 'sm' | 'xs';
 
 interface Props {
-  value: string;
+  value?: string;
+  onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void; // Propiedad onChange agregada
   setValue: (event: any) => void;
   sizesType: sizesType;
   autoFocus?: boolean;
@@ -21,25 +26,31 @@ interface Props {
   onKeyDown?: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
   onClick?: (event: React.MouseEvent<HTMLTextAreaElement>) => void;
+  fieldName?: string;
+  defaultValue?: string;
+  register?: any;
 }
 
-export const CustomTextarea = (props: Props) => {
-  const {
-    value,
-    setValue,
-    sizesType,
-    autoFocus = false,
-    scrollbar,
-    maxRows,
-    onKeyDown,
-    onBlur,
-    onClick,
-    children,
-    textareaRef,
-    sizeCard,
-    placeholder
-  } = props;
-
+export const CustomTextarea = ({
+  value,
+  onChange, // Propiedad onChange agregada
+  setValue,
+  sizesType,
+  autoFocus = false,
+  scrollbar,
+  maxRows,
+  onKeyDown,
+  onBlur,
+  onClick,
+  children,
+  textareaRef,
+  sizeCard,
+  placeholder,
+  fieldName,
+  register,
+  defaultValue,
+  ...rest
+}: Props) => {
   const setFont = () => {
     const typeChild = children.type.render.name;
     const typeDisplayName = children.type.displayName;
@@ -59,36 +70,45 @@ export const CustomTextarea = (props: Props) => {
   return (
     <Textarea
       rows={1}
-      color="text"
+      color="txPrimary"
       width="full"
       resize="none"
+      height="full"
       value={value}
-      placeholder={placeholder}
-      paddingX={1}
-      paddingY={1.2}
+      placeholder={placeholder ? placeholder : PLACEHOLDER_TEXTAREA}
+      p={'5px'}
+      border={0}
+      m="0px"
       autoFocus={autoFocus}
       ref={textareaRef}
       borderRadius="4px"
       fontSize={fontSize}
-      lineHeight={ sizeCard == 'md' ? ['16px', '22px'] : sizeCard == 'sm' ? '16px'   : 'unset'}
-      _hover={{ cursor: 'pointer' }}
+      lineHeight={
+        sizeCard === 'md'
+          ? ['16px', '22px']
+          : sizeCard === 'sm'
+          ? '16px'
+          : 'normal'
+      }
+      _hover={{ cursor: 'text' }}
       focusBorderColor="transparent"
       outline="1px solid"
       outlineColor="neAccent.500"
-      _selection={{
-        background: 'transparent',
-      }}
       as={ResizeTextarea} //library implementation for automatic rows
       maxRows={maxRows ?? 10000}
       fontWeight={fontWeight}
       letterSpacing={letterSpacing}
-      onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-        setValue(e.target.value)
-      }
+      onChange={onChange} // Propiedad onChange agregada
       onKeyDown={onKeyDown}
       onBlur={onBlur}
       onClick={onClick}
       spellCheck="false"
+      _placeholder={{ color: 'neGrey.700' }}
+      _dark={{
+        _placeholder: {
+          color: 'neGrey.700',
+        },
+      }}
       sx={
         scrollbar === false
           ? {
@@ -104,6 +124,9 @@ export const CustomTextarea = (props: Props) => {
               },
             }
       }
+      defaultValue={defaultValue}
+      {...(fieldName && register && register(fieldName))}
+      {...rest}
     >
       {value}
     </Textarea>

@@ -1,10 +1,18 @@
-import CustomDrawer from "../CustomDrawer";
-import BodyExample from "./components/BodyExample";
+import CustomDrawer from '../CustomDrawer';
+import InteractiveForm from './components/InteractiveForm';
 
-export function DrawerParent() {
-    return (
-        <CustomDrawer>
-            <BodyExample />
-        </CustomDrawer>
-    );
+interface Props {
+  isOpen: boolean;
+  onClose: () => void;
+  onOpen: () => void;
 }
+
+export const DrawerParent = (props: Props) => {
+  const { isOpen, onClose, onOpen } = props;
+
+  return (
+    <CustomDrawer isOpen={isOpen} onClose={onClose} onOpen={onOpen}>
+      <InteractiveForm onClose={onClose} />
+    </CustomDrawer>
+  );
+};

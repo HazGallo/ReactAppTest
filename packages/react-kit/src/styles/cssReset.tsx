@@ -1,6 +1,6 @@
 // https://codesandbox.io/s/hs31q?file=/src/index.tsx:543-564
 
-import { Global } from "@emotion/react";
+import { Global } from '@emotion/react';
 
 export const CSSReset = () => (
   <Global

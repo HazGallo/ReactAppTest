@@ -1,12 +1,11 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 type Field = {
   type: any;
   label: any;
-  defaultValue: any;
+  value?: any; // Agregar la propiedad 'value'
 };
 
 export type FormValues = {
@@ -14,30 +13,42 @@ export type FormValues = {
 };
 
 type HookProps = {
-  schema: Yup.ObjectSchema<FormValues>;
+  schema: any; //Yup.ObjectSchema<FormValues>
   initialState: FormValues;
+  onSubmit: (values: FormValues) => Promise<void>;
 };
 
-export const useCustomHook = ({ schema, initialState }: HookProps) => {
-  const { register, handleSubmit, formState } = useForm<FormValues>({
+export const useCustomHook = ({
+  schema,
+  initialState,
+  onSubmit,
+}: HookProps) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({
     resolver: yupResolver(schema),
-    defaultValues: initialState ?? {},
   });
 
-  // handle form state
   const [formValues, setFormValues] = useState(initialState);
+  const [error, setError] = useState<string>('');
 
-  const onSubmit = (data: FormValues) => {
-    // handle form submission
-    console.log(data);
+  const handleFormSubmit = async (data: FormValues) => {
+    try {
+      await onSubmit(data);
+      setError('');
+    } catch (err: any) {
+      setError(err.message);
+    }
   };
 
   return {
-    ...formState,
+    errors,
     register,
-    handleSubmit,
-    formValues,
+    handleSubmit: handleSubmit(handleFormSubmit),
     setFormValues,
-    onSubmit,
+    error,
+    formValues,
   };
 };

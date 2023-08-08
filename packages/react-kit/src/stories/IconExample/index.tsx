@@ -1,32 +1,9 @@
 import { Card, CardBody, Flex, Heading, Icon } from '@chakra-ui/react';
-import { IconsTypes } from './types/IconsTypes';
-
-export type contentType =
-  | 'IconAudio'
-  | 'IconArticle'
-  | 'IconVideo'
-  | 'IconImage'
-  | 'IconExternal'
-  | 'IconPlaylist'
-  | 'IconPdf'
-  | 'IconGallery'
-  | 'IconHtml'
-  | 'IconZip'
-  | 'IconTask'
-  | 'IconPoll'
-  | 'IconTest'
-  | 'IconGame'
-  | 'IconChallenge'
-  | 'IconDate'
-  | 'IconSend'
-  | 'IconDotsHorizontal'
-  | 'IconCheck'
-  | 'IconDraft'
-  | 'IconGhost';
+import { IconsTypes, types } from '../../shared/iconsTypes/icons';
 
 interface Props {
   size: '16px' | '24px' | '32px' | '48px' | '64px';
-  type: contentType;
+  type: types;
 }
 
 export const IconExample = ({ size, type }: Props) => {

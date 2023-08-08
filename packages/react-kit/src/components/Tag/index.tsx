@@ -1,117 +1,163 @@
-import { Box, Text } from '@chakra-ui/react';
-import { typesVersion } from './types/typesVersion';
-import { useState } from 'react';
+import { Box, TagProps, Text } from '@chakra-ui/react';
+
 import { Ico } from '../Ico';
+import { typesVersion } from './types/typesVersion';
+import { IconsTypes, types, noIcoType } from '../../shared/iconsTypes/icons';
 
-export type contentType = 'add' | 'remove' | 'selected' | 'link';
+export type contentType = 'add' | 'remove' | 'selected' | 'link' | 'primary';
 
-interface Props {
+interface Props extends TagProps {
   label: string;
-  icon?: any;
-  disabled?: boolean;
+  typeIcon?: types | noIcoType;
+  isDisabled?: boolean;
   typeVersion?: contentType;
+  isSelected?: boolean;
   onClick?: () => void;
+  amount?: number;
 }
 
 export const Tag = (props: Props) => {
-  const { typeVersion, label, icon, disabled, onClick } = props;
-
-  const [isSelected, setIsSelected] = useState(false);
+  const {
+    isSelected,
+    typeVersion,
+    label,
+    typeIcon,
+    isDisabled,
+    onClick,
+    amount,
+    ...rest
+  } = props;
 
   const x = typesVersion.find((x) => x.type === typeVersion);
+  const y = IconsTypes.find((x) => x.type === typeIcon);
 
   return (
     <Box
-      w="full"
-      h="36px"
+      {...rest}
+      minHeight="36px"
       borderRadius="50px"
       color={
         x?.type === 'remove'
-          ? disabled
-            ? 'bgGreyIcon '
+          ? isDisabled
+            ? 'bgGreyIcon'
             : isSelected
-            ? 'stError.500'
+            ? 'compBorderError'
             : 'neBlack'
-          : disabled
-          ? 'bgGreyIcon '
-          : isSelected
-          ? 'neAccent.500'
+          : isDisabled
+          ? 'bgGreyIcon'
+          : isSelected && typeVersion === 'primary'
+          ? 'white'
+          : isSelected && typeVersion !== 'primary'
+          ? 'txHighlight'
           : 'neBlack'
       }
       background={
-        disabled
+        isDisabled
           ? 'compBackgroundHover'
-          : isSelected
-          ? 'compBackgroundHover'
+          : isSelected && typeVersion === 'primary'
+          ? 'txHighlight'
+          : isSelected && typeVersion !== 'primary'
+          ? 'compBackgroundRest'
           : 'compBackgroundHover'
       }
-      _dark={{
-        color:
-          x?.type === 'remove'
-            ? disabled
-              ? 'neGrey.500'
-              : isSelected
-              ? 'stError.400'
-              : 'neWhite.500'
-            : disabled
-            ? 'neGrey.500'
-            : isSelected
-            ? 'neAccent.400'
-            : 'neBlack',
-      }}
       sx={{
-        cursor: disabled ? 'not-allowed' : 'pointer',
+        cursor: isDisabled ? 'not-allowed' : 'pointer',
       }}
       _hover={{
         background:
           x?.type === 'remove'
-            ? disabled
+            ? isDisabled
               ? 'compBackgroundHover'
               : isSelected
               ? 'compBackgroundFilledHover'
-              : 'stError.500'
-            : disabled
+              : 'compBorderError'
+            : isDisabled
             ? 'compBackgroundHover'
+            : isSelected && typeVersion === 'primary'
+            ? 'txHighlightHover'
             : 'compBackgroundFilledHover',
 
         color:
           x?.type === 'remove'
-            ? disabled
+            ? isDisabled
               ? 'bgGreyIcon'
               : isSelected
-              ? 'stError.500'
+              ? 'compBorderError'
               : 'neWhite.500'
-            : '',
-
+            : isDisabled
+            ? 'bgGreyIcon'
+            : isSelected && typeVersion === 'primary'
+            ? 'neWhite.500'
+            : isSelected && typeVersion !== 'primary'
+            ? 'txHighlightHover'
+            : 'txPrimaryHover',
         transition: '.3 ease',
+
+        border: typeVersion !== 'primary' ? '2px' : '',
+        borderColor: isDisabled
+          ? 'compBorderDisabled'
+          : isSelected
+          ? 'compBorderSelectedHover'
+          : 'compBorderDisabled',
       }}
-      onClick={() => setIsSelected((prev) => !prev)}
-      px="20px"
+      border={typeVersion !== 'primary' ? '2px' : ''}
+      borderColor={
+        isDisabled
+          ? 'compBorderDisabled'
+          : isSelected
+          ? 'compBorderSelected'
+          : 'compBorderRest '
+      }
+      onClick={onClick}
+      px={label.length > 80 ? '2rem' : '20px'}
+      py="8px"
       display="flex"
       alignItems="center"
-      justifyContent="center"
+      justifyContent={'center'}
+      userSelect={"none"}
     >
-      {icon && <Ico icon={icon} sizeName="xs" mr="5px" ml="-5px" />}
+      {y?.icon && y?.icon !== 'noIco' && (
+        <Ico icon={y?.icon} sizeName="xs" mr="5px" ml="-6px" />
+      )}
 
       <Text
-        mt="2px"
-        fontWeight="normal"
+        fontWeight="medium"
+        display="flex"
+        flexWrap="wrap"
         textStyle="sm"
+        wordBreak="break-word"
         sx={{
-          cursor: disabled ? 'not-allowed' : 'pointer',
+          cursor: isDisabled ? 'not-allowed' : 'pointer',
+          marginBottom: '-3px',
         }}
       >
         {label}
       </Text>
+      {amount !== 0 && (
+        <Text
+          ml="5px"
+          fontWeight="medium"
+          display="flex"
+          flexWrap="wrap"
+          textStyle="sm"
+          wordBreak="break-word"
+          color={isSelected ? 'neGrey.500' : 'txSecondary'}
+          sx={{
+            cursor: isDisabled ? 'not-allowed' : 'pointer',
+            marginBottom: '-3px',
+          }}
+        >
+          {amount}
+        </Text>
+      )}
 
-      {typeVersion && (
+      {x?.icon && (
         <Ico
           icon={x?.icon}
           sizeName="xs"
-          onClick={onClick}
           background="transparent"
           ml="10px"
-          mr="-5px"
+          mr="-6px"
         />
       )}
     </Box>
