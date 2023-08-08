@@ -39,6 +39,7 @@ import { Tag } from './components/Tag';
 import { TagSystem } from './components/TagSystem';
 import { TextEditable } from './components/TextEditable';
 import { UserAvatar } from './components/UserAvatar';
+import { PlaceholderTestQuestion } from './components/PlaceholderTestQuestion';
 
 const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
   return <ChakraProvider theme={theme}>{children}</ChakraProvider>;
@@ -58,6 +59,7 @@ export {
   DropdownMenuOption,
   FileDrop,
   FileDropper,
+  PlaceholderTestQuestion,
   Ico,
   ImageSelector,
   InputCheckbox,
