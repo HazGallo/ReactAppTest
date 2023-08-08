@@ -1,5 +1,5 @@
-import { create } from 'zustand';
 import { produce } from 'immer';
+import { create } from 'zustand';
 
 //devtools
 import { mountStoreDevtool } from 'simple-zustand-devtools';
@@ -123,69 +123,97 @@ const useSectionsStore = create<State>((set) => ({
       })
     );
   },
+
   addElement: (sectionId: string, element: Element) => {
     set(
-      produce((state) => {
-        const existingSection = state.sections.find(
-          ({ id }: { id: string }) => id === sectionId
-        );
-
-        if (!existingSection) {
-          console.error(`The section with ID '${sectionId}' does not exist.`);
-
-          return;
-        }
-
-        const sectionContentsIndex = state.sectionContents.findIndex(
-          ({ idSection }: { idSection: string }) => idSection === sectionId
-        );
-
-        if (sectionContentsIndex !== -1) {
-          const elIndex = state.sectionContents[
-            sectionContentsIndex
-          ].elements.findIndex(
-            ({ uid }: { uid: string }) => uid === element.uid
+      produce(
+        (state: {
+          sections: Section[];
+          sectionContents: SectionContents[];
+        }) => {
+          const existingSectionIndex = state.sections.findIndex(
+            ({ id }: { id: string }) => id === sectionId
           );
 
-          if (elIndex === -1) {
-            // If element doesn't exists.. we add it
-            const elements =
-              state.sectionContents[sectionContentsIndex]?.elements ?? [];
-
-            console.log(
-              'testing - state.sectionContents[sectionContentsIndex]: ',
-              state.sectionContents[sectionContentsIndex]
-            );
-            state.sectionContents[sectionContentsIndex].elements = [
-              ...elements,
-              element,
-            ];
-
-            state.addContent(
-              sectionId,
-              element.uid,
-              element.cover.filePath,
-              element.type.title
-            );
+          if (existingSectionIndex === -1) {
+            console.error(`The section with ID '${sectionId}' does not exist.`);
+            return;
           }
-        } else {
-          const newSectionContents: SectionContents = {
-            idSection: sectionId,
-            elements: [element],
+
+          const sectionContentsIndex = state.sectionContents.findIndex(
+            ({ idSection }: { idSection: string }) => idSection === sectionId
+          );
+
+          const newContent: Section['contents'][number] = {
+            id: element.uid,
+            coverImage: element.cover.filePath,
+            type: element.type.title,
           };
 
-          state.sectionContents = [
-            ...(state.sectionContents || []),
-            newSectionContents,
-          ];
-          state.addContent(
-            sectionId,
-            element.uid,
-            element.cover.filePath,
-            element.type.title
-          );
+          if (sectionContentsIndex !== -1) {
+            const elIndex = state.sectionContents[
+              sectionContentsIndex
+            ].elements.findIndex(
+              ({ uid }: { uid: string }) => uid === element.uid
+            );
+
+            if (elIndex === -1) {
+              // If element doesn't exists.. we add it
+              const elements =
+                state.sectionContents[sectionContentsIndex]?.elements ?? [];
+
+              state.sectionContents[sectionContentsIndex].elements = [
+                ...elements,
+                element,
+              ];
+            }
+
+            // Aquí añades el contenido
+            if (existingSectionIndex !== -1) {
+              const updatedSection: Section = {
+                ...state.sections[existingSectionIndex],
+                contents: [
+                  ...state.sections[existingSectionIndex].contents,
+                  newContent,
+                ],
+              };
+
+              state.sections = [
+                ...state.sections.slice(0, existingSectionIndex),
+                updatedSection,
+                ...state.sections.slice(existingSectionIndex + 1),
+              ];
+            }
+          } else {
+            const newSectionContents: SectionContents = {
+              idSection: sectionId,
+              elements: [element],
+            };
+
+            state.sectionContents = [
+              ...state.sectionContents,
+              newSectionContents,
+            ];
+
+            // Aquí también añades el contenido
+            if (existingSectionIndex !== -1) {
+              const updatedSection: Section = {
+                ...state.sections[existingSectionIndex],
+                contents: [
+                  ...state.sections[existingSectionIndex].contents,
+                  newContent,
+                ],
+              };
+
+              state.sections = [
+                ...state.sections.slice(0, existingSectionIndex),
+                updatedSection,
+                ...state.sections.slice(existingSectionIndex + 1),
+              ];
+            }
+          }
         }
-      })
+      )
     );
   },
 

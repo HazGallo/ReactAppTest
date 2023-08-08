@@ -91,20 +91,20 @@ export const Contents = () => {
   const handleCreateSection = () => {
     const sectionName = inputValue || 'New section';
     createSection(sectionName);
-    
+
     setInputValue('');
-    
+
     requestAnimationFrame(() => {
       const divElement = document.getElementById('scroll2');
       if (divElement) {
         divElement.scrollTo({
           top: divElement.scrollHeight,
-          behavior: 'smooth'
+          behavior: 'smooth',
         });
       }
     });
   };
-  
+
   const handleSection = (id: string) => {
     const dataSection = modifySection(id);
     setdataSectionSelected(dataSection);
@@ -113,8 +113,6 @@ export const Contents = () => {
   const currentSection = sectionContents.find(
     ({ idSection }) => idSection === IdSectionSelected
   );
-
-  console.log('watching: ', { currentSection });
 
   const generateAvatars = (contents: any) => {
     let avatar: any = [];
@@ -249,7 +247,6 @@ export const Contents = () => {
     addElement(sectionId ?? IdSectionSelected, newElement);
   };
 
-  console.log(sections, "sec")
   return (
     <Flex
       justifyContent="center"
