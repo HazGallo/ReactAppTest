@@ -103,7 +103,7 @@ export const ButtonNew = (props: Props) => {
               ? '15px'
               : '30px'
           }
-          pr={"15px"}
+          pr={'15px'}
           position="relative"
           display="flex"
           alignItems="center"
