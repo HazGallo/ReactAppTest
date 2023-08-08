@@ -109,11 +109,11 @@ export const BodyCard = (props: Props) => {
           color="bgShadow"
           onMouseOver={over}
           onMouseOut={out}
-          {...rest}
           _selection={{
             background: 'none',
             color: 'none',
           }}
+          {...rest}
         >
           <Flex
             position="relative"
@@ -159,6 +159,7 @@ export const BodyCard = (props: Props) => {
                 color: 'none',
               }}
               zIndex={isVisible ? '50' : isChecked ? '50' : '0'}
+              onClick={(e) => e.stopPropagation()}
             >
               <Box
                 position="relative"
