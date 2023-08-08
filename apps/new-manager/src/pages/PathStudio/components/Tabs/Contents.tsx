@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, lazy } from 'react';
+import { lazy, useCallback, useEffect, useState } from 'react';
 
 import {
   AbsoluteCenter,
@@ -29,8 +29,8 @@ import { motion } from 'framer-motion';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { animated, config, useTransition } from 'react-spring';
 import { getRandomObject } from 'src/data/dataCard';
-import { v4 as uuidv4 } from 'uuid';
 import { Element } from 'src/store/interfaces/element.interface';
+import { v4 as uuidv4 } from 'uuid';
 
 // Drawer exists in Chakra you don't need dynamic import
 import DrawerParent from '../DrawerParent/DrawerParent';

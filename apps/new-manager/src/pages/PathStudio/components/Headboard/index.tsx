@@ -60,13 +60,16 @@ export const Headboard: React.FC<HeadboardProps> = ({
     addElement,
     IdSectionSelected,
     modifySection,
-    getSectionElementCount,
-    sections,
+
     updateSectionName,
+    sectionContents,
   } = useSectionsStore();
 
-  const sectionElementCount = getSectionElementCount(IdSectionSelected);
   const [sectionName, setSectionName] = useState(subTitle || '');
+
+  const section = sectionContents.find(
+    (s) => s.idSection === IdSectionSelected
+  );
 
   const buttonData = [
     {
@@ -199,7 +202,6 @@ export const Headboard: React.FC<HeadboardProps> = ({
 
   const [showFlex, setShowFlex] = useState(true);
 
-
   const variants = {
     hidden: { y: -100, opacity: 0, transition: { duration: 0.2 } }, // Aumento la duración aquí
     visible: { y: 0, opacity: 1, transition: { duration: 0.2 } },
@@ -214,7 +216,6 @@ export const Headboard: React.FC<HeadboardProps> = ({
     }, 50);
   }, [isScrolled]);
 
-  
   return (
     <>
       <DrawerParent
@@ -224,142 +225,140 @@ export const Headboard: React.FC<HeadboardProps> = ({
         type={'DrawerFilter'}
       />
 
-{showFlex && (
-      <Box
-        width="full"
-        transition=" .3s ease-in-out"
-        sx={{
-          position: 'sticky',
-          top: '-73',
-          zIndex: 2,
-          width: '100%',
-          h: "20px"
-        }}
-      >
-        
-        <motion.div
-          initial="hidden" // Estado inicial
-          animate={isScrolled ? 'visible' : 'exit'} // Estado cuando está visible o cuando se oculta
-          variants={variants} // Aplicar las variantes definidas
+      {showFlex && (
+        <Box
+          width="full"
+          transition=" .3s ease-in-out"
+          sx={{
+            position: 'sticky',
+            top: '-73',
+            zIndex: 2,
+            width: '100%',
+            h: '20px',
+          }}
         >
-          
-             <Flex
-             justifyContent={isMobile ? 'center' : 'space-between'}
-             alignItems="center"
-             transition=" .3s ease-in-out"
-             flexWrap="wrap"
-             gap={['24px', '']}
-             width="full"
-             background={'primary'}
-             pt={'30px'}
-             pb="20px"
-           >
-             <Flex gap="12px" alignItems="center">
-               <Heading size={'sm'} mr={'5px'}>
-                 {title ?? 'Contents'}
-               </Heading>
+          <motion.div
+            initial="hidden" // Estado inicial
+            animate={isScrolled ? 'visible' : 'exit'} // Estado cuando está visible o cuando se oculta
+            variants={variants} // Aplicar las variantes definidas
+          >
+            <Flex
+              justifyContent={isMobile ? 'center' : 'space-between'}
+              alignItems="center"
+              transition=" .3s ease-in-out"
+              flexWrap="wrap"
+              gap={['24px', '']}
+              width="full"
+              background={'primary'}
+              pt={'30px'}
+              pb="20px"
+            >
+              <Flex gap="12px" alignItems="center">
+                <Heading size={'sm'} mr={'5px'}>
+                  {title ?? 'Contents'}
+                </Heading>
 
-               <ButtonIco
-                 sizeName="md"
-                 warning={false}
-                 isDisabled={false}
-                 backgroundType="backgroundFilled"
-                 typeIcon="IconList"
-                 display="flex"
-                 isSelected={buttonShow}
-                 onClick={handleButtonItemGroup}
-                 aria-label={''}
-               />
+                <ButtonIco
+                  sizeName="md"
+                  warning={false}
+                  isDisabled={false}
+                  backgroundType="backgroundFilled"
+                  typeIcon="IconList"
+                  display="flex"
+                  isSelected={buttonShow}
+                  onClick={handleButtonItemGroup}
+                  aria-label={''}
+                />
 
-               <Box h="38px" w="200px">
-                 <TextEditable
-                   hasError={false}
-                   sizesType="sm"
-                   errorMessage="error message"
-                   placeholder={'New section'}
-                   maxRows={1}
-                   setValue={setSectionName}
-                   value={sectionName}
-                   onChange={onChangeFuncHeading}
-                 >
-                   <Heading
-                     size="sm"
-                     noOfLines={1}
-                     lineHeight="unset"
-                     userSelect="none"
-                   >
-                     {sectionName ? sectionName : 'New section'}
-                   </Heading>
-                 </TextEditable>
-               </Box>
-             </Flex>
+                <Box h="38px" w="200px">
+                  <TextEditable
+                    hasError={false}
+                    sizesType="sm"
+                    errorMessage="error message"
+                    placeholder={'New section'}
+                    maxRows={1}
+                    setValue={setSectionName}
+                    value={sectionName}
+                    onChange={onChangeFuncHeading}
+                  >
+                    <Heading
+                      size="sm"
+                      noOfLines={1}
+                      lineHeight="unset"
+                      userSelect="none"
+                    >
+                      {sectionName ? sectionName : 'New section'}
+                    </Heading>
+                  </TextEditable>
+                </Box>
+              </Flex>
 
-             <Flex
-               gap="15px"
-               justifyContent="space-between"
-               alignItems="center"
-               flexWrap="wrap"
-             >
-               <Heading
-                 size="sm"
-                 fontWeight="bold"
-                 letterSpacing="-0.6px"
-                 ml="5px"
-               >
-                 {sectionElementCount} Cards
-               </Heading>
+              <Flex
+                gap="15px"
+                justifyContent="space-between"
+                alignItems="center"
+                flexWrap="wrap"
+              >
+                <Heading
+                  size="sm"
+                  fontWeight="bold"
+                  letterSpacing="-0.6px"
+                  ml="5px"
+                >
+                  {section?.elements.length !== undefined
+                    ? section.elements.length
+                    : 0}{' '}
+                  Cards
+                </Heading>
 
-               <Box width="215px" height={''}>
-                 <InputText
-                   onChange={() => {}}
-                   hasError={false}
-                   placeholder="Find"
-                   iconRight="IconSearch"
-                   sizes={'md'}
-                 />
-               </Box>
-               <ButtonIco
-                 sizeName={'md'}
-                 warning={false}
-                 isDisabled={false}
-                 backgroundType="backgroundFilled"
-                 typeIcon="IconFilters"
-                 onClick={() => onOpen()}
-                 aria-label={''}
-               />
+                <Box width="215px" height={''}>
+                  <InputText
+                    onChange={() => {}}
+                    hasError={false}
+                    placeholder="Find"
+                    iconRight="IconSearch"
+                    sizes={'md'}
+                  />
+                </Box>
+                <ButtonIco
+                  sizeName={'md'}
+                  warning={false}
+                  isDisabled={false}
+                  backgroundType="backgroundFilled"
+                  typeIcon="IconFilters"
+                  onClick={() => onOpen()}
+                  aria-label={''}
+                />
 
-               <ButtonIcoGroup width={'120px'}>
-                 {buttonData.map((value, index) => (
-                   <ButtonIco
-                     key={index}
-                     sizeName={'md'}
-                     warning={false}
-                     isDisabled={false}
-                     readOnly={false}
-                     typeIcon={value.typeIcon as types}
-                     aria-label={value.ariaLabel}
-                     backgroundType="noBackground"
-                     isSelected={value.selected}
-                     onClick={value.onclick}
-                   />
-                 ))}
-               </ButtonIcoGroup>
-               <ButtonMenu
-                 dataMenu={dataMenu}
-                 categoryType="noCategory"
-                 positioning={'right'}
-                 onSeletedChange={onSeletedChange}
-                 isOpen={false}
-                 warning={false}
-                 isScrolled={isScrolled || isMobile}
-               />
-             </Flex>
-           </Flex>
-
-           
-   
-        </motion.div>
-      </Box>
+                <ButtonIcoGroup width={'120px'}>
+                  {buttonData.map((value, index) => (
+                    <ButtonIco
+                      key={index}
+                      sizeName={'md'}
+                      warning={false}
+                      isDisabled={false}
+                      readOnly={false}
+                      typeIcon={value.typeIcon as types}
+                      aria-label={value.ariaLabel}
+                      backgroundType="noBackground"
+                      isSelected={value.selected}
+                      onClick={value.onclick}
+                    />
+                  ))}
+                </ButtonIcoGroup>
+                <ButtonMenu
+                  dataMenu={dataMenu}
+                  categoryType="noCategory"
+                  positioning={'right'}
+                  onSeletedChange={onSeletedChange}
+                  isOpen={false}
+                  warning={false}
+                  isScrolled={isScrolled || isMobile}
+                />
+              </Flex>
+            </Flex>
+          </motion.div>
+        </Box>
       )}
 
       <Box
@@ -481,7 +480,10 @@ export const Headboard: React.FC<HeadboardProps> = ({
           </Flex>
 
           <Heading size="sm" fontWeight="bold" letterSpacing="-0.6px" ml="5px">
-            {sectionElementCount} Cards
+            {section?.elements.length !== undefined
+              ? section.elements.length
+              : 0}{' '}
+            Cards
           </Heading>
         </Flex>
       </Box>

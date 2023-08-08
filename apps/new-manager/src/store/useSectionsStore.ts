@@ -245,6 +245,8 @@ const useSectionsStore = create<State>((set) => ({
     const section = initialState.sectionContents.find(
       (s) => s.idSection === sectionId
     );
+
+    console.log(section);
     return section ? section.elements.length : 0;
   },
 
@@ -254,6 +256,7 @@ const useSectionsStore = create<State>((set) => ({
       return { ...state };
     });
   },
+
   moveSection: (
     sectionId: string,
     direction: 'top' | 'bottom' | 'up' | 'down'
@@ -268,20 +271,23 @@ const useSectionsStore = create<State>((set) => ({
         return state;
       }
 
-      const originalLength = state.sections.length;
-      const [section] = state.sections.splice(index, 1);
+      // Creamos una copia del array original
+      const sectionsCopy = [...state.sections];
+
+      const section = sectionsCopy.splice(index, 1)[0];
+      const originalLength = sectionsCopy.length + 1; // Se agregó 1 porque ya eliminamos un elemento
 
       const directionOperations = {
-        top: () => state.sections.unshift(section),
-        bottom: () => state.sections.push(section),
-        up: () =>
-          state.sections.splice(
-            (index - 1 + originalLength) % originalLength,
-            0,
-            section
-          ),
-        down: () =>
-          state.sections.splice((index + 1) % originalLength, 0, section),
+        top: () => sectionsCopy.unshift(section),
+        bottom: () => sectionsCopy.push(section),
+        up: () => {
+          const newIndex = index === 0 ? originalLength - 1 : index - 1;
+          sectionsCopy.splice(newIndex, 0, section);
+        },
+        down: () => {
+          const newIndex = (index + 1) % originalLength;
+          sectionsCopy.splice(newIndex, 0, section);
+        },
       };
 
       if (!directionOperations[direction]) {
@@ -291,10 +297,9 @@ const useSectionsStore = create<State>((set) => ({
 
       directionOperations[direction]();
 
-      return { ...state };
+      return { ...state, sections: sectionsCopy };
     });
   },
-
   updateSectionName: (sectionId: string, newName: string) => {
     set(
       produce((state) => {
