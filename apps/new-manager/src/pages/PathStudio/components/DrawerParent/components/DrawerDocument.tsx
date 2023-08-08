@@ -24,7 +24,7 @@ import {
 import { isEqual } from 'lodash';
 import { shallow } from 'zustand/shallow';
 
-import { InputTextArea } from '@iseazy/react-kit';
+import { InputTextArea } from '../../../../../../../../packages/react-kit/src/components/InputTextArea';
 
 import useSectionsStore from 'src/store/useSectionsStore';
 
@@ -33,6 +33,7 @@ import { HeaderDrawer } from './HeaderDrawer';
 import { uploadFile } from '../interface/uploadFile';
 
 import { getFirstErrorMessage, hasFieldError } from '../utils/formik.helper';
+import { cleanHtml } from '../utils/clearHtml.helper';
 
 import { LANGUAGES, SELECTORS, DEFAULT_TRANSLATION } from '../constants';
 
@@ -324,7 +325,7 @@ const DrawerDocument = (props: Props) => {
               fieldName="title"
             >
               <Heading size="XL" noOfLines={[1000, 1000]} lineHeight="unset">
-                {formik.values?.translations[0]?.title || 'New Video' }
+                {formik.values?.translations[0]?.title || 'New Video'}
               </Heading>
             </TextEditable>
           </Box>
@@ -346,12 +347,14 @@ const DrawerDocument = (props: Props) => {
               scrollbar={false}
               placeholder="Add a brief description"
               onBlur={formik.handleBlur}
-              value={formik.values?.translations[0]?.description ?? ''}
+              value={
+                cleanHtml(formik.values?.translations[0]?.description) ?? ''
+              }
               hasError={hasFieldError(formik, 'description')}
               fieldName="description"
             >
               <Text textStyle="XL" noOfLines={[1000, 1000]}>
-                {formik.values?.translations[0]?.description ||
+                {cleanHtml(formik.values?.translations[0]?.description) ||
                   'Add a brief description'}
               </Text>
             </TextEditable>

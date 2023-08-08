@@ -107,6 +107,7 @@ export const Contents = () => {
 
   const handleSection = (id: string) => {
     const dataSection = modifySection(id);
+
     setdataSectionSelected(dataSection);
   };
 

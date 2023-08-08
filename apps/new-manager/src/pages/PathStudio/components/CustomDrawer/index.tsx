@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react';
+import { SkeletonDrawer } from './components/SkeletonDrawer'
 import {
   Drawer,
   DrawerOverlay,
@@ -8,7 +9,7 @@ import {
 import { propsDrawer } from './interfaces/propsDrawer';
 import { scrollBar } from './scrollBar';
 
-const LazyFallback = () => <div>Loading...</div>;
+const LazyFallback = () => <SkeletonDrawer /> ;
 
 const CustomDrawer = React.memo((props: propsDrawer) => {
   const { isOpen, onClose, children } = props;
@@ -24,7 +25,8 @@ const CustomDrawer = React.memo((props: propsDrawer) => {
           sx={scrollBar}
           p="0px"
         >
-          <Suspense fallback={<LazyFallback />}>{children}</Suspense>
+          {/* <Suspense fallback={<LazyFallback />}>{children}</Suspense> */}
+         <SkeletonDrawer /> 
         </DrawerBody>
       </DrawerContent>
     </Drawer>

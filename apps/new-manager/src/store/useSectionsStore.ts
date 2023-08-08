@@ -78,7 +78,6 @@ const useSectionsStore = create<State>((set) => ({
   ...initialState,
 
   createSection: (name: string) => {
-    console.log(name, 'hi');
     set(
       produce((state) => {
         const newSection: Section = {
@@ -234,7 +233,7 @@ const useSectionsStore = create<State>((set) => ({
         sectionContentsData: sectionContents ? [...sectionContents] : [],
       };
     }
-    return {
+    return { 
       sectionId: '',
       sectionData: {},
       sectionContentsData: [],
@@ -246,7 +245,6 @@ const useSectionsStore = create<State>((set) => ({
       (s) => s.idSection === sectionId
     );
 
-    console.log(section);
     return section ? section.elements.length : 0;
   },
 
@@ -309,6 +307,9 @@ const useSectionsStore = create<State>((set) => ({
 
         if (sectionIndex !== -1) {
           const section = state.sections[sectionIndex];
+
+          
+      console.log(section?.name, "sectionName")
 
           if (section?.name) {
             state.sections[sectionIndex].name = newName;
