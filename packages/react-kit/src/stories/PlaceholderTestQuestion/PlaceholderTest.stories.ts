@@ -16,5 +16,6 @@ export const Content: Story = {
   args: {
     title: ' Drop your questions here!',
     description: `or search in your device`,
+    reset: false,
   },
 };

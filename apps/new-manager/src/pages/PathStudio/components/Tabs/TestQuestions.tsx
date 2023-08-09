@@ -1,5 +1,5 @@
 import { Box, Flex } from '@chakra-ui/react';
-import { PlaceholderTestQuestion } from '@iseazy/react-kit';
+import { CardQuestion, PlaceholderTestQuestion } from '@iseazy/react-kit';
 import { Headboard } from '../Headboard';
 
 const TestQuestions = () => {
@@ -39,6 +39,10 @@ const TestQuestions = () => {
         <PlaceholderTestQuestion
           title=" Drop your questions here!"
           description="or search in your device"
+          // reset={true} //para resetear el state y volverlo a su estado inicial
+          // onExcelDataProcessed={(data) => {
+          //   console.log(data); // Aquí puedes acceder a los datos de Excel desde fuera.
+          // }}
         />
       </Box>
     </Flex>

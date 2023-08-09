@@ -2,31 +2,21 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import Lottie from 'react-lottie-player';
 
-import {
-  Box,
-  Flex,
-  Icon,
-  Image,
-  SimpleGrid,
-  useMediaQuery,
-} from '@chakra-ui/react';
+import { Box, Flex, Icon, Image } from '@chakra-ui/react';
 
-import { ActionBarButtons } from './components/ActionBarButtons';
-import { ButtonIco } from '../ButtonIco';
-import { croppingOptions, styles } from './types/FrameTypes';
-import { ErrorMessage } from './components/ErrorMessage';
-import { iconTypes, typesContent } from './types/iconTypes';
-import { types } from '../../shared/iconsTypes/icons';
-import { IconUncropped, IconWarningMark } from '../../assets/customIcons';
-import { MessagesErrors } from './validation/ErrorMessages';
-import ChakraProgress from './components/ChakraProgress';
+import { IconWarningMark } from '../../assets/customIcons';
 import FileHover from '../FileHover';
+import { ActionBarButtons } from './components/ActionBarButtons';
+import ChakraProgress from './components/ChakraProgress';
+import { ErrorMessage } from './components/ErrorMessage';
+import { croppingOptions, styles } from './types/FrameTypes';
+import { iconTypes, typesContent } from './types/iconTypes';
+import { MessagesErrors } from './validation/ErrorMessages';
 
 import { css as localCss } from '@emotion/react';
 
-import imageLoad from './animation/imageload.json';
 import imagePlaceholder from '../../assets/image/placeholder-ghost.png';
-import { ButtonUncropped } from './components/ButtonUncropped';
+import imageLoad from './animation/imageload.json';
 
 interface Props {
   maxFiles?: number;
@@ -79,7 +69,6 @@ export const ImageSelector = (props: Props) => {
 
   //para abir el menu:
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
 
   const handleDragEnter = useCallback(() => {
     setIsDragging(true);
@@ -285,7 +274,6 @@ export const ImageSelector = (props: Props) => {
       setIsLoadingFile(false);
     }
   }, [file, progress, isUploadedServer]);
-  
 
   useEffect(() => {
     if (isLoadingFile) {
@@ -293,9 +281,8 @@ export const ImageSelector = (props: Props) => {
     }
   }, [isLoadingFile, isVisible]);
 
-  console.log(isLoadingFile, "isLoadingFile")
   return (
-    <Box width="100%" height="100%" ref={boxRef} >
+    <Box width="100%" height="100%" ref={boxRef}>
       <Flex
         position="relative"
         minWidth="63px"
@@ -306,7 +293,9 @@ export const ImageSelector = (props: Props) => {
         alignContent="center"
         justifyContent="center"
         overflow={isMenuOpen ? '' : 'hidden'}
-        onMouseOver={() => !readonly && !isLoadingFile && !isUploadedServer && over()}
+        onMouseOver={() =>
+          !readonly && !isLoadingFile && !isUploadedServer && over()
+        }
         onMouseOut={() => !readonly && !isMenuOpen && out()}
       >
         <Box
@@ -407,7 +396,7 @@ export const ImageSelector = (props: Props) => {
               src={
                 file
                   ? URL.createObjectURL(file)
-                  : placeholderSrc 
+                  : placeholderSrc
                   ? placeholderSrc
                   : imagePlaceholder
               }

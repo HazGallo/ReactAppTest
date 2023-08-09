@@ -40,12 +40,14 @@ import { TagSystem } from './components/TagSystem';
 import { TextEditable } from './components/TextEditable';
 import { UserAvatar } from './components/UserAvatar';
 import { PlaceholderTestQuestion } from './components/PlaceholderTestQuestion';
+import { CardQuestion } from './components/Cards/CardQuestion/index';
 
 const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
   return <ChakraProvider theme={theme}>{children}</ChakraProvider>;
 };
 
 export {
+  CardQuestion,
   ItemGroup,
   ItemGroupNew,
   Badge,
