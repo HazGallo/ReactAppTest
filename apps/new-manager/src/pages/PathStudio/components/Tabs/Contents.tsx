@@ -42,20 +42,72 @@ const GridContentDraggable = lazy(() => import('../GridContentDraggable'));
 const TableDataCard = lazy(() => import('../TableDataCard'));
 
 import { badgeTypes } from './types/BadgeTypeBg';
+import { shallow } from 'zustand/shallow';
 
 export const Contents = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [dataSectionSelected, setdataSectionSelected] = useState<any>();
-  const [id, setid] = useState('');
   const [inputValue, setInputValue] = useState('');
   const [isHovered, setIsHovered] = useState(false);
-  const [name, setName] = useState('');
   const [showComponent, setShowComponent] = useState(false);
   const [showComponentState, setShowComponentState] = useState(false); // Nuevo estado
   const [showTable, setShowTable] = useState(false);
 
   const { handleSizeCardMd, handleSizeCardSm, cardSize } = useSettings();
+
+
+  console.log({dataSectionSelected});
+
+  const {
+    addElement,
+    createSection,
+    IdSectionSelected,
+    modifySection,
+    modifySections,
+    moveSection,
+    sectionContents,
+    sections,
+    updateSectionName,
+  } = useSectionsStore(
+    (state) => ({
+      addElement: state.addElement,
+      createSection: state.createSection,
+      IdSectionSelected: state.IdSectionSelected,
+      modifySection: state.modifySection,
+      modifySections: state.modifySections,
+      moveSection: state.moveSection,
+      sectionContents: state.sectionContents,
+      sections: state.sections,
+      updateSectionName: state.updateSectionName,
+    }),
+    shallow
+  );
+
+  // we have a big problem here... we need merge sections and sectionsContenst
+  const currentSectionContents = sectionContents.find(
+    ({ idSection }) => idSection === IdSectionSelected
+  );
+
+  const currentSection = sections.find(({ id }) => id === IdSectionSelected);
+
+
+  console.log({currentSection, IdSectionSelected});
+
+  const generateAvatars = (contents: any) => {
+    let avatar: any = [];
+
+    contents.forEach((element: any) => {
+      const bg = badgeTypes.find((x) => x.type === element.type);
+      avatar.unshift({
+        name: element.id,
+        src: element.coverImage,
+        backgroundColor: bg?.bg,
+      });
+    });
+
+    return avatar;
+  };
 
   const handleButtonTable = useCallback(() => {
     setShowTable(true);
@@ -74,19 +126,6 @@ export const Contents = () => {
   const handleButtonItemGroup = useCallback(() => {
     setShowComponent(!showComponent);
   }, [showComponent]);
-
-  //Para crear funcionalida de crear una sección
-  const {
-    sections,
-    createSection,
-    sectionContents,
-    modifySection,
-    IdSectionSelected,
-    modifySections,
-    moveSection,
-    updateSectionName,
-    addElement,
-  } = useSectionsStore();
 
   const handleCreateSection = () => {
     const sectionName = inputValue || 'New section';
@@ -111,25 +150,6 @@ export const Contents = () => {
     setdataSectionSelected(dataSection);
   };
 
-  const currentSection = sectionContents.find(
-    ({ idSection }) => idSection === IdSectionSelected
-  );
-
-  const generateAvatars = (contents: any) => {
-    let avatar: any = [];
-
-    contents.forEach((element: any) => {
-      const bg = badgeTypes.find((x) => x.type === element.type);
-      avatar.unshift({
-        name: element.id,
-        src: element.coverImage,
-        backgroundColor: bg?.bg,
-      });
-    });
-
-    return avatar;
-  };
-
   const handleDividerHover = (hovered: boolean) => {
     setIsHovered(hovered);
   };
@@ -139,11 +159,6 @@ export const Contents = () => {
     enter: { width: '0%', opacity: 1 },
     config: config.default,
   });
-
-  useEffect(() => {
-    updateSectionName(id, name);
-    handleSection(IdSectionSelected);
-  }, [name, id, sections, IdSectionSelected]);
 
   const onSeletedChange = (title: any, sectionId: string) => {
     const actions: { [key: string]: Function } = {
@@ -326,12 +341,8 @@ export const Contents = () => {
                                   {...provided.dragHandleProps}
                                 >
                                   <ItemGroup
-                                    handleCardClick={() => {
-                                      handleSection(section.id);
-                                    }}
-                                    isSelected={
-                                      section.id === IdSectionSelected
-                                    }
+                                    key={section.id}
+                                    isSelected={section.id === IdSectionSelected}
                                     isDisabled={false}
                                     avatars={generateAvatars(section.contents)}
                                     placeholder={'New section'}
@@ -342,14 +353,17 @@ export const Contents = () => {
                                     }
                                     valueHeading={section.name}
                                     readonly={false}
-                                    amount={section.contents.length}
+                                    amount={section?.contents?.length ?? 0}
                                     setValueHeading={(name: string) => {
-                                      setid(section.id);
-                                      setName(name);
+                                      updateSectionName(section.id, name);
                                     }}
-                                    onSeletedChange={(title: string) =>
-                                      onSeletedChange(title, section.id)
-                                    }
+                                    onSeletedChange={(title: string) => {
+                                      onSeletedChange(title, section.id);
+                                      handleSection(IdSectionSelected);
+                                    }}
+                                    handleCardClick={() => {
+                                      handleSection(section.id);
+                                    }}
                                   />
                                 </Box>
                               )}
@@ -457,7 +471,7 @@ export const Contents = () => {
           handleButtonItemGroup={handleButtonItemGroup}
           handleButtonTable={handleButtonTable}
           idSection={IdSectionSelected}
-          subTitle={dataSectionSelected?.sectionData?.name}
+          subTitle={currentSection?.name}
         />
 
         <Box key={IdSectionSelected}>
@@ -467,7 +481,7 @@ export const Contents = () => {
             animate="visible"
             transition={{ duration: 0.4 }}
           >
-            {!currentSection || !currentSection?.elements?.length ? (
+            {!currentSectionContents || !currentSectionContents?.elements?.length ? (
               <motion.div
                 initial={{ y: '5%' }}
                 animate={{ y: 0 }}
@@ -496,10 +510,10 @@ export const Contents = () => {
                 transition={{ duration: 0.3 }}
               >
                 {showTable ? (
-                  <TableDataCard dataCard={currentSection?.elements} />
+                  <TableDataCard dataCard={currentSectionContents?.elements} />
                 ) : (
                   <GridContentDraggable
-                    data={currentSection?.elements}
+                    data={currentSectionContents?.elements}
                     isError={false}
                   />
                 )}

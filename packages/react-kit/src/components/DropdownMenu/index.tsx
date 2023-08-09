@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Box,
@@ -43,6 +43,7 @@ interface Props extends BoxProps {
   showIcon?: boolean;
   typeMenu: 'buttonIco' | 'dropdownMenuOption' | 'dropdownMenuOptionIco';
   gridQuantity?: number;
+  closeMenu?: boolean; // Add this
 }
 
 export const DropdownMenu = (props: Props) => {
@@ -61,6 +62,7 @@ export const DropdownMenu = (props: Props) => {
     typeMenu,
     gridQuantity = 5,
     onSeletedChange,
+    closeMenu,
     ...rest
   } = props;
 
@@ -97,6 +99,13 @@ export const DropdownMenu = (props: Props) => {
     onSelect(title);
   };
 
+  useEffect(() => {
+    if (closeMenu) {
+      setIsOpen(false);
+    }
+  }, [closeMenu]);
+
+  
   return (
     <Box {...rest}>
       <Menu

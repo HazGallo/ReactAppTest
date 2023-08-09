@@ -1,6 +1,29 @@
-import { contentType } from '../../../../packages/react-kit/src/components/Badge/ContentBadge';
-import { pathType } from '../../../../packages/react-kit/src/components/Badge/PathBadge';
-import { ContentTypeStatus } from '../../../../packages/react-kit/src/components/cards/CardItem/components/ItemPublicationStatus';
+export type contentType =
+  | 'audio'
+  | 'article'
+  | 'video'
+  | 'image'
+  | 'external'
+  | 'playlist'
+  | 'pdf'
+  | 'gallery'
+  | 'html'
+  | 'zip'
+  | 'task'
+  | 'poll'
+  | 'test'
+  | 'game'
+  | 'challenge';
+
+type pathType =
+  | 'course'
+  | 'express'
+  | 'instagram'
+  | 'journey'
+  | 'cards'
+  | 'single';
+  
+type ContentTypeStatus = 'Draft' | 'Planned' | 'Published' | 'none';
 
 export const DataCard = [
   {

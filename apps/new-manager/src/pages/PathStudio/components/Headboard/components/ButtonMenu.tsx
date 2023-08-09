@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { DropdownMenu, ButtonNew } from '@iseazy/react-kit';
+import { Box } from '@chakra-ui/react';
 
 export type contentType = 'add' | 'remove' | 'selected';
 export type contentPosition = 'center' | 'left' | 'right' | 'top';
@@ -65,8 +66,10 @@ export const ButtonMenu = (props: Props) => {
     };
   }, []);
 
+console.log(isScrolled)
+
   return (
-    <div ref={menuRef}>
+    <Box ref={menuRef} zIndex={1} >
       <DropdownMenu
         iconTypes={iconTypes}
         categoryType={categoryType}
@@ -76,7 +79,9 @@ export const ButtonMenu = (props: Props) => {
         onChange={onChange}
         onSeletedChange={onSeletedChange}
         typeMenu={'dropdownMenuOptionIco'}
-        showIcon={true}
+        showIcon={isSelected}
+        
+        closeMenu={isScrolled}
       >
         <ButtonNew
           isSelected={isSelected}
@@ -90,6 +95,6 @@ export const ButtonMenu = (props: Props) => {
           formats={'fixed'}
         />
       </DropdownMenu>
-    </div>
+    </Box>
   );
 };

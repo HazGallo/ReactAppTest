@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 
 import Navbar from './components/Navbar';
@@ -8,10 +9,17 @@ import TestQuestions from './components/Tabs/TestQuestions';
 import Layout from './Layout';
 
 export default function PathStudio() {
+  const [tabIndex, setTabIndex] = useState<number>(0);
+
+  const handleTabsChange = (index: number) => {
+    setTabIndex(index);
+  };
+
   return (
     <Layout>
-      <Tabs isLazy m="0px" p="0px">
-        <Navbar />
+      <Tabs isLazy m="0px" p="0px" index={tabIndex} onChange={handleTabsChange}>
+        <Navbar tabIndex={tabIndex}/>
+
         <TabPanels m="0px" p="0px">
           <TabPanel m="0px" p="0px">
             <PathExperience />
@@ -21,6 +29,9 @@ export default function PathStudio() {
           </TabPanel>
           <TabPanel m="0px" p="0px">
             <TestQuestions />
+          </TabPanel>
+          <TabPanel m="0px" p="0px">
+            <Test />
           </TabPanel>
           <TabPanel m="0px" p="0px">
             <Test />

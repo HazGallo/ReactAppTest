@@ -15,9 +15,14 @@ import { ColorMode } from './components/ColorMode';
 
 import useSectionsStore from 'src/store/useSectionsStore';
 
-const Navbar = () => {
+interface Props {
+  tabIndex: number;
+}
+
+const Navbar = (props: Props) => {
+  const { tabIndex } = props;
+
   const [isMobile] = useMediaQuery('(max-width: 1110px)');
-  const [selectedItems, setSelectedItems] = useState<number[]>([0]);
   const [isOpen, setIsOpen] = useState(false);
 
   const { sections } = useSectionsStore(
@@ -28,7 +33,11 @@ const Navbar = () => {
   );
 
   const totalElements = useMemo(
-    () => sections.reduce((acc, section) => acc + section.contents.length, 0),
+    () =>
+      sections.reduce(
+        (acc, section) => acc + (section?.contents?.length ?? 0),
+        0
+      ),
     [sections]
   );
 
@@ -40,17 +49,13 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleTagClick = (index: number) => {
-    setSelectedItems([index]);
-  };
-
   const buttonData = [
     {
       ariaLabel: 'Efficient Strategies for Retail Success',
     },
     {
       ariaLabel: 'Contents',
-      amount: totalElements,
+      amount: totalElements ?? 0,
     },
     {
       ariaLabel: 'Test Questions',
@@ -124,6 +129,9 @@ const Navbar = () => {
               borderBottom="none"
               _active={{ border: '0px', bg: 'transparent' }}
               mb="4px"
+              onClick={() => {
+                console.info('onClick TabList');
+              }}
             >
               <Box
                 alignItems={isMobile ? 'flex-start' : 'center'}
@@ -133,15 +141,16 @@ const Navbar = () => {
                 justifyContent="center"
               >
                 {buttonData.map((value, index) => (
-                  <CustomTab key={index}>
-                    <Tag
-                      amount={value.amount}
-                      isSelected={selectedItems.includes(index)}
-                      label={value.ariaLabel}
-                      onClick={() => handleTagClick(index)}
-                      typeVersion="primary"
-                    />
-                  </CustomTab>
+                  <div key={index}>
+                    <CustomTab>
+                      <Tag
+                        amount={value.amount}
+                        isSelected={tabIndex === index}
+                        label={value.ariaLabel}
+                        typeVersion="primary"
+                      />
+                    </CustomTab>
+                  </div>
                 ))}
               </Box>
             </TabList>

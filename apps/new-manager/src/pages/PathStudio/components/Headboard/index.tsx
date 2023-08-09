@@ -42,16 +42,16 @@ interface HeadboardProps {
 
 export const Headboard: React.FC<HeadboardProps> = ({
   buttonOne,
-  buttonTwo,
-  buttonThree,
   buttonShow,
+  buttonThree,
+  buttonTwo,
   handleButtonCardMd,
   handleButtonCardSm,
-  handleButtonTable,
   handleButtonItemGroup,
-  title,
-  subTitle,
+  handleButtonTable,
   idSection,
+  subTitle,
+  title,
 }) => {
   const [isMobile] = useMediaQuery('(max-width: 1110px)');
   const [isScrolled, setIsScrolled] = useState(false);
@@ -60,14 +60,23 @@ export const Headboard: React.FC<HeadboardProps> = ({
     addElement,
     IdSectionSelected,
     modifySection,
-
     updateSectionName,
     sectionContents,
-  } = useSectionsStore();
+    sections,
+  } = useSectionsStore(
+    (state) => ({
+      sections: state.sections,
+      addElement: state.addElement,
+      IdSectionSelected: state.IdSectionSelected,
+      modifySection: state.modifySection,
+      updateSectionName: state.updateSectionName,
+      sectionContents: state.sectionContents,
+    }),
+  );
 
   const [sectionName, setSectionName] = useState(subTitle || '');
 
-  const section = sectionContents.find(
+  const sectionContent = sectionContents.find(
     (s) => s.idSection === IdSectionSelected
   );
 
@@ -305,8 +314,8 @@ export const Headboard: React.FC<HeadboardProps> = ({
                   letterSpacing="-0.6px"
                   ml="5px"
                 >
-                  {section?.elements.length !== undefined
-                    ? section.elements.length
+                  {sectionContent?.elements.length !== undefined
+                    ? sectionContent.elements.length
                     : 0}{' '}
                   Cards
                 </Heading>
@@ -479,9 +488,9 @@ export const Headboard: React.FC<HeadboardProps> = ({
             </Box>
           </Flex>
 
-          <Heading size="sm" fontWeight="bold" letterSpacing="-0.6px" ml="5px">
-            {section?.elements.length !== undefined
-              ? section.elements.length
+          <Heading size="sm" fontWeight="bold" letterSpacing="-0.6px" ml="5px" >
+            {sectionContent?.elements.length !== undefined
+              ? sectionContent.elements.length
               : 0}{' '}
             Cards
           </Heading>

@@ -19,12 +19,14 @@ import {
   SelectorSystem,
   Switch,
   TextEditable,
+  InputTextArea
 } from '@iseazy/react-kit';
 
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 import { shallow } from 'zustand/shallow';
 
-import { InputTextArea } from '../../../../../../../../packages/react-kit/src/components/InputTextArea';
+// please avoid using relative paths, use absolute paths instead
+// import { InputTextArea } from '../../../../../../../../packages/react-kit/src/components/InputTextArea';
 
 import useSectionsStore from 'src/store/useSectionsStore';
 
