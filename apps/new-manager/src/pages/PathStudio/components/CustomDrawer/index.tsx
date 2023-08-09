@@ -25,8 +25,8 @@ const CustomDrawer = React.memo((props: propsDrawer) => {
           sx={scrollBar}
           p="0px"
         >
-          {/* <Suspense fallback={<LazyFallback />}>{children}</Suspense> */}
-         <SkeletonDrawer /> 
+          <Suspense fallback={<LazyFallback />}>{children}</Suspense>
+     
         </DrawerBody>
       </DrawerContent>
     </Drawer>

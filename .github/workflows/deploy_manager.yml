@@ -1,0 +1,46 @@
+name: Deploy manager in svrdev
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  despliegue:
+    runs-on: ubuntu-latest
+    steps:
+    
+    #- name: Checkout
+    #  uses: actions/checkout@v2
+    
+    - name: Get runner IP
+      run: |
+          ip=`curl http://ip.int.iseazyengage.com:8000`
+          echo $ip
+          echo "runner_ip=$ip" >> $GITHUB_ENV
+
+    - name: Add Github Actions IP to Security group as a Postgres inbound rule
+      run: |
+        aws ec2 authorize-security-group-ingress --group-id ${{ secrets.AWS_SECURITY_GROUP_ID_SVRDEV }} --protocol tcp --port 22 --cidr ${{ env.runner_ip }}/32
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: eu-west-1
+        
+    - name: SSH into EC2 Instance and run sh
+      uses: appleboy/ssh-action@master
+      with:
+        host: 54.217.215.241
+        username: ubuntu
+        key: ${{ secrets.SSH_PRIVATE_KEY_SVRDEV }}
+        script: |
+          cd /data/dev_docker_compose/manager
+          sudo ./deploy.sh
+
+    - name: Remove Github Actions IP from security group
+      run: |
+        aws ec2 revoke-security-group-ingress --group-id ${{ secrets.AWS_SECURITY_GROUP_ID_SVRDEV }} --protocol tcp --port 22 --cidr ${{ env.runner_ip }}/32
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: eu-west-1
+      if: always()
