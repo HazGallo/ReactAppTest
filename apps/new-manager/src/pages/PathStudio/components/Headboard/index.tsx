@@ -1,9 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useLayoutEffect,
-} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Flex,
@@ -63,16 +58,14 @@ export const Headboard: React.FC<HeadboardProps> = ({
     updateSectionName,
     sectionContents,
     sections,
-  } = useSectionsStore(
-    (state) => ({
-      sections: state.sections,
-      addElement: state.addElement,
-      IdSectionSelected: state.IdSectionSelected,
-      modifySection: state.modifySection,
-      updateSectionName: state.updateSectionName,
-      sectionContents: state.sectionContents,
-    }),
-  );
+  } = useSectionsStore((state) => ({
+    sections: state.sections,
+    addElement: state.addElement,
+    IdSectionSelected: state.IdSectionSelected,
+    modifySection: state.modifySection,
+    updateSectionName: state.updateSectionName,
+    sectionContents: state.sectionContents,
+  }));
 
   const [sectionName, setSectionName] = useState(subTitle || '');
 
@@ -329,6 +322,7 @@ export const Headboard: React.FC<HeadboardProps> = ({
                     sizes={'md'}
                   />
                 </Box>
+
                 <ButtonIco
                   sizeName={'md'}
                   warning={false}
@@ -408,6 +402,7 @@ export const Headboard: React.FC<HeadboardProps> = ({
                 sizes={isMobile ? 'md' : 'lg'}
               />
             </Box>
+
             <ButtonIco
               sizeName={isMobile ? 'md' : 'lg'}
               warning={false}
@@ -488,7 +483,7 @@ export const Headboard: React.FC<HeadboardProps> = ({
             </Box>
           </Flex>
 
-          <Heading size="sm" fontWeight="bold" letterSpacing="-0.6px" ml="5px" >
+          <Heading size="sm" fontWeight="bold" letterSpacing="-0.6px" ml="5px">
             {sectionContent?.elements.length !== undefined
               ? sectionContent.elements.length
               : 0}{' '}

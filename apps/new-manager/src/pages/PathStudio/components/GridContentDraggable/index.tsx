@@ -118,19 +118,22 @@ const GridContentDraggable = ({ data }: Props) => {
     setCard(updatedCardWithNewItems);
   }, [data]);
 
-  const cardHeight = cardSize ? 364 : 220;
+  const cardHeight = adaptedSizeSm ? 220 : cardSize ? 364 : 220;
   const columnCount = Math.ceil(card.length / column);
   const totalHeight = (cardHeight + 20) * columnCount;
 
   useEffect(() => {
-    if (cardSize) {
+    if (adaptedSizeSm) {
+      setCustomCardWidth(160);
+      setCustomCardHeight(220);
+    } else if (cardSize) {
       setCustomCardWidth(220);
       setCustomCardHeight(364);
     } else {
       setCustomCardWidth(160);
       setCustomCardHeight(220);
     }
-  }, [intersect, data, cardSize]);
+  }, [intersect, data, cardSize, adaptedSizeSm]);
 
   return (
     <Box h="100%">

@@ -164,6 +164,9 @@ export const PlaceholderTestQuestion = (props: Props) => {
       _dark={{
         color: 'neWhite.500',
       }}
+      px={['50px', '50px']}
+      py={['100px', '160px']}
+      overflow="hidden"
       onDragOver={dragHandlers.handleDragOver}
       onDragEnter={dragHandlers.handleDragEnter}
       onDragLeave={dragHandlers.handleDragLeave}

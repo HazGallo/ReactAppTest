@@ -6,6 +6,9 @@ import { LoadingPath } from 'src/pages/PathStudio/components/LoadingPath';
 import Login from 'src/pages/Login';
 import Layout from '../../src/pages/PathStudio/Layout';
 
+import { LearningModule } from '../../src/pages/LearningModule';
+
+
 const PathStudio = lazy(() => import('src/pages/PathStudio'));
 
 export const ManagerRoutes = () => {
@@ -23,6 +26,10 @@ export const ManagerRoutes = () => {
           </Suspense>
         }
       />
+
+<Route path="/learning/module" element={<LearningModule />} />
+
+      
       <Route path="/login" element={<Login />} />
       <Route path="/table" element={<ExampleReactTable />} />
       <Route path="*" element={<div>404</div>} />

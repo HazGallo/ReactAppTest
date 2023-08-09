@@ -1,4 +1,4 @@
-import { Box, Text, Heading, useMediaQuery } from '@chakra-ui/react';
+import { Box, Text, Heading, useMediaQuery, Flex } from '@chakra-ui/react';
 import { IconsTypes, types, noIcoType } from '../../shared/iconsTypes/icons';
 import { Ico } from '../Ico';
 
@@ -17,25 +17,31 @@ export const PlaceholderArea = (props: Props) => {
   const [adaptedSizeSm] = useMediaQuery('(max-width: 30rem)');
 
   return (
-      <Box
-        w="full"
-        height="calc(100vh - 340px)"
-        borderRadius={'8px'}
-        bg={'compBackgroundFilled'}
-        display="flex"
+    <Box
+      w="full"
+      height="calc(100vh - 340px)"
+      borderRadius={'8px'}
+      bg={'compBackgroundFilled'}
+      color={'txTertiary'}
+      _dark={{
+        color: 'neWhite.500',
+      }}
+      px={['50px', '50px']}
+      py={['100px', '160px']}
+      overflow="hidden"
+    >
+      <Flex
         justifyContent={'center'}
         alignItems="center"
         flexDir="column"
-        color={'txTertiary'}
-        _dark={{
-          color: "neWhite.500"
-        }}
+        h="full"
+        w="full"
       >
         {x?.icon && x?.icon !== 'noIco' && (
           <Ico icon={x?.icon} sizeName={adaptedSizeSm ? 'lg' : 'xl'} />
         )}
         <Text
-          fontSize={['20px', '30px']}
+          fontSize={['14px', '30px']}
           mb="15px"
           fontWeight="bold"
           letterSpacing="-0.75px"
@@ -45,7 +51,7 @@ export const PlaceholderArea = (props: Props) => {
         </Text>
 
         <Text
-          fontSize={['10px', '14px']}
+          textStyle={['xs', 'md']}
           fontWeight="normal"
           letterSpacing="0px"
           textAlign={'center'}
@@ -54,6 +60,7 @@ export const PlaceholderArea = (props: Props) => {
         </Text>
 
         {children && <Box mt="25px">{children}</Box>}
-      </Box>
+      </Flex>
+    </Box>
   );
 };
