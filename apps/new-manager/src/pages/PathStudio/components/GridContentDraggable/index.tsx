@@ -1,23 +1,5 @@
-import {
-  Box,
-  Flex,
-  Heading,
-  Input,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverFooter,
-  PopoverHeader,
-  PopoverTrigger,
-  Portal,
-  useDisclosure,
-  useMediaQuery,
-  Button as Btn,
-} from '@chakra-ui/react';
+import { Box, useDisclosure, useMediaQuery } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
-import { shallow } from 'zustand/shallow';
 import {
   GridContextProvider,
   GridDropZone,
@@ -25,11 +7,11 @@ import {
   move,
   swap,
 } from 'react-grid-dnd';
+import { shallow } from 'zustand/shallow';
 
-import GridCards from '../GridCards';
 import { useSettings } from '../../../../../src/store/settingsStore';
 import DrawerParent from '../DrawerParent/DrawerParent';
-import { Button } from '../../../../../../../packages/react-kit/src/components/Button/index';
+import GridCards from '../GridCards';
 
 interface Props {
   data: any;
@@ -160,7 +142,7 @@ const GridContentDraggable = ({ data }: Props) => {
       />
 
       <GridContextProvider onChange={onChange}>
-        <Box ref={ref} w="100%" h="100%" >
+        <Box ref={ref} w="100%" h="100%">
           <GridDropZone
             boxesPerRow={column === 1 ? 2 : column}
             id="Card"

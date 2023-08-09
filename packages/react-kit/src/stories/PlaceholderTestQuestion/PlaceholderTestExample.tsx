@@ -4,18 +4,23 @@ import { PlaceholderTestQuestion } from '../../../src/components/PlaceholderTest
 interface Props {
   title: string;
   description: string;
+  reset?: boolean;
   children?: any;
 }
 
 export const PlaceholderTestExample = (props: Props) => {
-  const { description, title } = props;
+  const { description, title, reset } = props;
 
   return (
     <Box w={'100%'} h={'100%'} p="50px">
       <PlaceholderTestQuestion
         title={title}
         description={description}
-      ></PlaceholderTestQuestion>
+        reset={reset}
+        onExcelDataProcessed={(data) => {
+          console.log(data); // Aquí puedes acceder a los datos de Excel desde fuera.
+        }}
+      />
     </Box>
   );
 };

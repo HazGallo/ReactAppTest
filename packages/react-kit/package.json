@@ -41,7 +41,8 @@
     "react-textarea-autosize": "^8.4.1",
     "sinon": "^15.1.2",
     "vite-plugin-dts": "^2.1.0",
-    "vite-plugin-svgr": "^2.4.0"
+    "vite-plugin-svgr": "^2.4.0",
+    "xlsx": "^0.18.5"
   },
   "peerDependencies": {
     "@chakra-ui/react": "^2.5.1",
@@ -51,10 +52,10 @@
     "@sentry/react": "^7.57.0",
     "formik": "^2.4.1",
     "framer-motion": "^6.5.1",
+    "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.41.5",
-    "react-icons": "^4.7.1",
-    "react": "^18.2.0"
+    "react-icons": "^4.7.1"
   },
   "devDependencies": {
     "@chakra-ui/storybook-addon": "5.0.0",
