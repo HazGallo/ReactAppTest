@@ -1,15 +1,19 @@
 import { useQuery } from 'react-query';
-import { Element } from './interfaces/element.interface';
 import { sectionContent } from '../services/sectionContent';
 
-export const useContentList = (queryKey: string | null) => {
+export const useContentList = (id: string | null) => {
   const getProductListQuery = useQuery<Element[], Error>(
-    ['videoList', queryKey],
-    sectionContent,
+    ['videoList', id],
+    () => {
+      if (typeof id === 'string') {
+        return sectionContent(id);
+      }
+      throw new Error('ID must be a string.');
+    },
     {
-      staleTime: Infinity, // Los datos no se considerarán obsoletos y no se refetchearán automáticamente
-      cacheTime: Infinity, // Los datos permanecerán en la caché de manera indefinida
-      enabled: queryKey !== null, // <-- no realiza la consulta si queryKey es null
+      staleTime: Infinity,
+      cacheTime: Infinity,
+      enabled: !!id,
     }
   );
 
