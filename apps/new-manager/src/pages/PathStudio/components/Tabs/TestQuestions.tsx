@@ -1,6 +1,6 @@
 import { Box, Flex } from '@chakra-ui/react';
 import { CardQuestion, PlaceholderTestQuestion } from '@iseazy/react-kit';
-import { Headboard } from '../Headboard';
+import { Headboard } from '../../../Headboard';
 
 const TestQuestions = () => {
   return (

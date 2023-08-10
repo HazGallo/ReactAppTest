@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { learning } from './interfaces/learning.interface';
 
-export const useLearingStore = create(
+export const useLearningStore = create(
   persist<learning>(
     (set, get) => ({
       lang: 'en',

@@ -14,9 +14,9 @@ import {
   PlaceholderArea,
 } from '@iseazy/react-kit';
 
-import { Headboard } from '../Headboard';
-import { ButtonMenu } from '../Headboard/components/ButtonMenu';
-import { dataMenu } from '../Headboard/data/dataMenu';
+import { Headboard } from '../../../Headboard';
+import { ButtonMenu } from '../../../Headboard/components/ButtonMenu';
+import { dataMenu } from '../../../Headboard/data/dataMenu';
 import { scrollCss } from './types/scroll.type';
 import { scrollContents } from './types/scrollContents.type';
 

@@ -1,9 +1,12 @@
-import { Box } from "@chakra-ui/react"
-import Navbar from "./components/Navbar"
+import Navbar from './components/Navbar';
+import Layout from './Layout';
+import { Published } from "./components/Published"
+
 export const LearningModule = () => {
   return (
-    <Box>
-     <Navbar tabIndex={0} /> 
-    </Box>
-  )
-}
+    <Layout>
+      <Navbar />
+      <Published />
+    </Layout>
+  );
+};

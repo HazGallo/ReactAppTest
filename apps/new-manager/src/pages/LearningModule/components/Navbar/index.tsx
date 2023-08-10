@@ -5,7 +5,7 @@ import {
   Heading,
   Collapse,
   useMediaQuery,
-  TabList,
+  Text,
 } from '@chakra-ui/react';
 import { shallow } from 'zustand/shallow';
 
@@ -14,61 +14,11 @@ import { ColorMode } from './components/ColorMode';
 
 import useSectionsStore from 'src/store/useSectionsStore';
 
-interface Props {
-  tabIndex: number;
-}
+interface Props {}
 
 const Navbar = (props: Props) => {
-  const { tabIndex } = props;
-
+  const {} = props;
   const [isMobile] = useMediaQuery('(max-width: 1110px)');
-  const [isOpen, setIsOpen] = useState(false);
-
-  const { sections } = useSectionsStore(
-    (state) => ({
-      sections: state.sections,
-    }),
-    shallow
-  );
-
-  const totalElements = useMemo(
-    () =>
-      sections.reduce(
-        (acc, section) => acc + (section?.contents?.length ?? 0),
-        0
-      ),
-    [sections]
-  );
-
-  useEffect(() => {
-    setIsOpen(!isMobile);
-  }, [isMobile]);
-
-  const toggleCollapse = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const buttonData = [
-    {
-      ariaLabel: 'Efficient Strategies for Retail Success',
-    },
-    {
-      ariaLabel: 'Contents',
-      amount: totalElements ?? 0,
-    },
-    {
-      ariaLabel: 'Test Questions',
-      amount: 12,
-    },
-    {
-      ariaLabel: 'Game Questions',
-      amount: 23,
-    },
-    {
-      ariaLabel: 'Materials',
-      amount: 8,
-    },
-  ];
 
   return (
     <Flex
@@ -95,72 +45,63 @@ const Navbar = (props: Props) => {
         display="flex"
         justifyContent="center"
         position="relative"
+        borderRight="1px"
+        borderColor="blackAlpha.50"
+        pr="20px"
       >
-        <Heading size="sm" ml="15px" fontWeight="900">
-          Path Studio
-        </Heading>
+        <Text fontSize="18px">
+          <strong>iseazy</strong>
+          engage
+        </Text>
       </Box>
 
-      <Collapse in={isOpen}>
+      <Box
+        alignItems="center"
+        display="flex"
+        justifyContent="center"
+        position="relative"
+        pl="20px"
+      >
+        <Text textStyle={'lg'}>Store Manager Project</Text>
+      </Box>
+
+      <Box
+        bg={isMobile ? 'primary' : 'transparent'}
+        bottom={isMobile ? '0' : 'auto'}
+        boxShadow="2xl"
+        display={isMobile ? 'block' : 'flex'}
+        flexDirection={isMobile ? 'column' : 'row'}
+        p={isMobile ? '20px' : '0'}
+        position={isMobile ? 'fixed' : 'static'}
+        right={isMobile ? '-200px' : '0'}
+        top={isMobile ? '75px' : 'auto'}
+        transition="right 0.3s ease-in-out"
+        width={isMobile ? ['70%', '50%', '40%', '70%', '80%'] : 'auto'}
+        zIndex="999"
+      >
         <Box
-          bg={isMobile ? 'primary' : 'transparent'}
-          bottom={isMobile ? '0' : 'auto'}
-          boxShadow="2xl"
-          display={isMobile ? 'block' : 'flex'}
+          alignItems={isMobile ? 'flex-start' : 'center'}
+          display="flex"
           flexDirection={isMobile ? 'column' : 'row'}
-          p={isMobile ? '20px' : '0'}
-          position={isMobile ? 'fixed' : 'static'}
-          right={isMobile ? (isOpen ? '0' : '-200px') : '0'}
-          top={isMobile ? '75px' : 'auto'}
-          transition="right 0.3s ease-in-out"
-          width={isMobile ? ['70%', '50%', '40%', '70%', '80%'] : 'auto'}
-          zIndex="999"
+          gap="15px"
+          justifyContent="space-between"
+          ml="50px"
         >
           <Box
-            alignItems={isMobile ? 'flex-start' : 'center'}
-            display="flex"
-            flexDirection={isMobile ? 'column' : 'row'}
-            gap="15px"
-            justifyContent="space-between"
-            ml="50px"
+            alignItems={'center'}
+            display={'flex'}
+            gap="10px"
+            justifyContent="center"
+            mr="25px"
+            position={isMobile ? 'relative' : 'absolute'}
+            right="0"
           >
+            <ColorMode />
 
-
-            <Box
-              alignItems={'center'}
-              display={'flex'}
-              gap="10px"
-              justifyContent="center"
-              mr="25px"
-              position={isMobile ? 'relative' : 'absolute'}
-              right="0"
-            >
-              <ColorMode />
-              <Box userSelect={'none'}>
-                <Badge type="course" size="xs" />
-              </Box>
-              <Button
-                formats="fixed"
-                label="Exit"
-                sizeName="md"
-                variant="secondary"
-              />
-            </Box>
+            <ButtonIco sizeName="md" typeIcon="IconCardBig" aria-label={''} />
           </Box>
         </Box>
-      </Collapse>
-
-      {isMobile && (
-        <ButtonIco
-          aria-label={''}
-          backgroundType="backgroundFilled"
-          isSelected={isOpen}
-          ml="25px"
-          onClick={toggleCollapse}
-          sizeName={'md'}
-          typeIcon="IconDotsHorizontal"
-        />
-      )}
+      </Box>
     </Flex>
   );
 };
