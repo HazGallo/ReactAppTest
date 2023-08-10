@@ -3,7 +3,6 @@ import { create } from 'zustand';
 
 //devtools
 import { mountStoreDevtool } from 'simple-zustand-devtools';
-
 import { v4 as uuidv4 } from 'uuid';
 
 import {
@@ -17,13 +16,8 @@ export type State = {
   IdSectionSelected: string;
   sectionContents: SectionContents[];
   sections: Section[];
-  createSection: (name: string) => void;
-  addContent: (
-    sectionId: string,
-    id: string,
-    coverImage: string,
-    type: any
-  ) => void;
+  createSection: (id: string, name: string) => void;
+
   addElement: (sectionId: string, element: Element) => void;
   modifySection: (sectionId: string) => {
     sectionId: string;
@@ -56,7 +50,7 @@ const initialState: State = {
       name: 'Your Contents',
     },
   ],
-  addContent: () => {},
+
   addElement: () => {},
   createSection: () => {},
   getSectionElementCount: () => 0,
@@ -77,48 +71,23 @@ initialState.IdSectionSelected = initialState.sections[0].id;
 const useSectionsStore = create<State>((set) => ({
   ...initialState,
 
-  createSection: (name: string) => {
+  createSection: (id: string, name: string) => {
     set(
       produce((state) => {
-        const newSection: Section = {
-          id: uuidv4(),
-          name,
-          contents: [],
-        };
-
-        state.sections = [...state.sections, newSection];
-      })
-    );
-  },
-
-  addContent: (
-    sectionId: string,
-    id: string,
-    coverImage: string,
-    type: any
-  ) => {
-    set(
-      produce((state) => {
-        const sectionIndex = state.sections.findIndex(
-          ({ id }: { id: string }) => id === sectionId
+        // Verifica si el id ya existe en las secciones
+        const sectionExists = state.sections.some(
+          (section: Section) => section.id === id
         );
 
-        if (sectionIndex === -1) {
-          console.error(`The section with ID '${sectionId}' does not exist.`);
+        if (!sectionExists) {
+          const newSection: Section = {
+            id,
+            name,
+            contents: [],
+          };
 
-          return;
+          state.sections = [...state.sections, newSection]; // usando el operador de propagación
         }
-
-        const newContent: Section['contents'][number] = {
-          id,
-          coverImage,
-          type,
-        };
-
-        state.sections[sectionIndex].contents = [
-          ...(state?.sections[sectionIndex]?.contents || []),
-          newContent,
-        ];
       })
     );
   },
@@ -148,6 +117,18 @@ const useSectionsStore = create<State>((set) => ({
             coverImage: element.cover.filePath,
             type: element.type.title,
           };
+
+          // Verificar si newContent ya existe en section.contents
+          const contentAlreadyExists = state.sections[
+            existingSectionIndex
+          ].contents.some((content) => content.id === newContent.id);
+
+          if (contentAlreadyExists) {
+            console.error(
+              `Content with ID '${newContent.id}' already exists in the section.`
+            );
+            return; // Si ya existe, salimos sin hacer nada más.
+          }
 
           if (sectionContentsIndex !== -1) {
             const elIndex = state.sectionContents[
@@ -233,7 +214,7 @@ const useSectionsStore = create<State>((set) => ({
         sectionContentsData: sectionContents ? [...sectionContents] : [],
       };
     }
-    return { 
+    return {
       sectionId: '',
       sectionData: {},
       sectionContentsData: [],
@@ -308,8 +289,7 @@ const useSectionsStore = create<State>((set) => ({
         if (sectionIndex !== -1) {
           const section = state.sections[sectionIndex];
 
-          
-      console.log(section?.name, "sectionName")
+          console.log(section?.name, 'sectionName');
 
           if (section?.name) {
             state.sections[sectionIndex].name = newName;

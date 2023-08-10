@@ -1,28 +1,41 @@
+import React, { useEffect, useMemo, useState } from 'react';
 import { Box } from '@chakra-ui/react';
-import React from 'react';
+import useSectionsStore from 'src/store/useSectionsStore';
+import { useContentList } from '../hooks/useContentList';
+import { usePathSection } from '../hooks/usePathSection';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  // const { addElement, IdSectionSelected } = useSectionsStore();
-  // const [processedIds, setProcessedIds] = useState<string[]>([]);
+  const { createSection, IdSectionSelected, addElement } = useSectionsStore();
+  const [processedIds, setProcessedIds] = useState<string[]>([]);
 
-  // // Usar useMemo para evitar operaciones costosas en cada renderizado
-  // const shouldFetch = useMemo(
-  //   () => IdSectionSelected && !processedIds.includes(IdSectionSelected),
-  //   [IdSectionSelected, processedIds]
-  // );
+  const { data } = usePathSection(null);
 
-  // const { data, error } = useContentList(
-  //   shouldFetch ? IdSectionSelected : null
-  // );
+  // Usar useMemo para determinar si debemos hacer la petición
+  const shouldFetch = useMemo(
+    () => IdSectionSelected && !processedIds.includes(IdSectionSelected),
+    [IdSectionSelected]
+  );
 
-  // useEffect(() => {
-  //   if (data && data.length > 0) {
-  //     data.forEach((item: any) => {
-  //       addElement(IdSectionSelected, item);
-  //     });
-  //     setProcessedIds((prevIds) => [...prevIds, IdSectionSelected]);
-  //   }
-  // }, [data, IdSectionSelected]);
+  const { data: dataContentList } = useContentList(
+    shouldFetch ? IdSectionSelected : null
+  );
+
+  useEffect(() => {
+    if (data) {
+      data.forEach((section) => {
+        createSection(section.uid, section.title);
+      });
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (dataContentList) {
+      dataContentList.forEach((contentItem: any) => {
+        addElement(IdSectionSelected, contentItem.content);
+      });
+    }
+    setProcessedIds((prevIds) => [...prevIds, IdSectionSelected]);
+  }, [IdSectionSelected, dataContentList]);
 
   return (
     <Box bg="primary" minHeight="100vh">

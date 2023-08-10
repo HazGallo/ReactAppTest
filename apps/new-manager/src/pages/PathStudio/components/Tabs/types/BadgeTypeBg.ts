@@ -20,12 +20,17 @@ export const contentTypes = {
   JOURNEY: 'journey',
   CARDS: 'cards',
   SINGLE: 'single',
+  URL: 'url',
 };
 
 export const badgeTypes = [
   {
     type: contentTypes.ARTICLE,
     bg: 'baRose.200',
+  },
+  {
+    type: contentTypes.URL,
+    bg: 'baPear.200',
   },
   {
     type: contentTypes.AUDIO,

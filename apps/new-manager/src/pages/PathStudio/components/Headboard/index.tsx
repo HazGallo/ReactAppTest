@@ -97,7 +97,7 @@ export const Headboard: React.FC<HeadboardProps> = ({
   const onSeletedChange = (title: string) => {
     const dataSection = modifySection(idSection);
 
-    handleAddElement(dataSection?.sectionId, title);
+    handleAddElement(dataSection?.sectionId, title.toLowerCase());
   };
 
   const handleAddElement = (sectionId: string, title: any) => {

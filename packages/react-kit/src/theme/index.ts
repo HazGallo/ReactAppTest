@@ -22,7 +22,7 @@ import {
   baVioletRed,
 } from './colors/basics';
 
-import { neBlack, neAccent, neWhite, neGrey } from './colors/neutral';
+import { neAccent, neBlack, neGrey, neWhite } from './colors/neutral';
 
 import { lkBlue, lkGreen, lkOrange, lkRed, lkYellow } from './colors/likert';
 
@@ -41,12 +41,12 @@ import { TextTheme } from './SizesText';
 
 // Font Imports
 import '@fontsource/roboto';
-import '@fontsource/roboto/900.css';
-import '@fontsource/roboto/700.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/100.css';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import '@fontsource/roboto/900.css';
 
 export const theme = extendTheme({
   styles: {
@@ -139,7 +139,7 @@ export const theme = extendTheme({
     whiteAlpha,
   },
   semanticTokens: {
-    colors: { 
+    colors: {
       button: { default: 'neAccent.500', _dark: 'baOceanBlue.500' },
       primary: { default: 'neWhite.500', _dark: 'neGrey.800' },
 
@@ -171,6 +171,7 @@ export const theme = extendTheme({
       coPoll: { default: 'baPear.500', _dark: 'baPear.400' },
       coPlaylist: { default: 'neGrey.500', _dark: 'neGrey.500' },
       coChallenge: { default: 'neGrey.500', _dark: 'neGrey.500' },
+      coUrl: { default: 'baPear.500', _dark: 'baPear.400' },
 
       //Path colors
       paCourse: { default: 'baPomegranate.500', _dark: 'baPomegranate.400' },

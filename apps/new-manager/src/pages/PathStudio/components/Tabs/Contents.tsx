@@ -56,9 +56,6 @@ export const Contents = () => {
 
   const { handleSizeCardMd, handleSizeCardSm, cardSize } = useSettings();
 
-
-  console.log({dataSectionSelected});
-
   const {
     addElement,
     createSection,
@@ -91,17 +88,14 @@ export const Contents = () => {
 
   const currentSection = sections.find(({ id }) => id === IdSectionSelected);
 
-
-  console.log({currentSection, IdSectionSelected});
-
   const generateAvatars = (contents: any) => {
     let avatar: any = [];
 
     contents.forEach((element: any) => {
-      const bg = badgeTypes.find((x) => x.type === element.type);
+      const bg = badgeTypes.find((x) => x.type.toLowerCase() === element.type);
       avatar.unshift({
         name: element.id,
-        src: element.coverImage,
+        src: '',
         backgroundColor: bg?.bg,
       });
     });
@@ -129,7 +123,7 @@ export const Contents = () => {
 
   const handleCreateSection = () => {
     const sectionName = inputValue || 'New section';
-    createSection(sectionName);
+    createSection(uuidv4(), sectionName);
 
     setInputValue('');
 
@@ -192,7 +186,7 @@ export const Contents = () => {
 
   const onSelected = (title: string) => {
     const dataSection = modifySection(IdSectionSelected);
-    handleAddElement(dataSection?.sectionId, title);
+    handleAddElement(dataSection?.sectionId, title.toLowerCase());
   };
 
   const handleAddElement = (sectionId: string, title: any) => {
@@ -342,7 +336,9 @@ export const Contents = () => {
                                 >
                                   <ItemGroup
                                     key={section.id}
-                                    isSelected={section.id === IdSectionSelected}
+                                    isSelected={
+                                      section.id === IdSectionSelected
+                                    }
                                     isDisabled={false}
                                     avatars={generateAvatars(section.contents)}
                                     placeholder={'New section'}
@@ -481,7 +477,8 @@ export const Contents = () => {
             animate="visible"
             transition={{ duration: 0.4 }}
           >
-            {!currentSectionContents || !currentSectionContents?.elements?.length ? (
+            {!currentSectionContents ||
+            !currentSectionContents?.elements?.length ? (
               <motion.div
                 initial={{ y: '5%' }}
                 animate={{ y: 0 }}
