@@ -1,6 +1,6 @@
-export const pathSection = async () => {
+export const pathSection = async (sectionId: string | null) => {
   const response = await fetch(
-    'https://dev-content.iseazyengage.com/api/v1/path/sections/0189e146-82ac-7580-9045-6d7eb4bf2e44',
+    `https://dev-content.iseazyengage.com/api/v1/path/sections/${sectionId}`, // Usa el sectionId en la URL
     {
       method: 'GET',
       headers: {

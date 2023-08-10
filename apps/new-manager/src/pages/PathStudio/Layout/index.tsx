@@ -8,7 +8,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const { createSection, IdSectionSelected, addElement } = useSectionsStore();
   const [processedIds, setProcessedIds] = useState<string[]>([]);
 
-  const { data } = usePathSection(null);
+  const { data } = usePathSection('0189e146-7cd7-7177-b24e-4fcedd47c951');
 
   // Usar useMemo para determinar si debemos hacer la petición
   const shouldFetch = useMemo(
