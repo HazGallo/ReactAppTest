@@ -18,7 +18,7 @@ type Story = StoryObj<typeof meta>;
 export const cardItemSingle: Story = {
   args: {
     typeStatus: 'Published',
-    typeBadge: 'audio',
+    typeBadge: 'url',
     checked: false,
     InfoAndActionBar: '25 min',
     editableTitle: 'Meet the team in the office',

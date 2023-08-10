@@ -1,7 +1,7 @@
 import { Badge } from '..';
 
 export type contentType =
-  'audio'
+  | 'audio'
   | 'article'
   | 'video'
   | 'image'
@@ -15,8 +15,8 @@ export type contentType =
   | 'poll'
   | 'test'
   | 'game'
+  | 'url'
   | 'challenge';
-
 
 interface Props {
   type: contentType;
@@ -25,12 +25,5 @@ interface Props {
 }
 
 export const BadgeContent = ({ type, size, skeleton }: Props) => {
-
-  return (
-    <Badge
-      type={type}
-      size={size}
-      skeleton={skeleton}
-    />
-  );
+  return <Badge type={type} size={size} skeleton={skeleton} />;
 };

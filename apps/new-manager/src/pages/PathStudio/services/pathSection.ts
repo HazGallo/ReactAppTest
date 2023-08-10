@@ -1,9 +1,6 @@
-export const sectionContent = async (id: string) => {
-  if (!id) {
-    throw new Error('Invalid ID provided.');
-  }
+export const pathSection = async () => {
   const response = await fetch(
-    `https://dev-content.iseazyengage.com/api/v1/section/get-contents/${id}`, // <-- 2. Usamos el id en la URL
+    'https://dev-content.iseazyengage.com/api/v1/path/sections/0189e146-82ac-7580-9045-6d7eb4bf2e44',
     {
       method: 'GET',
       headers: {
@@ -14,7 +11,7 @@ export const sectionContent = async (id: string) => {
   );
 
   if (!response.ok) {
-    throw new Error('Failed to fetch product list');
+    throw new Error('Failed to fetch section list');
   }
 
   const responseData = await response.json();

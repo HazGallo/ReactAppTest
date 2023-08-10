@@ -2,6 +2,7 @@ import {
   IconArticle,
   IconAudio,
   IconChallenge,
+  IconDownload,
   IconExternal,
   IconGallery,
   IconGame,
@@ -32,6 +33,7 @@ export const contentTypes = {
   TEST: 'test',
   GAME: 'game',
   CHALLENGE: 'challenge',
+  URL: 'url',
 };
 
 export const badgeTypes = [
@@ -39,6 +41,11 @@ export const badgeTypes = [
     type: contentTypes.ARTICLE,
     icon: IconArticle,
     bg: 'coArticle',
+  },
+  {
+    type: contentTypes.URL,
+    icon: IconDownload,
+    bg: 'coUrl',
   },
   {
     type: contentTypes.AUDIO,
