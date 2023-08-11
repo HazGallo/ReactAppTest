@@ -9,12 +9,6 @@ export const ColorMode = () => {
 
   const [checked, setChecked] = useState(false);
 
-  const handleToggle = () => {
-    setChecked(!checked);
-  };
-
-  console.log(colorMode);
-
   return (
    <Box>
      <Switch

@@ -1,28 +1,36 @@
 import { produce } from 'immer';
 import { create } from 'zustand';
 import { mountStoreDevtool } from 'simple-zustand-devtools';
-import { v4 as uuidv4 } from 'uuid';
-
-import { Element } from './interfaces/pathList.interface';
+import { SectionsResponse, Data } from './interfaces/pathList.interface';
+// (Aquí las interfaces creadas)
 
 export type State = {
-  elements: Element[];
-
-  addElement: (element: Element) => void;
+  dataPath: Data[];
+  IdCardSelected: string;
+  setData: (newData: SectionsResponse) => void;
+  updateCardSelected: (selectedElement: string | null) => void;
 };
 
 const initialState: State = {
-  elements: [],
-  addElement: () => {},
+  dataPath: [],
+  IdCardSelected: '',
+  setData: (newData: SectionsResponse) => {},
+  updateCardSelected: () => {},
 };
 
-const useSectionsStore = create<State>((set) => ({
+const useSectionsStore = create<State>((set, get) => ({
   ...initialState,
+  setData: (newData) =>
+    set(
+      produce((state) => {
+        state.dataPath = newData;
+      })
+    ),
 
-  addElement: (element) => {
-    set((state) =>
-      produce(state, (draft) => {
-        draft.elements.push(element);
+  updateCardSelected: (selectedElement: string | null) => {
+    set(
+      produce((state) => {
+        state.IdCardSelected = selectedElement;
       })
     );
   },

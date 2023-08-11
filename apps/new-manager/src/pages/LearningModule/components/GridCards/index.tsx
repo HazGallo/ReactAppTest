@@ -2,11 +2,12 @@ import { useCallback, useEffect, useState, memo } from 'react';
 import { Box, useMediaQuery } from '@chakra-ui/react';
 import { shallow } from 'zustand/shallow';
 
-import { CardItem } from '@iseazy/react-kit';
+import { CardItem, contentType, pathType } from '@iseazy/react-kit';
 
 import useSectionsStore from 'src/store/useSectionsStore';
 import { getRandomObject } from '../../../../data/dataCard';
 import { useSettings } from '../../../../store/settingsStore';
+import usePathListStore from '../../../../store/usePathList';
 import { Element } from './interfaces/propertiesCard';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,13 +16,13 @@ const GridCards = memo(
     const [randomObject] = useState(() => getRandomObject());
     const [adaptedSizeSm] = useMediaQuery('(max-width: 768px)');
     const navigate = useNavigate();
+    const { updateCardSelected } = usePathListStore(
+      (state) => ({
+        updateCardSelected: state.updateCardSelected,
+      }),
+      shallow
+    );
 
-    // const { updateCardElementSelected } = useSectionsStore(
-    //   (state) => ({
-    //     updateCardElementSelected: state.updateCardElementSelected,
-    //   }),
-    //   shallow
-    // );
     const { cardSize, readonly } = useSettings(
       (state) => ({
         cardSize: state.cardSize,
@@ -30,8 +31,9 @@ const GridCards = memo(
       shallow
     );
 
-    const handleClickCard = (event: any) => {
+    const handleClickCard = (uid: string) => {
       navigate('/');
+      updateCardSelected(uid);
     };
 
     return (
@@ -44,7 +46,7 @@ const GridCards = memo(
           cursor: 'pointer',
         }}
         userSelect="none"
-        onClick={handleClickCard}
+        onClick={() => handleClickCard(uid)}
       >
         <CardItem
           checked={randomObject.checked}
@@ -58,12 +60,12 @@ const GridCards = memo(
             'inherit',
             adaptedSizeSm ? '140px' : cardSize ? '220px' : '140px',
           ]}
-          onClickDrawer={handleClickCard}
+          onClickDrawer={() => handleClickCard(uid)}
           placeholder="title"
           placeholderSrc={''}
           readOnly={readonly}
           sizeCard={adaptedSizeSm ? 'sm' : cardSize ? 'md' : 'sm'}
-          typeBadge={cover.type.toLowerCase()}
+          typeBadge={cover.type.toLowerCase() as contentType | pathType}
           typeStatus={'none'}
           width="inherit"
         />

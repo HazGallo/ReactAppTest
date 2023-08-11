@@ -1,5 +1,3 @@
-import { contentType } from '@iseazy/react-kit/dist/components/InputDropdown';
-
 interface ImageAsset {
   focusPoint: number;
   isCropable: boolean;
@@ -9,7 +7,7 @@ interface ImageAsset {
 interface Cover {
   filePath: string;
   cdnUrl: string | null;
-  type: contentType;
+  type: string;
   mimeType: string;
   size: number;
   isCompressed: boolean;

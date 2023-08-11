@@ -1,9 +1,9 @@
 import { useQuery } from 'react-query';
-import { Element } from './interfaces/element.interface';
+import { SectionsResponse } from './interfaces/element.interface';
 import { sectionContent } from '../services/sectionContent';
 
 export const usePathList = (queryKey: string | null) => {
-  const getProductListQuery = useQuery<Element[], Error>(
+  const getProductListQuery = useQuery<SectionsResponse, Error>(
     ['pathList', queryKey],
     sectionContent,
     {

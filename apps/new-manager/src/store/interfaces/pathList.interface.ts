@@ -1,3 +1,5 @@
+// Interfaces
+
 interface ImageAsset {
   focusPoint: number;
   isCropable: boolean;
@@ -18,11 +20,20 @@ interface Cover {
   updatedAt: string | null;
 }
 
-export interface Element {
+export interface Data {
   uid: string;
   title: string;
   language: string;
   cover: Cover;
   createdAt: string;
   updatedAt: string | null;
+}
+
+export interface SectionsResponse {
+  data: Data[];
+  totalCount: number;
+  currentPage: number;
+  nextPage: string;
+  previousPage: string | null;
+  timestamp: string;
 }

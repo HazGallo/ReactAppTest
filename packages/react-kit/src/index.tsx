@@ -41,6 +41,7 @@ import { TextEditable } from './components/TextEditable';
 import { UserAvatar } from './components/UserAvatar';
 import { PlaceholderTestQuestion } from './components/PlaceholderTestQuestion';
 import { CardQuestion } from './components/Cards/CardQuestion/index';
+import type { contentType, pathType } from './types/typesBages';
 
 const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
   return <ChakraProvider theme={theme}>{children}</ChakraProvider>;
@@ -80,4 +81,6 @@ export {
   ThemeProvider,
   UserAvatar,
   PlaceholderArea,
+  contentType,
+  pathType,
 };

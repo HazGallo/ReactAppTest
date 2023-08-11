@@ -66,8 +66,6 @@ export const ButtonMenu = (props: Props) => {
     };
   }, []);
 
-console.log(isScrolled)
-
   return (
     <Box ref={menuRef} zIndex={1} >
       <DropdownMenu

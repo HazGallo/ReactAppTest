@@ -3,12 +3,16 @@ import { Box } from '@chakra-ui/react';
 import useSectionsStore from 'src/store/useSectionsStore';
 import { useContentList } from '../hooks/useContentList';
 import { usePathSection } from '../hooks/usePathSection';
+import usePathList from "src/store/usePathList"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { createSection, IdSectionSelected, addElement } = useSectionsStore();
   const [processedIds, setProcessedIds] = useState<string[]>([]);
 
-  const { data } = usePathSection('0189e146-7cd7-7177-b24e-4fcedd47c951');
+  const { IdCardSelected } = usePathList();
+
+  console.log(IdCardSelected, "cardData")
+  const { data } = usePathSection(IdCardSelected);
 
   // Usar useMemo para determinar si debemos hacer la petición
   const shouldFetch = useMemo(

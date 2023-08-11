@@ -1,4 +1,4 @@
-import { contentType } from '@iseazy/react-kit/dist/components/InputDropdown';
+// Interfaces
 
 interface ImageAsset {
   focusPoint: number;
@@ -20,11 +20,20 @@ interface Cover {
   updatedAt: string | null;
 }
 
-export interface Element {
+interface Data {
   uid: string;
   title: string;
   language: string;
   cover: Cover;
   createdAt: string;
   updatedAt: string | null;
+}
+
+export interface SectionsResponse {
+  data: Data[];
+  totalCount: number;
+  currentPage: number;
+  nextPage: string;
+  previousPage: string | null;
+  timestamp: string;
 }
