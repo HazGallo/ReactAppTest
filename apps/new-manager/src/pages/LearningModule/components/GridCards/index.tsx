@@ -7,7 +7,7 @@ import { CardItem, contentType, pathType } from '@iseazy/react-kit';
 import useSectionsStore from 'src/store/useSectionsStore';
 import { getRandomObject } from '../../../../data/dataCard';
 import { useSettings } from '../../../../store/settingsStore';
-import usePathListStore from '../../../../store/usePathList';
+import usePathListStore from '../../../../store/usePathListStore';
 import { Element } from './interfaces/propertiesCard';
 import { useNavigate } from 'react-router-dom';
 
@@ -32,7 +32,7 @@ const GridCards = memo(
     );
 
     const handleClickCard = (uid: string) => {
-      navigate('/');
+      navigate('/learning/studio');
       updateCardSelected(uid);
     };
 

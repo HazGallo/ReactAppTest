@@ -6,28 +6,15 @@ export const useSettings = create(
   persist<data>(
     (set) => ({
       navSize: 'small',
-      isOpen: false, //TODO: delete this
       sendData: false,
       cardSize: false,
       readonly: false, //TODO: re-check
-      infoUser: {},
       InfoCardDrawer: {},
       //TODO: move to another store ?
       dataVideo: {} as Video, // Nuevo campo dataVideo inicializado como un objeto vacío de tipo Video
 
       changeNavSize: (size: string) => {
         set((state) => ({ navSize: size }));
-      },
-
-      //TODO: delete this
-      setIsOpen: () => {
-        set((state) => {
-          if (state.isOpen) {
-            return { isOpen: false };
-          } else {
-            return { isOpen: true };
-          }
-        });
       },
       
       setSendData: () => {
@@ -53,11 +40,7 @@ export const useSettings = create(
           InfoCardDrawer: InfoCardDrawer,
         }));
       },
-      setInfoUser: (infoUser: any) => {
-        set((state) => ({
-          infoUser: infoUser,
-        }));
-      },
+
       setReadonly: () => {
         set((state) => ({
           readonly: !state.readonly,

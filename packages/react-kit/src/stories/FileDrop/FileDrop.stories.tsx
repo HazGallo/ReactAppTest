@@ -12,4 +12,15 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const content: Story = {};
+export const content: Story = {
+  args: {
+    typeAnimacion: "courseloading"
+  },
+  argTypes: {
+ 
+    typeAnimacion: {
+      control: {
+        type: 'select',      },
+    },
+  },
+};

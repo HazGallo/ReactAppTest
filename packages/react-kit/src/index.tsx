@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren, lazy } from 'react';
 import { theme } from './theme';
 import { ChakraProvider } from '@chakra-ui/react';
 import '@fontsource/roboto';
@@ -14,10 +14,11 @@ import { Badge } from './components/Badge';
 import { Button } from './components/Button';
 import { ButtonIco } from './components/ButtonIco';
 import { ButtonIcoGroup } from './components/ButtonIcoGroup';
-import { CardItem } from './components/Cards/CardItem';
-import { DropdownMenuOption } from './components/DropdownMenuOption';
-import { DropdownMenu } from './components/DropdownMenu';
 import { ButtonNew } from './components/ButtonNew';
+import { CardItem } from './components/Cards/CardItem';
+import { CardQuestion } from './components/Cards/CardQuestion/index';
+import { DropdownMenu } from './components/DropdownMenu';
+import { DropdownMenuOption } from './components/DropdownMenuOption';
 import { FileDrop } from './components/FileDrop';
 import { FileDropper } from './components/FileDropper';
 import { Ico } from './components/Ico';
@@ -32,6 +33,7 @@ import { ItemGroupHover } from './components/ItemGroup/components/ItemGroupHover
 import { ItemGroupNew } from './components/ItemGroupNew';
 import { ModuleSelector } from './components/ModuleSelector';
 import { PlaceholderArea } from './components/PlaceholderArea';
+import { PlaceholderTestQuestion } from './components/PlaceholderTestQuestion';
 import { Selector } from './components/Selector';
 import { SelectorSystem } from './components/SelectorSystem';
 import { Switch } from './components/Switch';
@@ -39,8 +41,6 @@ import { Tag } from './components/Tag';
 import { TagSystem } from './components/TagSystem';
 import { TextEditable } from './components/TextEditable';
 import { UserAvatar } from './components/UserAvatar';
-import { PlaceholderTestQuestion } from './components/PlaceholderTestQuestion';
-import { CardQuestion } from './components/Cards/CardQuestion/index';
 import type { contentType, pathType } from './types/typesBages';
 
 const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -48,29 +48,30 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
 };
 
 export {
-  CardQuestion,
-  ItemGroup,
-  ItemGroupNew,
   Badge,
-  ItemGroupHover,
   Button,
-  ButtonNew,
   ButtonIco,
   ButtonIcoGroup,
+  ButtonNew,
   CardItem,
+  CardQuestion,
   DropdownMenu,
   DropdownMenuOption,
   FileDrop,
   FileDropper,
-  PlaceholderTestQuestion,
   Ico,
   ImageSelector,
   InputCheckbox,
   InputDropdown,
   InputText,
-  ItemAmount,
   InputTextArea,
+  ItemAmount,
+  ItemGroup,
+  ItemGroupHover,
+  ItemGroupNew,
   ModuleSelector,
+  PlaceholderArea,
+  PlaceholderTestQuestion,
   Selector,
   SelectorSystem,
   Switch,
@@ -80,7 +81,6 @@ export {
   theme,
   ThemeProvider,
   UserAvatar,
-  PlaceholderArea,
   contentType,
   pathType,
 };

@@ -18,7 +18,7 @@ const initialState: State = {
   updateCardSelected: () => {},
 };
 
-const useSectionsStore = create<State>((set, get) => ({
+const usePathListStore = create<State>((set, get) => ({
   ...initialState,
   setData: (newData) =>
     set(
@@ -37,7 +37,7 @@ const useSectionsStore = create<State>((set, get) => ({
 }));
 
 if (process.env.NODE_ENV === 'development') {
-  mountStoreDevtool('SectionsStore', useSectionsStore);
+  mountStoreDevtool('PathListStore', usePathListStore);
 }
 
-export default useSectionsStore;
+export default usePathListStore;

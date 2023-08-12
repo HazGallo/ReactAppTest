@@ -18,13 +18,13 @@ import {
 
 import Swal from 'sweetalert2';
 
-import Loading from '../../components/Loading';
+import { LoadingLearning } from '../LoadingLearning';
 import BtnColorMode from '../../components/BtnColorMode';
 
 import { useLogin } from './hooks/useLogin';
-import { useSettings } from '../../store/settingsStore';
 
 import { LoginParams } from './interfaces/LoginParams';
+import useLoginCheckStore from 'src/store/useLoginStore';
 
 import Logo from '../../assets/iseazyLight.png';
 import Logo2 from '../../assets/iseazyDark.png';
@@ -34,8 +34,9 @@ import { shallow } from 'zustand/shallow';
 const Login = () => {
   const { colorMode } = useColorMode();
   const navigate = useNavigate();
-  const { setInfoUser } = useSettings(
-    (state) => ({ setInfoUser: state.setInfoUser }),
+
+  const { addData } = useLoginCheckStore(
+    (state) => ({ addData: state.addData }),
     shallow
   );
 
@@ -62,13 +63,13 @@ const Login = () => {
     }
     if (isSuccess) {
       reset();
-      setInfoUser(data);
-      navigate('/');
+      addData(data);
+      navigate('/learning/module');
     }
   }, [isError, isSuccess]);
 
   if (isLoading) {
-    return <Loading />;
+    return <LoadingLearning typeAnimacion="stepsLoading" />;
   }
 
   return (

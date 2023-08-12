@@ -16,7 +16,7 @@ import { scrollContents } from './types/scrollContents.type';
 
 import { useSettings } from 'src/store/settingsStore';
 import useSectionsStore from 'src/store/useSectionsStore';
-import usePathListStore from 'src/store/usePathList';
+import usePathListStore from 'src/store/usePathListStore';
 
 import { motion } from 'framer-motion';
 import { animated, config, useTransition } from 'react-spring';
@@ -36,8 +36,6 @@ const TableDataCard = lazy(
 export const Published = () => {
   const { dataPath } = usePathListStore();
 
-  const [inputValue, setInputValue] = useState('');
-  const [isHovered, setIsHovered] = useState(false);
   const [showComponent, setShowComponent] = useState(false);
   const [showComponentState, setShowComponentState] = useState(false); // Nuevo estado
   const [showTable, setShowTable] = useState(false);
@@ -72,8 +70,6 @@ export const Published = () => {
     hidden: { opacity: 0, y: '10%' },
     visible: { opacity: 1, y: '0%' },
   };
-
-  console.log(dataPath)
 
   return (
     <Flex

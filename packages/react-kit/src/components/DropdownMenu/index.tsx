@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Box,
@@ -22,47 +22,47 @@ interface Categories {
 }
 
 interface contentData {
-  title: string;
-  isMenuItem?: boolean;
   categoryTitle?: string;
   icon?: any;
+  isMenuItem?: boolean;
+  title: string;
 }
 
 interface Props extends BoxProps {
-  dataMenu: contentData[];
   categoryType?: contentCategory;
+  children?: any;
+  closeMenu?: boolean; // Add this
+  dataMenu: contentData[];
+  gridQuantity?: number;
   iconTypes?: any;
   isDisabled?: boolean;
-  typeVersion?: contentType;
-  positioning?: contentPosition;
   isOpen?: boolean;
-  children?: any;
   onSelect?: any;
-  warning?: boolean;
   onSeletedChange?: (title: string) => void;
+  positioning?: contentPosition;
   showIcon?: boolean;
   typeMenu: 'buttonIco' | 'dropdownMenuOption' | 'dropdownMenuOptionIco';
-  gridQuantity?: number;
-  closeMenu?: boolean; // Add this
+  typeVersion?: contentType;
+  warning?: boolean;
 }
 
 export const DropdownMenu = (props: Props) => {
   const {
-    isOpen: initialIsOpen,
+    categoryType,
     children,
-    positioning,
-    typeVersion,
+    closeMenu,
     dataMenu,
+    gridQuantity = 5,
     iconTypes,
     isDisabled,
+    isOpen: initialIsOpen,
     onSelect,
-    warning,
-    categoryType,
+    onSeletedChange,
+    positioning,
     showIcon,
     typeMenu,
-    gridQuantity = 5,
-    onSeletedChange,
-    closeMenu,
+    typeVersion,
+    warning,
     ...rest
   } = props;
 

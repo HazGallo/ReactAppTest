@@ -69,28 +69,27 @@ export const ButtonMenu = (props: Props) => {
   return (
     <Box ref={menuRef} zIndex={1} >
       <DropdownMenu
-        iconTypes={iconTypes}
         categoryType={categoryType}
-        positioning={positioning}
-        typeVersion={'add'}
+        closeMenu={isScrolled}
         dataMenu={dataMenu}
+        iconTypes={iconTypes}
         onChange={onChange}
         onSeletedChange={onSeletedChange}
-        typeMenu={'dropdownMenuOptionIco'}
+        positioning={positioning}
         showIcon={isSelected}
-        
-        closeMenu={isScrolled}
+        typeMenu={'dropdownMenuOptionIco'}
+        typeVersion={'add'}
       >
         <ButtonNew
-          isSelected={isSelected}
-          sizeName={isScrolled ? 'md' : 'lg'}
-          onClick={handleIconClick}
-          iconLeft={'IconPlusNew'}
-          isIconChanged={isSelected}
-          isDisabled={isDisabled}
-          label={'New'}
-          variant={'primary'}
           formats={'fixed'}
+          iconLeft={'IconPlusNew'}
+          isDisabled={isDisabled}
+          isIconChanged={isSelected}
+          isSelected={isSelected}
+          label={'New'}
+          onClick={handleIconClick}
+          sizeName={isScrolled ? 'md' : 'lg'}
+          variant={'primary'}
         />
       </DropdownMenu>
     </Box>

@@ -4,6 +4,9 @@ import usePathList from 'src/store/usePathList';
 import useSectionsStore from 'src/store/useSectionsStore';
 import { useContentList } from '../hooks/useContentList';
 import { usePathSection } from '../hooks/usePathSection';
+import usePathList from 'src/store/usePathListStore';
+import useLoginCheckStore from 'src/store/useLoginStore';
+import { LoadingLearning } from "../../LoadingLearning"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const {
@@ -16,6 +19,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [processedIds, setProcessedIds] = useState<string[]>([]);
 
   const { IdCardSelected } = usePathList();
+  const { dataLogin } = useLoginCheckStore();
+  console.log(dataLogin, 'new');
 
   const { data } = usePathSection(IdCardSelected);
 
@@ -49,7 +54,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }, [IdSectionSelected, dataContentList]);
 
   return (
-    <Box bg="primary" minHeight="100vh">
+    <Box
+     bg="primary"
+      minHeight="100vh"
+      >
       {children}
     </Box>
   );
