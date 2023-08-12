@@ -63,6 +63,21 @@ const GridCards = memo(
     const title = translations[0].title;
     const key = `${uid}-${title}`;
 
+    // Estado para el skeleton
+    const [skeleton, setSkeleton] = useState(true);
+
+    useEffect(() => {
+      // Configura un timer para cambiar el valor de skeleton
+      const timer = setTimeout(() => {
+        setSkeleton(false);
+      }, 700);
+
+      // Limpia el timer cuando el componente se desmonte
+      return () => {
+        clearTimeout(timer);
+      };
+    }, []);
+
     return (
       <Box
         padding="0 0.5em"
@@ -77,6 +92,7 @@ const GridCards = memo(
       >
         <CardItem
           key={key}
+          skeleton={skeleton}
           checked={randomObject.checked}
           coverImage={cover?.filePath}
           date="april 10, 2002 03:24:00"

@@ -3,7 +3,6 @@ import { create } from 'zustand';
 
 //devtools
 import { mountStoreDevtool } from 'simple-zustand-devtools';
-import { v4 as uuidv4 } from 'uuid';
 
 import {
   Element,
@@ -32,6 +31,7 @@ export type State = {
   ) => void;
   updateSectionName: (sectionId: string, newName: string) => void;
   updateCardElementSelected: (selectedElement: Element | null) => void;
+  resetStore: () => void;
   updateElement: (
     sectionId: string,
     elementId: string,
@@ -43,15 +43,10 @@ const initialState: State = {
   cardElementSelected: null,
   IdSectionSelected: '',
   sectionContents: [],
-  sections: [
-    {
-      id: uuidv4(),
-      contents: [],
-      name: 'Your Contents',
-    },
-  ],
+  sections: [],
 
   addElement: () => {},
+  resetStore: () => {},
   createSection: () => {},
   getSectionElementCount: () => 0,
   modifySection: () => ({
@@ -65,8 +60,6 @@ const initialState: State = {
   updateElement: () => {},
   updateSectionName: () => {},
 };
-
-initialState.IdSectionSelected = initialState.sections[0].id;
 
 const useSectionsStore = create<State>((set) => ({
   ...initialState,
@@ -357,6 +350,9 @@ const useSectionsStore = create<State>((set) => ({
         state.sectionContents[sectionIndex].elements[elIndex] = updatedElement;
       })
     );
+  },
+  resetStore: () => {
+    set(initialState);
   },
 }));
 

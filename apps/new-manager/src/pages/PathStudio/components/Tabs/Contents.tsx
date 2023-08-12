@@ -41,8 +41,11 @@ const GridContentDraggable = lazy(() => import('../GridContentDraggable'));
 // Adding lazy import for TableDataCard
 const TableDataCard = lazy(() => import('../TableDataCard'));
 
-import { badgeTypes } from './types/BadgeTypeBg';
 import { shallow } from 'zustand/shallow';
+import usePathList from '../../../../../src/store/usePathList';
+import { Video } from '../../hooks/interfaces/section.interface';
+import { useCreateSection } from '../../hooks/useCreateSection';
+import { badgeTypes } from './types/BadgeTypeBg';
 
 export const Contents = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -121,9 +124,24 @@ export const Contents = () => {
     setShowComponent(!showComponent);
   }, [showComponent]);
 
+  // en este metodo que le pasamos como props al hooks obtiene la data y una ves ya la tenemos
+  //  creamos la seccion en nuestro state de zustand, mas que todo para obtener el id
+  const onMutationSuccess = (video: Video) => {
+    createSection(video.uid, video.title);
+  };
+
+  // llamamos al hooks y le pasamos un metodo para obtener la data una ves ya este cargada
+  const createSectionMutation = useCreateSection(onMutationSuccess);
+  const { IdCardSelected } = usePathList();
+
   const handleCreateSection = () => {
     const sectionName = inputValue || 'New section';
-    createSection(uuidv4(), sectionName);
+
+    // usamos el mutate para hacer la peticion
+    createSectionMutation.mutate({
+      id: IdCardSelected,
+      title: sectionName,
+    });
 
     setInputValue('');
 
