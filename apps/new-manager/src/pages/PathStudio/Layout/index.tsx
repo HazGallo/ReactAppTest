@@ -1,12 +1,11 @@
-import { Box } from '@chakra-ui/react';
 import React, { useEffect, useMemo, useState } from 'react';
-import usePathList from 'src/store/usePathList';
 import useSectionsStore from 'src/store/useSectionsStore';
 import { useContentList } from '../hooks/useContentList';
 import { usePathSection } from '../hooks/usePathSection';
 import usePathList from 'src/store/usePathListStore';
 import useLoginCheckStore from 'src/store/useLoginStore';
 import { LoadingLearning } from "../../LoadingLearning"
+import { Box } from '@chakra-ui/react';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const {
@@ -36,7 +35,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (data) {
-      data.forEach((section) => {
+      data.forEach((section:any) => {
         createSection(section.uid, section.title);
       });
 

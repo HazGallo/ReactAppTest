@@ -42,7 +42,7 @@ const GridContentDraggable = lazy(() => import('../GridContentDraggable'));
 const TableDataCard = lazy(() => import('../TableDataCard'));
 
 import { shallow } from 'zustand/shallow';
-import usePathList from '../../../../../src/store/usePathList';
+import usePathList from 'src/store/usePathListStore';
 import { Video } from '../../hooks/interfaces/section.interface';
 import { useCreateSection } from '../../hooks/useCreateSection';
 import { badgeTypes } from './types/BadgeTypeBg';
