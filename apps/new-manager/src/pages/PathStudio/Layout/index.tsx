@@ -1,17 +1,22 @@
-import React, { useEffect, useMemo, useState } from 'react';
 import { Box } from '@chakra-ui/react';
+import React, { useEffect, useMemo, useState } from 'react';
+import usePathList from 'src/store/usePathList';
 import useSectionsStore from 'src/store/useSectionsStore';
 import { useContentList } from '../hooks/useContentList';
 import { usePathSection } from '../hooks/usePathSection';
-import usePathList from "src/store/usePathList"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const { createSection, IdSectionSelected, addElement } = useSectionsStore();
+  const {
+    createSection,
+    IdSectionSelected,
+    addElement,
+    modifySection,
+    resetStore,
+  } = useSectionsStore();
   const [processedIds, setProcessedIds] = useState<string[]>([]);
 
   const { IdCardSelected } = usePathList();
 
-  console.log(IdCardSelected, "cardData")
   const { data } = usePathSection(IdCardSelected);
 
   // Usar useMemo para determinar si debemos hacer la petición
@@ -29,6 +34,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       data.forEach((section) => {
         createSection(section.uid, section.title);
       });
+
+      modifySection(data[0].uid);
     }
   }, [data]);
 
