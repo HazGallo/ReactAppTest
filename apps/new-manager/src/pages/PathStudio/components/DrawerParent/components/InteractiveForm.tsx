@@ -87,7 +87,7 @@ const InteractiveForm = memo((props: Props) => {
   };
 
   return (
-    <Box position={'relative'} >
+    <Box position={'relative'}>
       <FormControl>
         <DrawerDocument
           onClose={onClose}
@@ -105,7 +105,8 @@ const InteractiveForm = memo((props: Props) => {
                 maxFiles={1}
                 maxSize={10 * 1000 * 1000}
                 type="image"
-                placeholderSrc={cardElementSelected?.cover.filePath}
+                // placeholderSrc={cardElementSelected?.cover.filePath }
+                placeholderSrc={undefined}
                 warning={false}
                 isDisabled={false}
                 hasError={false}

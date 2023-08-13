@@ -35,7 +35,7 @@ export type State = {
   updateElement: (
     sectionId: string,
     elementId: string,
-    newData: Partial<Element>
+    newData: Partial<Element> | any
   ) => void;
 };
 
@@ -282,8 +282,6 @@ const useSectionsStore = create<State>((set) => ({
         if (sectionIndex !== -1) {
           const section = state.sections[sectionIndex];
 
-          console.log(section?.name, 'sectionName');
-
           if (section?.name) {
             state.sections[sectionIndex].name = newName;
           } else {
@@ -340,8 +338,6 @@ const useSectionsStore = create<State>((set) => ({
         }
 
         const updatedElement = { ...elementToUpdate, ...newData };
-
-        console.log({ updatedElement });
 
         if (newData.translations) {
           updatedElement.translations = newData.translations;
