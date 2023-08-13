@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from './validation/schema';
+import Swal from 'sweetalert2';
+import { shallow } from 'zustand/shallow';
 
 import {
   Box,
@@ -15,32 +17,23 @@ import {
   Text,
   useColorMode,
 } from '@chakra-ui/react';
-
-import Swal from 'sweetalert2';
-
 import { LoadingLearning } from '../LoadingLearning';
 import BtnColorMode from '../../components/BtnColorMode';
-
-import { useLogin } from './hooks/useLogin';
-
-import { LoginParams } from './interfaces/LoginParams';
-import useLoginCheckStore from 'src/store/useLoginStore';
-
 import Logo from '../../assets/iseazyLight.png';
 import Logo2 from '../../assets/iseazyDark.png';
 
-import { shallow } from 'zustand/shallow';
+import { useLogin } from './hooks/useLogin';
+import useLoginCheckStore from 'src/store/useLoginStore';
+
+import { LoginParams } from './interfaces/LoginParams';
 
 const Login = () => {
   const { colorMode } = useColorMode();
   const navigate = useNavigate();
-
   const { addData } = useLoginCheckStore(
     (state) => ({ addData: state.addData }),
     shallow
   );
-
-  // We make the request and destructure the values we want
   const { mutate, isError, isLoading, data, isSuccess } = useLogin();
 
   const {
@@ -48,30 +41,28 @@ const Login = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<LoginParams>({
-    resolver: yupResolver(schema),
-  });
+  } = useForm<LoginParams>({ resolver: yupResolver(schema) });
 
-  // we make the request
-  const onSubmit = async ({ username, password }: LoginParams) => {
+  const onSubmit = async ({ username, password }: LoginParams) =>
     mutate({ username, password });
-  };
 
-  useEffect(() => {
-    if (isError) {
-      Swal.fire('Invalid Credentials.');
-    }
+    useEffect(() => {
+      if (isError) Swal.fire('Invalid Credentials.');
+      if (isSuccess) {
+        reset();
+        addData(data);
+        navigate('/learning/module');
+      }
+    }, [isError, isSuccess]);
+  
+    // Nuevo: Revisamos si isSuccess es verdadero antes de mostrar el componente de login
     if (isSuccess) {
-      reset();
-      addData(data);
       navigate('/learning/module');
+      return null; // Esto retornará null, evitando renderizar el componente de login
     }
-  }, [isError, isSuccess]);
-
-  if (isLoading) {
-    return <LoadingLearning typeAnimacion="stepsLoading" />;
-  }
-
+  
+    if (isLoading) return <LoadingLearning typeAnimacion="stepsLoading" />;
+  
   return (
     <Flex
       width="full"

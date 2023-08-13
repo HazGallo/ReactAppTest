@@ -16,7 +16,6 @@ import {
 import {
   FileDropper,
   InputText,
-  InputTextArea,
   SelectorSystem,
   Switch,
   TextEditable,
@@ -26,7 +25,7 @@ import isEqual from 'lodash/isEqual';
 import { shallow } from 'zustand/shallow';
 
 // please avoid using relative paths, use absolute paths instead
-// import { InputTextArea } from '../../../../../../../../packages/react-kit/src/components/InputTextArea';
+import { InputTextArea } from '../../../../../../../../packages/react-kit/src/components/InputTextArea';
 
 import useSectionsStore from 'src/store/useSectionsStore';
 

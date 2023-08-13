@@ -1,40 +1,27 @@
-import { produce } from 'immer';
 import { create } from 'zustand';
 import { mountStoreDevtool } from 'simple-zustand-devtools';
-import { SectionsResponse, Data } from './interfaces/pathList.interface';
-// (Aquí las interfaces creadas)
+import { data } from './interfaces/pathList.interface';
+import { persist } from 'zustand/middleware';
 
-export type State = {
-  dataPath: Data[];
-  IdCardSelected: string;
-  setData: (newData: SectionsResponse) => void;
-  updateCardSelected: (selectedElement: string | null) => void;
-};
+const usePathListStore = create(
+  persist<data>(
+    (set, get) => ({
+      dataPath: [],
+      IdCardSelected: '',
 
-const initialState: State = {
-  dataPath: [],
-  IdCardSelected: '',
-  setData: (newData: SectionsResponse) => {},
-  updateCardSelected: () => {},
-};
+      setData: (newData: any) => {
+        set({ dataPath: newData });
+      },
 
-const usePathListStore = create<State>((set, get) => ({
-  ...initialState,
-  setData: (newData) =>
-    set(
-      produce((state) => {
-        state.dataPath = newData;
-      })
-    ),
-
-  updateCardSelected: (selectedElement: string | null) => {
-    set(
-      produce((state) => {
-        state.IdCardSelected = selectedElement;
-      })
-    );
-  },
-}));
+      updateCardSelected: (selectedElement: any) => {
+        set({ IdCardSelected: selectedElement });
+      },
+    }),
+    {
+      name: 'path-list',
+    }
+  )
+);
 
 if (process.env.NODE_ENV === 'development') {
   mountStoreDevtool('PathListStore', usePathListStore);

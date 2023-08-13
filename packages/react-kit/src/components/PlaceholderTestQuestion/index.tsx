@@ -149,7 +149,8 @@ export const PlaceholderTestQuestion = (props: Props) => {
   };
 
   return (
-    <Box
+   <Box>
+     <Box
       w="full"
       height="calc(100vh - 340px)"
       borderRadius={'8px'}
@@ -164,8 +165,6 @@ export const PlaceholderTestQuestion = (props: Props) => {
       _dark={{
         color: 'neWhite.500',
       }}
-      px={['50px', '50px']}
-      py={['100px', '160px']}
       overflow="hidden"
       onDragOver={dragHandlers.handleDragOver}
       onDragEnter={dragHandlers.handleDragEnter}
@@ -301,5 +300,6 @@ export const PlaceholderTestQuestion = (props: Props) => {
         </Flex>
       )}
     </Box>
+   </Box>
   );
 };
