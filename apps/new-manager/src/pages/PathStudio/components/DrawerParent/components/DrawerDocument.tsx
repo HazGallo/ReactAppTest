@@ -16,10 +16,10 @@ import {
 import {
   FileDropper,
   InputText,
+  InputTextArea,
   SelectorSystem,
   Switch,
   TextEditable,
-  InputTextArea
 } from '@iseazy/react-kit';
 
 import isEqual from 'lodash/isEqual';
@@ -31,13 +31,13 @@ import { shallow } from 'zustand/shallow';
 import useSectionsStore from 'src/store/useSectionsStore';
 
 import { useFileDropper } from '../hooks/useFileDropper';
-import { HeaderDrawer } from './HeaderDrawer';
 import { uploadFile } from '../interface/uploadFile';
+import { HeaderDrawer } from './HeaderDrawer';
 
-import { getFirstErrorMessage, hasFieldError } from '../utils/formik.helper';
 import { cleanHtml } from '../utils/clearHtml.helper';
+import { getFirstErrorMessage, hasFieldError } from '../utils/formik.helper';
 
-import { LANGUAGES, SELECTORS, DEFAULT_TRANSLATION } from '../constants';
+import { DEFAULT_TRANSLATION, LANGUAGES, SELECTORS } from '../constants';
 
 interface Props {
   onClose?: () => void;
@@ -95,12 +95,6 @@ const DrawerDocument = (props: Props) => {
       existingTranslations.map((t: any) => [t.language, t])
     );
 
-    console.log({
-      LANGUAGES,
-      DEFAULT_TRANSLATION,
-      mapM: translationsMap.get('en'),
-    });
-
     return LANGUAGES.map((language) => ({
       language,
       ...DEFAULT_TRANSLATION,
@@ -111,9 +105,17 @@ const DrawerDocument = (props: Props) => {
   const formik = useFormik({
     initialValues: {
       uid: cardElementSelected?.uid,
-      translations: combinedTranslations(cardElementSelected),
-      // translations: [...cardElementSelected.translations],
+      translations: cardElementSelected
+        ? [
+            {
+              title: cardElementSelected.translations[0].title,
+              description: cardElementSelected.translations[0].description,
+            },
+            ...combinedTranslations(cardElementSelected).slice(1),
+          ]
+        : combinedTranslations(cardElementSelected),
     },
+
     validationSchema,
     enableReinitialize: true,
     onSubmit: (values) => {
@@ -128,10 +130,6 @@ const DrawerDocument = (props: Props) => {
       }
     },
   });
-
-  console.log('re-render');
-  console.log('test > formik values: ', formik.values);
-  console.info('test > cardElementSelected: ', cardElementSelected);
 
   const {
     mutate: mutateUploadVideo,
@@ -170,12 +168,8 @@ const DrawerDocument = (props: Props) => {
   };
 
   const handleSaveDataCard = () => {
-    console.trace('handleSaveDataCard');
-
-    console.log('test: formik values: ', formik.values);
-    console.log('test: cardElementSelected: ', cardElementSelected);
-
     updateElement(IdSectionSelected, cardElementSelected?.uid, {
+      ...cardElementSelected,
       translations: formik.values.translations,
     });
 
@@ -183,8 +177,6 @@ const DrawerDocument = (props: Props) => {
       ...cardElementSelected,
       translations: formik.values.translations,
     });
-
-    // Swal.fire('Updated SuccessFully!', '...', 'success');
   };
 
   const handleCustomInput = (value: string) => {
@@ -217,7 +209,6 @@ const DrawerDocument = (props: Props) => {
             handleTranslate={handleTranslate}
             showTranslate={showTranslate}
             onClick={handleSaveDataCard}
-            // handleTabChange={handleTabChange}
             languages={LANGUAGES}
           />
         </Box>
@@ -260,7 +251,6 @@ const DrawerDocument = (props: Props) => {
                       />
                     </Box>
 
-                    {/* FileDropper component */}
                     {!checked && (
                       <>
                         <Flex w="100%" mt="20px">
