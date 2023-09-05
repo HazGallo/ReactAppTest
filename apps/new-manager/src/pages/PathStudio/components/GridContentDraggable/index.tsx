@@ -14,11 +14,12 @@ import DrawerParent from '../DrawerParent/DrawerParent';
 import GridCards from '../GridCards';
 
 interface Props {
+  typeCard?: 'cardItem' | 'cardQuestion';
   data: any;
   isError: boolean;
 }
 
-const GridContentDraggable = ({ data }: Props) => {
+const GridContentDraggable = ({ data, typeCard = 'cardItem' }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [adaptedSizeSm] = useMediaQuery('(max-width: 768px)');
@@ -124,13 +125,13 @@ const GridContentDraggable = ({ data }: Props) => {
 
   useEffect(() => {
     if (adaptedSizeSm) {
-      setCustomCardWidth(160);
+      setCustomCardWidth(130);
       setCustomCardHeight(220);
     } else if (cardSize) {
-      setCustomCardWidth(220);
+      setCustomCardWidth(210);
       setCustomCardHeight(364);
     } else {
-      setCustomCardWidth(160);
+      setCustomCardWidth(130);
       setCustomCardHeight(220);
     }
   }, [intersect, data, cardSize, adaptedSizeSm]);
@@ -156,6 +157,7 @@ const GridContentDraggable = ({ data }: Props) => {
             {card.map((item: any) => (
               <GridItem key={item.uid}>
                 <GridCards
+                  typeCard={typeCard}
                   height={totalHeight}
                   {...item}
                   isDragging={isDragging}

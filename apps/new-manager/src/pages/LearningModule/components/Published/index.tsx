@@ -16,7 +16,7 @@ import { scrollContents } from './types/scrollContents.type';
 
 import { useSettings } from 'src/store/settingsStore';
 import useSectionsStore from 'src/store/useSectionsStore';
-import usePathListStore from 'src/store/usePathListStore';
+import { useNonPersistedStore } from 'src/store/usePathListStore';
 
 import { motion } from 'framer-motion';
 import { animated, config, useTransition } from 'react-spring';
@@ -34,7 +34,7 @@ const TableDataCard = lazy(
 );
 
 export const Published = () => {
-  const { dataPath } = usePathListStore();
+  const { dataPath } = useNonPersistedStore();
 
   const [showComponent, setShowComponent] = useState(false);
   const [showComponentState, setShowComponentState] = useState(false); // Nuevo estado
@@ -44,7 +44,7 @@ export const Published = () => {
 
   const handleButtonTable = useCallback(() => {
     setShowTable(true);
-  }, []);
+  }, []); 
 
   const handleButtonCardSm = useCallback(() => {
     handleSizeCardSm();

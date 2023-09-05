@@ -20,7 +20,7 @@ export const ColorMode = () => {
      <Switch
       sizes={'md'}
       iconOf={"IconAtom"}
-      iconOn={"IconPlaylist"}
+      iconOn={"IconBullets"}
       checked={colorMode === 'dark' ? true : false}
       onClick={toggleColorMode}
     />

@@ -3,7 +3,7 @@ export interface CreateSectionProps {
   title: string;
 }
 
-export interface Video {
+export interface Section {
   uid: string;
   title: string;
   createdAt: string;
@@ -13,5 +13,5 @@ export interface Video {
 export interface CreateSectionResponse {
   success: boolean;
   message: string;
-  video: Video;
+  section: Section;
 }

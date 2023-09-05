@@ -1,11 +1,11 @@
 import { useMutation } from 'react-query';
-import { createSection } from '../services/createSection';
+import { updateSection } from '../services/updateSection';
 import { Section } from './interfaces/section.interface';
 
-export const useCreateSection = (
+export const useUpdateSection = (
   onMutationSuccess: (data: Section) => void
 ) => {
-  return useMutation(createSection, {
+  return useMutation(updateSection, {
     onSuccess: (data: Section) => {
       onMutationSuccess(data);
     },

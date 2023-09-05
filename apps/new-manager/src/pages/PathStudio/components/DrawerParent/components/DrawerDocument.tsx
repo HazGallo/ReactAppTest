@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -29,7 +29,6 @@ import { InputTextArea } from '../../../../../../../../packages/react-kit/src/co
 
 import useSectionsStore from 'src/store/useSectionsStore';
 
-import { useFileDropper } from '../hooks/useFileDropper';
 import { uploadFile } from '../interface/uploadFile';
 import { HeaderDrawer } from './HeaderDrawer';
 
@@ -50,31 +49,22 @@ const DrawerDocument = (props: Props) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [hasError, setHasError] = useState(false);
   const [isFileUploaded, setIsFileUploaded] = useState(true);
-  const [selectedLanguage, setSelectedLanguage] = useState<string>('');
   const [customInput, setCustomInput] = useState('Custom');
+  const fileRef = useRef<any>();
+  const [fileState, setFileState] = useState<uploadFile | null>(null);
 
-  const { onClose, handleTranslate, showTranslate, isScrolled } = props;
+  const { updateElement } = useSectionsStore();
 
-  const { cardElementSelected, sectionContents, IdSectionSelected } =
-    useSectionsStore(
-      (state) => ({
-        cardElementSelected: state.cardElementSelected,
-        sectionContents: state.sectionContents,
-        IdSectionSelected: state.IdSectionSelected,
-      }),
-      shallow
-    );
+  const { onClose, handleTranslate, showTranslate } = props;
 
-  const { updateElement, updateCardElementSelected } = useSectionsStore(
+  const { cardElementSelected, IdSectionSelected } = useSectionsStore(
     (state) => ({
-      updateElement: state.updateElement,
-      updateCardElementSelected: state.updateCardElementSelected,
-    })
+      cardElementSelected: state.cardElementSelected,
+      sectionContents: state.sectionContents,
+      IdSectionSelected: state.IdSectionSelected,
+    }),
+    shallow
   );
-
-  const handleTabChange = (lenguage: string) => {
-    setSelectedLanguage(lenguage);
-  };
 
   const validationSchema = Yup.object().shape({
     title: Yup.string().required('Campo obligatorio'),
@@ -117,49 +107,14 @@ const DrawerDocument = (props: Props) => {
 
     validationSchema,
     enableReinitialize: true,
-    onSubmit: (values) => {
-      if (!dataVideo?.path) {
-        setHasError(true);
-        setErrorMessage('El campo es requerido');
-      } else {
-        if (values.uid === null) {
-          setHasError(false);
-          setErrorMessage('');
-        }
-      }
-    },
+    onSubmit: (values) => {},
   });
-
-  const {
-    mutate: mutateUploadVideo,
-    error,
-    data: dataVideo,
-  } = useFileDropper();
-
-  useEffect(() => {
-    if (!dataVideo?.path && error) {
-      setHasError(true);
-      setErrorMessage('El campo es requerido');
-    } else {
-      setHasError(false);
-      setErrorMessage('');
-    }
-  }, [dataVideo, error]);
-
-  const uploadFile = (file: any) => {
-    setIsFileUploaded(true);
-    mutateUploadVideo({ path: file });
-  };
 
   const handleToggle = () => {
     setChecked(!checked);
   };
 
-  const fileRef = useRef<any>();
-  const [fileState, setFileState] = useState<uploadFile | null>(null); // Inicializar state
-
   const handleFileAttributes = (fileData: uploadFile) => {
-    //if new file is different from the previous one, update state
     if (!isEqual(fileState, fileData)) {
       fileRef.current = fileData;
       setFileState(fileData);
@@ -167,14 +122,29 @@ const DrawerDocument = (props: Props) => {
   };
 
   const handleSaveDataCard = () => {
-    updateElement(IdSectionSelected, cardElementSelected?.uid, {
-      ...cardElementSelected,
-      translations: formik.values.translations,
-    });
+    if (!cardElementSelected || !formik.values.translations) return;
 
-    updateCardElementSelected({
-      ...cardElementSelected,
-      translations: formik.values.translations,
+    // 1. Crea el primer elemento modificado.
+    const updatedFirstTranslation = {
+      title: formik.values.translations[0].title,
+      description: formik.values.translations[0].description,
+      asset: {
+        ...cardElementSelected?.translations[0].asset,
+        size: fileState?.size,
+        filePath: fileState?.name,
+      },
+    };
+
+    // 2. Combina el elemento modificado con el resto de formik.values.translations.
+    const updatedTranslations = [
+      updatedFirstTranslation,
+      ...formik.values.translations.slice(1),
+    ];
+
+    // 3. Pasa el array modificado a la función updateElement.
+    updateElement(IdSectionSelected, cardElementSelected.uid, {
+      translations: updatedTranslations,
+      newCard: false,
     });
   };
 
@@ -247,6 +217,7 @@ const DrawerDocument = (props: Props) => {
                             value
                           );
                         }}
+                        toolBars={false}
                       />
                     </Box>
 
@@ -268,17 +239,31 @@ const DrawerDocument = (props: Props) => {
                           <FileDropper
                             onChangeProgress={setIsFileUploaded}
                             progressChange={isFileUploaded}
-                            type={cardElementSelected?.type?.title.toLowerCase()}
+                            type={cardElementSelected?.type.title.toLowerCase()}
                             isDisabled={false}
                             errorMessage={errorMessage}
                             hasError={hasError}
                             warning={false}
                             maxFiles={1}
                             maxSize={10 * 1000 * 1000}
-                            onChange={uploadFile}
+                            onChange={() => {}}
                             onDrop={(files: any) => {
                               console.log({ files });
                             }}
+                            uploadedFileDuration={null}
+                            uploadedFileName={
+                              cardElementSelected?.translations[0]?.asset
+                                ?.filePath
+                                ? cardElementSelected?.translations[0]?.asset
+                                    ?.filePath
+                                : null
+                            }
+                            uploadedFileSize={
+                              cardElementSelected?.translations[0]?.asset?.size
+                                ? cardElementSelected?.translations[0]?.asset
+                                    ?.size
+                                : null
+                            }
                             setFileAttributes={handleFileAttributes}
                           />
                         </Flex>
@@ -362,71 +347,82 @@ const DrawerDocument = (props: Props) => {
               <Switch sizes="md" checked={checked} onClick={handleToggle} />
             </Box>
           </Flex>
-          <Flex
-            marginTop="25px"
-            marginBottom={
-              cardElementSelected?.type.title === 'Video' ||
-              cardElementSelected?.type.title === 'Audio'
-                ? '50px'
-                : '20px'
-            }
-            w="100%"
-          >
-            <FileDropper
-              errorMessage={errorMessage}
-              hasError={hasError}
-              isDisabled={false}
-              onChangeProgress={setIsFileUploaded}
-              progressChange={isFileUploaded}
-              type={cardElementSelected?.type.title.toLowerCase()}
-              warning={false}
-              onDrop={(files: any) => {
-                console.log({ files });
-              }}
-              maxFiles={1}
-              maxSize={10 * 1000 * 1000}
-              onChange={uploadFile}
-              setFileAttributes={handleFileAttributes}
-              uploadedFileDuration={null}
-              uploadedFileName={
-                cardElementSelected?.translations[0]?.asset?.filePath || null
-              }
-              uploadedFileSize={
-                cardElementSelected?.translations[0]?.asset?.size
-              }
-            />
-          </Flex>
-          {cardElementSelected?.type.title === 'Video' ||
-          cardElementSelected?.type.title === 'Audio' ? (
-            <></>
-          ) : (
-            <>
-              <Text color="txSecondary">Estimated time to complete</Text>
-              <Box
-                display="flex"
-                alignContent={'center'}
-                gap="20px"
-                marginBottom="40px"
-                justifyContent="space-between"
-                marginTop="10px"
-              >
-                <SelectorSystem
-                  selectorData={SELECTORS}
-                  type={'sm'}
-                  selectionType={'single'}
-                />
 
-                <Box width="80px">
-                  <InputText
-                    hasError={false}
-                    placeholder="Text"
-                    sizes="md"
-                    value={customInput}
-                    onChange={(e) => handleCustomInput(e.target.value)}
-                  />
-                </Box>
-              </Box>
-            </>
+          {cardElementSelected.type.title === 'url' ? (
+            <Box w="100%" mt="40px"></Box>
+          ) : (
+            <div>
+              <Flex
+                marginTop="25px"
+                marginBottom={
+                  cardElementSelected?.type.title === 'Video' ||
+                  cardElementSelected?.type.title === 'Audio'
+                    ? '50px'
+                    : '20px'
+                }
+                w="100%"
+              >
+                <FileDropper
+                  errorMessage={errorMessage}
+                  hasError={hasError}
+                  isDisabled={false}
+                  onChangeProgress={setIsFileUploaded}
+                  progressChange={isFileUploaded}
+                  type={cardElementSelected?.type.title.toLowerCase()}
+                  warning={false}
+                  onDrop={(files: any) => {
+                    console.log({ files });
+                  }}
+                  maxFiles={1}
+                  maxSize={10 * 1000 * 1000}
+                  onChange={() => {}}
+                  setFileAttributes={handleFileAttributes}
+                  uploadedFileDuration={null}
+                  uploadedFileName={
+                    cardElementSelected?.translations[0]?.asset?.filePath
+                      ? cardElementSelected?.translations[0]?.asset?.filePath
+                      : null
+                  }
+                  uploadedFileSize={
+                    cardElementSelected?.translations[0]?.asset?.size
+                      ? cardElementSelected?.translations[0]?.asset?.size
+                      : null
+                  }
+                />
+              </Flex>
+              {cardElementSelected?.type.title === 'Video' ||
+              cardElementSelected?.type.title === 'Audio' ? (
+                <></>
+              ) : (
+                <>
+                  <Text color="txSecondary">Estimated time to complete</Text>
+                  <Box
+                    display="flex"
+                    alignContent={'center'}
+                    gap="20px"
+                    marginBottom="40px"
+                    justifyContent="space-between"
+                    marginTop="10px"
+                  >
+                    <SelectorSystem
+                      selectorData={SELECTORS}
+                      type={'sm'}
+                      selectionType={'single'}
+                    />
+
+                    <Box width="80px">
+                      <InputText
+                        hasError={false}
+                        placeholder="Text"
+                        sizes="md"
+                        value={customInput}
+                        onChange={(e) => handleCustomInput(e.target.value)}
+                      />
+                    </Box>
+                  </Box>
+                </>
+              )}
+            </div>
           )}
         </Box>
       )}

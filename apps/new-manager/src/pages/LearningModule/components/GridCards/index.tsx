@@ -1,27 +1,29 @@
-import { useCallback, useEffect, useState, memo } from 'react';
-import { Box, useMediaQuery } from '@chakra-ui/react';
+import { useState, memo } from 'react';
 import { shallow } from 'zustand/shallow';
+import { useNavigate } from 'react-router-dom';
+import { Box, useMediaQuery } from '@chakra-ui/react';
 
 import { CardItem, contentType, pathType } from '@iseazy/react-kit';
 
 import useSectionsStore from 'src/store/useSectionsStore';
 import { getRandomObject } from '../../../../data/dataCard';
 import { useSettings } from '../../../../store/settingsStore';
-import usePathListStore from '../../../../store/usePathListStore';
+import { usePersistedStore } from '../../../../store/usePathListStore';
 import { Element } from './interfaces/propertiesCard';
-import { useNavigate } from 'react-router-dom';
 
 const GridCards = memo(
   ({ uid, title, language, cover }: Element & { isDragging: boolean }) => {
     const [randomObject] = useState(() => getRandomObject());
     const [adaptedSizeSm] = useMediaQuery('(max-width: 768px)');
     const navigate = useNavigate();
-    const { updateCardSelected } = usePathListStore(
+    const { updateCardSelected, updateSelectedPathName } = usePersistedStore(
       (state) => ({
         updateCardSelected: state.updateCardSelected,
+        updateSelectedPathName: state.updateSelectedPathName
       }),
       shallow
     );
+    const { resetStore } = useSectionsStore();
 
     const { cardSize, readonly } = useSettings(
       (state) => ({
@@ -31,9 +33,11 @@ const GridCards = memo(
       shallow
     );
 
-    const handleClickCard = (uid: string) => {
-      navigate('/learning/studio');
+    const handleClickCard = (uid: string, title:string) => {
+      resetStore();
       updateCardSelected(uid);
+      updateSelectedPathName(title)
+      navigate('/learning/studio');
     };
 
     return (
@@ -46,7 +50,7 @@ const GridCards = memo(
           cursor: 'pointer',
         }}
         userSelect="none"
-        onClick={() => handleClickCard(uid)}
+        onClick={() => handleClickCard(uid, title)}
       >
         <CardItem
           checked={randomObject.checked}
@@ -60,7 +64,7 @@ const GridCards = memo(
             'inherit',
             adaptedSizeSm ? '140px' : cardSize ? '220px' : '140px',
           ]}
-          onClickDrawer={() => handleClickCard(uid)}
+          onClickDrawer={() => handleClickCard(uid, title)}
           placeholder="title"
           placeholderSrc={''}
           readOnly={readonly}

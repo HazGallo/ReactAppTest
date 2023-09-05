@@ -15,8 +15,15 @@ export type State = {
   IdSectionSelected: string;
   sectionContents: SectionContents[];
   sections: Section[];
-  createSection: (id: string, name: string) => void;
-
+  createSection: (sectionData: Section) => void;
+  updateSectionContents: (
+    sectionId: string,
+    newContents: {
+      id: string;
+      coverImage: string;
+      type: any;
+    }[]
+  ) => void;
   addElement: (sectionId: string, element: Element) => void;
   modifySection: (sectionId: string) => {
     sectionId: string;
@@ -44,7 +51,7 @@ const initialState: State = {
   IdSectionSelected: '',
   sectionContents: [],
   sections: [],
-
+  updateSectionContents: () => {},
   addElement: () => {},
   resetStore: () => {},
   createSection: () => {},
@@ -64,23 +71,62 @@ const initialState: State = {
 const useSectionsStore = create<State>((set) => ({
   ...initialState,
 
-  createSection: (id: string, name: string) => {
+  resetStore: () => {
+    set(
+      produce((state) => {
+        state.cardElementSelected = null;
+        state.IdSectionSelected = '';
+        state.sectionContents = [];
+        state.sections = [];
+      })
+    );
+  },
+
+  createSection: (sectionData: Section) => {
     set(
       produce((state) => {
         // Verifica si el id ya existe en las secciones
         const sectionExists = state.sections.some(
-          (section: Section) => section.id === id
+          (section: Section) => section.id === sectionData.id
         );
 
         if (!sectionExists) {
-          const newSection: Section = {
-            id,
-            name,
-            contents: [],
-          };
-
-          state.sections = [...state.sections, newSection]; // usando el operador de propagación
+          state.sections = [...state.sections, sectionData]; // usando el operador de propagación
         }
+      })
+    );
+  },
+
+  updateSectionContents: (
+    sectionId: string,
+    newContents: {
+      id: string;
+      coverImage: string;
+      type: any;
+    }[]
+  ) => {
+    set(
+      produce((state) => {
+        const sectionIndex = state.sections.findIndex(
+          (section: Section) => section.id === sectionId
+        );
+
+        if (sectionIndex === -1) {
+          console.error(`The section with ID '${sectionId}' does not exist.`);
+          return;
+        }
+
+        const updatedSection = { ...state.sections[sectionIndex] };
+        updatedSection.contents = [
+          ...updatedSection.contents,
+          ...newContents.map((content) => ({
+            id: content.id,
+            coverImage: content.coverImage,
+            type: content.type,
+          })),
+        ];
+
+        state.sections[sectionIndex] = updatedSection;
       })
     );
   },
@@ -104,24 +150,6 @@ const useSectionsStore = create<State>((set) => ({
           const sectionContentsIndex = state.sectionContents.findIndex(
             ({ idSection }: { idSection: string }) => idSection === sectionId
           );
-
-          const newContent: Section['contents'][number] = {
-            id: element.uid,
-            coverImage: element.cover.filePath,
-            type: element.type.title,
-          };
-
-          // Verificar si newContent ya existe en section.contents
-          const contentAlreadyExists = state.sections[
-            existingSectionIndex
-          ].contents.some((content) => content.id === newContent.id);
-
-          if (contentAlreadyExists) {
-            console.error(
-              `Content with ID '${newContent.id}' already exists in the section.`
-            );
-            return; // Si ya existe, salimos sin hacer nada más.
-          }
 
           if (sectionContentsIndex !== -1) {
             const elIndex = state.sectionContents[
@@ -147,7 +175,7 @@ const useSectionsStore = create<State>((set) => ({
                 ...state.sections[existingSectionIndex],
                 contents: [
                   ...state.sections[existingSectionIndex].contents,
-                  newContent,
+                  // newContent,
                 ],
               };
 
@@ -174,7 +202,7 @@ const useSectionsStore = create<State>((set) => ({
                 ...state.sections[existingSectionIndex],
                 contents: [
                   ...state.sections[existingSectionIndex].contents,
-                  newContent,
+                  // newContent,
                 ],
               };
 
@@ -346,9 +374,6 @@ const useSectionsStore = create<State>((set) => ({
         state.sectionContents[sectionIndex].elements[elIndex] = updatedElement;
       })
     );
-  },
-  resetStore: () => {
-    set(initialState);
   },
 }));
 

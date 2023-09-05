@@ -25,8 +25,9 @@ export const ManagerRoutes = () => {
             fallback={<LoadingLearning typeAnimacion="courseloading" />}
           >
             <Layout>
-              <PathStudio />
+            <PathStudio />
             </Layout>
+         
           </Suspense>
         }
       />

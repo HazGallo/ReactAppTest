@@ -15,7 +15,7 @@ export interface Element {
   onClose: () => void;
   setIsDragging: (e: any) => void;
   newCard: boolean;
-
+  typeCard: 'cardItem' | 'cardQuestion';
   height: number;
 }
 

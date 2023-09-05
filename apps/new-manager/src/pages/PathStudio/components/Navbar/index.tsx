@@ -14,6 +14,7 @@ import { CustomTab } from './components/CustomTab';
 import { ColorMode } from './components/ColorMode';
 
 import useSectionsStore from 'src/store/useSectionsStore';
+import { usePersistedStore } from 'src/store/usePathListStore';
 
 interface Props {
   tabIndex: number;
@@ -24,6 +25,12 @@ const Navbar = (props: Props) => {
 
   const [isMobile] = useMediaQuery('(max-width: 1110px)');
   const [isOpen, setIsOpen] = useState(false);
+  const { seletedPathName } = usePersistedStore(
+    (state) => ({
+      seletedPathName: state.seletedPathName,
+    }),
+    shallow
+  );
 
   const { sections } = useSectionsStore(
     (state) => ({
@@ -51,7 +58,9 @@ const Navbar = (props: Props) => {
 
   const buttonData = [
     {
-      ariaLabel: 'Efficient Strategies for Retail Success',
+      ariaLabel: seletedPathName
+        ? seletedPathName
+        : 'Efficient Strategies for Retail Success',
     },
     {
       ariaLabel: 'Contents',

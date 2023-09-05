@@ -42,10 +42,11 @@ const GridContentDraggable = lazy(() => import('../GridContentDraggable'));
 const TableDataCard = lazy(() => import('../TableDataCard'));
 
 import { shallow } from 'zustand/shallow';
-import usePathList from 'src/store/usePathListStore';
-import { Video } from '../../hooks/interfaces/section.interface';
+import { usePersistedStore } from 'src/store/usePathListStore';
+import { Section } from '../../hooks/interfaces/section.interface';
 import { useCreateSection } from '../../hooks/useCreateSection';
 import { badgeTypes } from './types/BadgeTypeBg';
+import { useUpdateSection } from '../../hooks/useUpdateSection';
 
 export const Contents = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -69,9 +70,11 @@ export const Contents = () => {
     sectionContents,
     sections,
     updateSectionName,
+    updateSectionContents,
   } = useSectionsStore(
     (state) => ({
       addElement: state.addElement,
+      updateSectionContents: state.updateSectionContents,
       createSection: state.createSection,
       IdSectionSelected: state.IdSectionSelected,
       modifySection: state.modifySection,
@@ -98,7 +101,7 @@ export const Contents = () => {
       const bg = badgeTypes.find((x) => x.type.toLowerCase() === element.type);
       avatar.unshift({
         name: element.id,
-        src: '',
+        src: element.coverImage,
         backgroundColor: bg?.bg,
       });
     });
@@ -124,20 +127,23 @@ export const Contents = () => {
     setShowComponent(!showComponent);
   }, [showComponent]);
 
-  // en este metodo que le pasamos como props al hooks obtiene la data y una ves ya la tenemos
-  //  creamos la seccion en nuestro state de zustand, mas que todo para obtener el id
-  const onMutationSuccess = (video: Video) => {
-    createSection(video.uid, video.title);
+  const onMutationSuccess = (section: Section) => {
+    createSection({
+      id: section.uid,
+      name: section.title,
+      contents: [],
+    });
   };
 
-  // llamamos al hooks y le pasamos un metodo para obtener la data una ves ya este cargada
+  const onMutationUpdateSectionSuccess = (section: Section) => {};
   const createSectionMutation = useCreateSection(onMutationSuccess);
-  const { IdCardSelected } = usePathList();
+  const updateSectionMutation = useUpdateSection(
+    onMutationUpdateSectionSuccess
+  );
+  const { IdCardSelected } = usePersistedStore();
 
   const handleCreateSection = () => {
     const sectionName = inputValue || 'New section';
-
-    // usamos el mutate para hacer la peticion
     createSectionMutation.mutate({
       id: IdCardSelected,
       title: sectionName,
@@ -153,6 +159,13 @@ export const Contents = () => {
           behavior: 'smooth',
         });
       }
+    });
+  };
+
+  const updateTitleSection = (sectionId: string, title: string) => {
+    updateSectionMutation.mutate({
+      id: sectionId,
+      title,
     });
   };
 
@@ -208,6 +221,13 @@ export const Contents = () => {
   };
 
   const handleAddElement = (sectionId: string, title: any) => {
+    updateSectionContents(sectionId, [
+      {
+        id: uuidv4(),
+        coverImage: '',
+        type: title,
+      },
+    ]);
     const newElement: Element = {
       uid: uuidv4(),
       type: {
@@ -280,7 +300,7 @@ export const Contents = () => {
       justifyContent="center"
       alignItems={'center'}
       width={'100%'}
-      pl="5%"
+      pl={['20px', '5%']}
       h="100vh"
     >
       <DrawerParent
@@ -315,6 +335,7 @@ export const Contents = () => {
                   pb="50px"
                   overflowY="auto"
                   overflowX="hidden"
+                  id="scroll2"
                   sx={{ ...scrollCss }}
                 >
                   <DragDropContext
@@ -370,6 +391,7 @@ export const Contents = () => {
                                     amount={section?.contents?.length ?? 0}
                                     setValueHeading={(name: string) => {
                                       updateSectionName(section.id, name);
+                                      updateTitleSection(section.id, name);
                                     }}
                                     onSeletedChange={(title: string) => {
                                       onSeletedChange(title, section.id);
@@ -465,13 +487,14 @@ export const Contents = () => {
       <Box
         h="100%"
         paddingTop="130px"
-        ml={showComponent ? '400px' : ''}
+        ml={showComponent ? '350px' : ''}
         position={'relative'}
         id="scrollSection"
         overflowY={'auto'}
         sx={{ ...scrollContents }}
         overflowX="hidden"
-        pr="5%"
+        pr={['20px', '5%']}
+        pl={showComponent ? '50px' : ''}
         transition="all .3s ease-in-out"
         w="100%"
       >

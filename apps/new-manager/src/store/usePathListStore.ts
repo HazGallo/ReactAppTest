@@ -1,20 +1,37 @@
 import { create } from 'zustand';
 import { mountStoreDevtool } from 'simple-zustand-devtools';
-import { data } from './interfaces/pathList.interface';
+import { Data, SectionsResponse } from './interfaces/pathList.interface';
 import { persist } from 'zustand/middleware';
+import { produce } from 'immer';
 
-const usePathListStore = create(
-  persist<data>(
+type PersistedState = {
+  IdCardSelected: string;
+  seletedPathName: string;
+  updateCardSelected: (selectedElement: any) => void;
+  updateSelectedPathName: (namePath: any) => void;
+};
+
+type NonPersistedState = {
+  dataPath: Data[];
+  setData: (newData: SectionsResponse) => void;
+};
+
+const initialState: NonPersistedState = {
+  dataPath: [],
+  setData: () => {},
+};
+
+const usePersistedStore = create(
+  persist<PersistedState>(
     (set, get) => ({
-      dataPath: [],
       IdCardSelected: '',
-
-      setData: (newData: any) => {
-        set({ dataPath: newData });
-      },
+      seletedPathName: '',
 
       updateCardSelected: (selectedElement: any) => {
         set({ IdCardSelected: selectedElement });
+      },
+      updateSelectedPathName: (namePath: any) => {
+        set({ seletedPathName: namePath });
       },
     }),
     {
@@ -23,8 +40,19 @@ const usePathListStore = create(
   )
 );
 
+const useNonPersistedStore = create<NonPersistedState>((set, get) => ({
+  ...initialState,
+  setData: (newData) =>
+    set(
+      produce((state) => {
+        state.dataPath = newData;
+      })
+    ),
+}));
+
 if (process.env.NODE_ENV === 'development') {
-  mountStoreDevtool('PathListStore', usePathListStore);
+  mountStoreDevtool('PersistedStore', usePersistedStore);
+  mountStoreDevtool('NonPersistedStore', useNonPersistedStore);
 }
 
-export default usePathListStore;
+export { usePersistedStore, useNonPersistedStore };

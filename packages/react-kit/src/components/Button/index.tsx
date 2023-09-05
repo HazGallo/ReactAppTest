@@ -7,7 +7,6 @@ import {
 } from '@chakra-ui/react';
 
 import { IconWarningMark } from '../../assets/customIcons';
-import { Ico } from '../Ico';
 
 import Lottie from 'react-lottie-player';
 import loaderDots from './animation/loaderDots.json';
@@ -20,7 +19,7 @@ import '@fontsource/roboto';
 export interface Props extends ButtonProps {
   label: string;
   typeIcon?: types | noIcoType;
-  warning?: boolean; 
+  warning?: boolean;
   sizeName: 'md' | 'lg';
   isDisabled?: boolean;
   isSelected?: boolean;
@@ -51,7 +50,13 @@ export const Button = (props: Props) => {
   return (
     <CustomButton
       display={formats === 'fixed' ? 'inline-block' : 'block'}
-      width={formats === 'fixed' ? (isLoading && !isDisabled  ? '112px' : 'unset') : '100%'}
+      width={
+        formats === 'fixed'
+          ? isLoading && !isDisabled
+            ? '112px'
+            : 'unset'
+          : '100%'
+      }
       height={y?.background}
       borderRadius="8px"
       overflow="hidden"
@@ -146,7 +151,7 @@ export const Button = (props: Props) => {
       }}
       cursor={isDisabled ? 'not-allowed' : 'pointer'}
       position="relative"
-      pointerEvents={isLoading && !isDisabled  ? 'none' : 'auto'}
+      pointerEvents={isLoading && !isDisabled ? 'none' : 'auto'}
       px="0px"
       py="0px"
       mx="0px"
@@ -185,7 +190,7 @@ export const Button = (props: Props) => {
               ? x?.icon && x?.icon !== 'noIco'
                 ? '15px'
                 : '25px'
-              :  x?.icon && x?.icon !== 'noIco'
+              : x?.icon && x?.icon !== 'noIco'
               ? '25px'
               : '30px'
           }
@@ -196,7 +201,9 @@ export const Button = (props: Props) => {
           justifyContent="center"
           cursor={isDisabled ? 'not-allowed' : 'pointer'}
         >
-          {x?.icon && x?.icon !== 'noIco' && <Ico icon={x?.icon} sizeName="sm" mr="5px" />}
+          {/* {x?.icon && x?.icon !== 'noIco' && (
+            <Ico icon={x?.icon} sizeName="sm" mr="5px" />
+          )} */}
           <Text
             mt={sizeName === 'md' ? '10px' : '15px'}
             mb={sizeName === 'md' ? '9px' : '14px'}

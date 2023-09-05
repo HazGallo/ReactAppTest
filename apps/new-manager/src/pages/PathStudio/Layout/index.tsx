@@ -1,25 +1,17 @@
+import { Box } from '@chakra-ui/react';
 import React, { useEffect, useMemo, useState } from 'react';
+import { usePersistedStore } from 'src/store/usePathListStore';
 import useSectionsStore from 'src/store/useSectionsStore';
+import { Section } from '../hooks/interfaces/pathSection.interface';
 import { useContentList } from '../hooks/useContentList';
 import { usePathSection } from '../hooks/usePathSection';
-import usePathList from 'src/store/usePathListStore';
-import useLoginCheckStore from 'src/store/useLoginStore';
-import { LoadingLearning } from "../../LoadingLearning"
-import { Box } from '@chakra-ui/react';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const {
-    createSection,
-    IdSectionSelected,
-    addElement,
-    modifySection,
-    resetStore,
-  } = useSectionsStore();
+  const { createSection, IdSectionSelected, addElement, modifySection } =
+    useSectionsStore();
   const [processedIds, setProcessedIds] = useState<string[]>([]);
 
-  const { IdCardSelected } = usePathList();
-  const { dataLogin } = useLoginCheckStore();
-  console.log(dataLogin, 'new');
+  const { IdCardSelected } = usePersistedStore();
 
   const { data } = usePathSection(IdCardSelected);
 
@@ -35,8 +27,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (data) {
-      data.forEach((section:any) => {
-        createSection(section.uid, section.title);
+      data.forEach((section: Section) => {
+        const contents = section.firstThreeContentCovers.map(
+          (contentCover) => ({
+            id: section.uid,
+            coverImage: contentCover.filePath,
+            type: contentCover.dominantColor,
+          })
+        );
+
+        createSection({
+          id: section.uid,
+          name: section.title,
+          contents: contents,
+        });
       });
 
       modifySection(data[0].uid);
@@ -46,17 +50,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (dataContentList) {
       dataContentList.forEach((contentItem: any) => {
-        addElement(IdSectionSelected, contentItem.content);
+        addElement(IdSectionSelected, contentItem);
       });
     }
     setProcessedIds((prevIds) => [...prevIds, IdSectionSelected]);
   }, [IdSectionSelected, dataContentList]);
 
   return (
-    <Box
-     bg="primary"
-      minHeight="100vh"
-      >
+    <Box bg="primary" minHeight="100vh">
       {children}
     </Box>
   );

@@ -204,7 +204,7 @@ export const selectorPathData = [
   },
   {
     type: 'SelectorPathInstagram',
-  }
+  },
 ];
 
 export const selectorAttempts = [
@@ -219,16 +219,54 @@ export const selectorAttempts = [
   },
 ];
 
-export const selectorMark = [
-  {
-    title: '4,5',
-  },
-  {
-    title: '5',
-  },
-  {
-    title: '7,5',
-  },
-];
+export const selectorModuleTest = {
+  selectorsMark: [
+    {
+      title: '4,5',
+    },
+    {
+      title: '5', 
+    },
+    {
+      title: '7,5',
+    },
+  ],
+  selectorsAttemts: [
+    {
+      title: '1',
+    },
+    {
+      title: '3',
+    },
+    {
+      title: '5',
+    },
+  ],
+};
 
 
+export const selectorModuleGame = {
+  selectorsAttemts: [
+    {
+      title: '1',
+    },
+    {
+      title: '5',
+    },
+    {
+      title: 'Unilimited',
+    },
+  ],
+};
+
+// moduleData.js
+export const valueHeadingTestInitial: string = 'Test';
+export const valueTextTestInitial: string =
+  'Test the user knowledge and make sure the content sticks. Unlock the assessment start mode for even more user knowledge data.';
+
+export const valueHeadingGameInitial: string = 'Game';
+export const valueTextGameInitial: string = `Allow users to compete in the path's knowledge-based game. Unlock the initial game start mode for even more user engagement.`;
+
+export const valueHeadingMaterialInitial: string = 'Additional Materials';
+export const valueTextMaterialInitial: string =
+  'Complete your path with additional content for your users to further explore, contextualize and learn.';

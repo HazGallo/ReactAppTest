@@ -1,12 +1,12 @@
 import {
   CreateSectionProps,
   CreateSectionResponse,
-  Video,
+  Section,
 } from '../hooks/interfaces/section.interface';
 
 export const createSection = async (
   props: CreateSectionProps
-): Promise<Video> => {
+): Promise<Section> => {
   const { id, title } = props;
 
   if (!id) {
@@ -31,5 +31,5 @@ export const createSection = async (
   }
 
   const responseData: CreateSectionResponse = await response.json();
-  return responseData.video;
+  return responseData.section;
 };

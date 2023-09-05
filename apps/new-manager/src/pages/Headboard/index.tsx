@@ -1,26 +1,29 @@
-import React, { useState, useEffect } from 'react';
 import {
   Box,
   Flex,
   Heading,
+  Text,
   useDisclosure,
   useMediaQuery,
-  Text,
 } from '@chakra-ui/react';
 import {
   ButtonIco,
   ButtonIcoGroup,
+  DropdownMenu,
   InputText,
   TextEditable,
 } from '@iseazy/react-kit';
-import { ButtonMenu } from './components/ButtonMenu';
+import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { Element } from 'src/store/interfaces/element.interface';
+import { v4 as uuidv4 } from 'uuid';
 import { types } from '../../../../../packages/react-kit/src/shared/iconsTypes/icons';
 import useSectionsStore from '../../store/useSectionsStore';
-import { v4 as uuidv4 } from 'uuid';
+import { Section } from '../PathStudio/hooks/interfaces/section.interface';
+import { useUpdateSection } from '../PathStudio/hooks/useUpdateSection';
 import DrawerParent from './../PathStudio/components/DrawerParent/DrawerParent';
+import { ButtonMenu } from './components/ButtonMenu';
 import { dataMenu } from './data/dataMenu';
-import { Element } from 'src/store/interfaces/element.interface';
-import { motion } from 'framer-motion';
 
 interface HeadboardProps {
   buttonOne?: boolean;
@@ -36,12 +39,15 @@ interface HeadboardProps {
   idSection?: string;
   areaSection?: boolean;
   titleHeader?: string;
+  contentImport?: boolean;
+  counter?: number;
 }
 
 export const Headboard: React.FC<HeadboardProps> = ({
   buttonOne,
   buttonShow,
   buttonThree,
+  counter = 0,
   buttonTwo,
   handleButtonCardMd,
   handleButtonCardSm,
@@ -52,6 +58,7 @@ export const Headboard: React.FC<HeadboardProps> = ({
   title,
   areaSection = true,
   titleHeader,
+  contentImport,
 }) => {
   const [isMobile] = useMediaQuery('(max-width: 1110px)');
   const [isScrolled, setIsScrolled] = useState(false);
@@ -63,9 +70,11 @@ export const Headboard: React.FC<HeadboardProps> = ({
     updateSectionName,
     sectionContents,
     sections,
+    updateSectionContents,
   } = useSectionsStore((state) => ({
     sections: state.sections,
     addElement: state.addElement,
+    updateSectionContents: state.updateSectionContents,
     IdSectionSelected: state.IdSectionSelected,
     modifySection: state.modifySection,
     updateSectionName: state.updateSectionName,
@@ -107,6 +116,14 @@ export const Headboard: React.FC<HeadboardProps> = ({
   };
 
   const handleAddElement = (sectionId: string, title: any) => {
+    updateSectionContents(sectionId, [
+      {
+        id: uuidv4(),
+        coverImage: '',
+        type: title,
+      },
+    ]);
+
     const newElement: Element = {
       uid: uuidv4(),
       type: {
@@ -155,7 +172,7 @@ export const Headboard: React.FC<HeadboardProps> = ({
         filePath: '',
         cdnUrl: null,
         mimeType: 'image/png',
-        size: 100,
+        size: 0,
         sizeFormatted: '100 ',
         imageAsset: null,
         isCompressed: false,
@@ -174,11 +191,44 @@ export const Headboard: React.FC<HeadboardProps> = ({
     addElement(sectionId ?? IdSectionSelected, newElement);
   };
 
+  const option = [
+    {
+      title: 'Import Template',
+      categoryTitle: 'Category 1',
+      icon: 'IconDownload',
+    },
+  ];
+
+  const [download, setDownload] = useState(false);
+
+  const handleDownload = () => {
+    setDownload(!download);
+  };
+
+  const handleDownloadExcel = () => {
+    window.location.href = '../../../public/questionsExcel.xlsx';
+  };
+
+  const onMutationUpdateSectionSuccess = (section: Section) => {};
+
+  const updateSectionMutation = useUpdateSection(
+    onMutationUpdateSectionSuccess
+  );
+
+  const updateTitleSection = (sectionId: string, title: string) => {
+    updateSectionMutation.mutate({
+      id: sectionId,
+      title,
+    });
+  };
+
   const onChangeFuncHeading = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ): void => {
     setSectionName(event.target.value);
+
     updateSectionName(IdSectionSelected, event.target.value);
+    updateTitleSection(IdSectionSelected, event.target.value);
   };
 
   useEffect(() => {
@@ -244,6 +294,7 @@ export const Headboard: React.FC<HeadboardProps> = ({
             width: '100%',
             h: '20px',
           }}
+          //  px="0.5em"
         >
           <motion.div
             initial="hidden" // Estado inicial
@@ -265,26 +316,28 @@ export const Headboard: React.FC<HeadboardProps> = ({
               width="full"
               background={'primary'}
               pt={'30px'}
-              pb="20px"
+              pb={['10px', '20px']}
             >
-              <Flex gap="12px" alignItems="center">
+              <Flex gap="12px" alignItems="center" w="250px">
                 <Heading size={'sm'} mr={'5px'}>
                   {title ?? 'Contents'}
                 </Heading>
 
                 {areaSection && (
                   <>
-                    <ButtonIco
-                      sizeName="md"
-                      warning={false}
-                      isDisabled={false}
-                      backgroundType="backgroundFilled"
-                      typeIcon="IconList"
-                      display="flex"
-                      isSelected={buttonShow}
-                      onClick={handleButtonItemGroup}
-                      aria-label={''}
-                    />
+                    <Box>
+                      <ButtonIco
+                        sizeName="md"
+                        warning={false}
+                        isDisabled={false}
+                        backgroundType="backgroundFilled"
+                        typeIcon="IconList"
+                        display="flex"
+                        isSelected={buttonShow}
+                        onClick={handleButtonItemGroup}
+                        aria-label={''}
+                      />
+                    </Box>
 
                     <Box h="38px" w="200px">
                       <TextEditable
@@ -296,6 +349,7 @@ export const Headboard: React.FC<HeadboardProps> = ({
                         setValue={setSectionName}
                         value={sectionName}
                         onChange={onChangeFuncHeading}
+                        readOnly={title === 'Test Questions' ? true : false}
                       >
                         <Heading
                           size="sm"
@@ -317,17 +371,29 @@ export const Headboard: React.FC<HeadboardProps> = ({
                 alignItems="center"
                 flexWrap="wrap"
               >
-                <Heading
-                  size="sm"
-                  fontWeight="bold"
-                  letterSpacing="-0.6px"
-                  ml="5px"
-                >
-                  {sectionContent?.elements.length !== undefined
-                    ? sectionContent.elements.length
-                    : 0}{' '}
-                  Cards
-                </Heading>
+                {title === 'Test Questions' ? (
+                  <Heading
+                    size="sm"
+                    fontWeight="bold"
+                    letterSpacing="-0.6px"
+                    ml="5px"
+                  >
+                    {counter + '   '}
+                    Questions
+                  </Heading>
+                ) : (
+                  <Heading
+                    size="sm"
+                    fontWeight="bold"
+                    letterSpacing="-0.6px"
+                    ml="5px"
+                  >
+                    {sectionContent?.elements.length !== undefined
+                      ? sectionContent.elements.length
+                      : 0}{' '}
+                    Cards
+                  </Heading>
+                )}
 
                 <Box width="215px" height={''}>
                   <InputText
@@ -388,6 +454,7 @@ export const Headboard: React.FC<HeadboardProps> = ({
           position: 'static',
           width: '100%',
         }}
+        px="0.5em"
       >
         {titleHeader && (
           <Text textStyle={'md'} color="neGrey.700">
@@ -414,7 +481,7 @@ export const Headboard: React.FC<HeadboardProps> = ({
             alignItems="center"
             flexWrap="wrap"
           >
-            <Box width="215px" height={'50px'}>
+            <Box width="215px" height={isMobile ? '40px' : '50px'}>
               <InputText
                 onChange={() => {}}
                 hasError={false}
@@ -450,6 +517,38 @@ export const Headboard: React.FC<HeadboardProps> = ({
                 />
               ))}
             </ButtonIcoGroup>
+
+            {contentImport && (
+              <DropdownMenu
+                iconTypes={'IconDotsHorizontal'}
+                categoryType={'noCategory'}
+                positioning="center"
+                dataMenu={option}
+                isDisabled={false}
+                onSelect={(data: any) => {
+                  if (option[0].title === data) {
+                    handleDownloadExcel();
+                    setDownload(false);
+                  }
+                }}
+                warning={false}
+                showIcon={true}
+                typeMenu={'dropdownMenuOption'}
+              >
+                <div>
+                  <ButtonIco
+                    isSelected={download}
+                    backgroundType="backgroundFilled"
+                    sizeName={isMobile ? 'md' : 'lg'}
+                    aria-label=""
+                    onClick={handleDownload}
+                    typeIcon={'IconDotsHorizontal'}
+                    isDisabled={false}
+                  />
+                </div>
+              </DropdownMenu>
+            )}
+
             <ButtonMenu
               dataMenu={dataMenu}
               categoryType="noCategory"
@@ -492,6 +591,7 @@ export const Headboard: React.FC<HeadboardProps> = ({
                   setValue={setSectionName}
                   value={sectionName}
                   onChange={onChangeFuncHeading}
+                  readOnly={title === 'Test Questions' ? true : false}
                 >
                   <Heading
                     size="sm"
@@ -506,12 +606,29 @@ export const Headboard: React.FC<HeadboardProps> = ({
             </Flex>
           )}
 
-          <Heading size="sm" fontWeight="bold" letterSpacing="-0.6px" ml="5px">
-            {sectionContent?.elements.length !== undefined
-              ? sectionContent.elements.length
-              : 0}{' '}
-            Cards
-          </Heading>
+          {title === 'Test Questions' ? (
+            <Heading
+              size="sm"
+              fontWeight="bold"
+              letterSpacing="-0.6px"
+              ml="5px"
+            >
+              {counter + '   '}
+              Questions
+            </Heading>
+          ) : (
+            <Heading
+              size="sm"
+              fontWeight="bold"
+              letterSpacing="-0.6px"
+              ml="5px"
+            >
+              {sectionContent?.elements.length !== undefined
+                ? sectionContent.elements.length
+                : 0}{' '}
+              Cards
+            </Heading>
+          )}
         </Flex>
       </Box>
     </>

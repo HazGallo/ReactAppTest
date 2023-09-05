@@ -18,11 +18,22 @@ import {
 import {
   arrayTitle,
   selectorAttempts,
-  selectorMark,
-  selectorStart,
   selectorPathData,
   dataModule,
+  selectorNavigate,
+  selectorModuleTest,
+  valueHeadingTestInitial,
+  valueTextTestInitial,
+  valueHeadingGameInitial,
+  valueTextGameInitial,
+  valueHeadingMaterialInitial,
+  valueTextMaterialInitial,
+  selectorModuleGame,
 } from './data/dataMenu';
+
+import { usePersistedStore } from 'src/store/usePathListStore';
+import { shallow } from 'zustand/shallow';
+import { at } from 'lodash';
 
 export type types =
   | 'SelectorPathExpress'
@@ -34,6 +45,7 @@ export type types =
 interface Props {
   selectionType?: 'single' | 'multipleChoice';
 }
+
 export const PathExperience = (props: Props) => {
   const { t } = useTranslation();
   const { selectionType = 'single' } = props;
@@ -41,6 +53,26 @@ export const PathExperience = (props: Props) => {
   const [isMobile] = useMediaQuery('(max-width: 1110px)');
 
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
+
+  const [valueHeading, setValueHeading] = useState(valueHeadingTestInitial);
+  const [valueText, setValueText] = useState(valueTextTestInitial);
+  const [valueHeadingGame, setValueHeadingGame] = useState(
+    valueHeadingGameInitial
+  );
+  const [valueTextGame, setValueTextGame] = useState(valueTextGameInitial);
+  const [valueHeadingMaterial, setValueHeadingMaterial] = useState(
+    valueHeadingMaterialInitial
+  );
+  const [valueTextMaterial, setValueTextMaterial] = useState(
+    valueTextMaterialInitial
+  );
+
+  const { seletedPathName } = usePersistedStore(
+    (state) => ({
+      seletedPathName: state.seletedPathName,
+    }),
+    shallow
+  );
 
   useEffect(() => {
     if (selectionType === 'single') {
@@ -77,20 +109,83 @@ export const PathExperience = (props: Props) => {
     };
   }, []);
 
-  //manejo del estado de los inputs del moduleSelector
+  // moduleSelector test Mark
   const [markValue, setMarkValue] = useState('');
+  const [onselect, setOnselect] = useState(false);
+  const [onselectSystem, setOnselectSystem] = useState(false);
+
+  const onSeletedSelectorMark = () => {
+    setOnselect(false);
+    setOnselectSystem(false);
+  };
+
+  const onSeletedSelectorTest = () => {
+    setOnselectSystem(true);
+  };
+
+  const handleMarkTitleChange = () => {
+    setOnselect(true);
+  };
+
+  const handleInputChange = (event: any) => {
+    const newValue = event.target.value;
+
+    if (!isNaN(newValue)) {
+      setMarkValue(newValue);
+    }
+  };
+
+  // moduleSelector test Attemps
   const [attemptsValue, setAttemptsValue] = useState('');
-  const [attemptsValueGame, setAttemptsValueGame] = useState('');
+  const [onselectAttempts, setOnselectAttempts] = useState(false);
+  const [onselectSystemAttempts, setOnselectSystemAttempts] = useState(false);
 
-  const handleMarkInputChange = (value: string) => {
-    setMarkValue(value);
+  const onSeletedSelectorAttempts = () => {
+    setOnselectAttempts(false);
+    setOnselectSystemAttempts(false);
   };
 
-  const handleAttemptsInputChange = (value: string) => {
-    setAttemptsValue(value);
+  const onSeletedSelectorTestAttempts = () => {
+    setOnselectSystemAttempts(true);
   };
-  const handleAttemptsInputGame = (value: string) => {
-    setAttemptsValueGame(value);
+
+  const handleAttemptsTitleChange = () => {
+    setOnselectAttempts(true);
+  };
+
+  const handleInputChangeAttempts = (event: any) => {
+    const newValue = event.target.value;
+
+    if (!isNaN(newValue)) {
+      setAttemptsValue(newValue);
+    }
+  };
+
+  // moduleSelector Game Attempts
+  const [gameAttemptsValue, setGameAttemptsValue] = useState('');
+  const [isGameAttemptsSelected, setIsGameAttemptsSelected] = useState(false);
+  const [isGameAttemptsSystemSelected, setIsGameAttemptsSystemSelected] =
+    useState(false);
+
+  const deselectGameAttempts = () => {
+    setIsGameAttemptsSelected(false);
+    setIsGameAttemptsSystemSelected(false);
+  };
+
+  const selectGameAttemptsSystem = () => {
+    setIsGameAttemptsSystemSelected(true);
+  };
+
+  const gameAttemptsTitleChange = () => {
+    setIsGameAttemptsSelected(true);
+  };
+
+  const handleGameAttemptsInputChange = (event: any) => {
+    const newValue = event.target.value;
+
+    if (!isNaN(newValue)) {
+      setGameAttemptsValue(newValue);
+    }
   };
 
   return (
@@ -111,7 +206,7 @@ export const PathExperience = (props: Props) => {
           display={isScrolled ? 'inherit' : 'none'}
           py="20px"
         >
-          Efficient Strategies for Retail Success
+          {seletedPathName}
         </Heading>
       </Box>
 
@@ -128,7 +223,7 @@ export const PathExperience = (props: Props) => {
           flexDir={'column'}
           alignItems={isMobile ? 'center' : 'normal'}
         >
-          <Heading size={'xl'}>Efficient Strategies for Retail Success</Heading>
+          <Heading size={'xl'}>{seletedPathName}</Heading>
           <Heading size={'md'} mt="40px">
             {t('TR_PATH_TITLE_TYPE')}
           </Heading>
@@ -173,11 +268,11 @@ export const PathExperience = (props: Props) => {
             <ModuleSelector
               placeholder={'Title'}
               dataMenu={arrayTitle}
-              valueHeading={'Test'}
-              valueText={
-                'Test the user knowledge and make sure the content sticks. Unlock the assessment start mode for even more user knowledge data.'
-              }
               readOnly={true}
+              setValueText={setValueText}
+              valueText={valueText}
+              setValueHeading={setValueHeading}
+              valueHeading={valueHeading}
             >
               <Grid
                 columnGap="50px"
@@ -201,18 +296,29 @@ export const PathExperience = (props: Props) => {
                     justifyContent="center"
                   >
                     <SelectorSystem
-                      selectorData={selectorMark}
+                      selectorData={selectorModuleTest?.selectorsMark}
                       type={'sm'}
                       selectionType={'single'}
-                      selectedDefault={1}
+                      disableUnselected={onselectSystem ? false : onselect}
+                      onSeleted={onSeletedSelectorTest}
                     />
-                    <InputText
-                      hasError={false}
-                      placeholder="Custom Mark"
-                      sizes="md"
-                      value={markValue}
-                      onChange={(e) => handleMarkInputChange(e.target.value)}
-                    />
+                    {!onselect && !onselectSystem ? (
+                      <InputText
+                        hasError={false}
+                        placeholder="Custom"
+                        sizes="md"
+                        value={markValue}
+                        onChange={handleInputChange}
+                        onEnterPress={handleMarkTitleChange}
+                      />
+                    ) : (
+                      <Selector
+                        title={markValue}
+                        type={'sm'}
+                        isSelected={onselectSystem ? false : onselect}
+                        onClick={onSeletedSelectorMark}
+                      />
+                    )}
                   </Grid>
                 </GridItem>
 
@@ -230,20 +336,34 @@ export const PathExperience = (props: Props) => {
                     justifyContent="center"
                   >
                     <SelectorSystem
-                      selectorData={selectorAttempts}
+                      selectorData={selectorModuleTest?.selectorsAttemts}
                       type={'sm'}
                       selectionType={'single'}
-                      selectedDefault={1}
-                    />
-                    <InputText
-                      hasError={false}
-                      placeholder="Custom attempts"
-                      sizes="md"
-                      value={attemptsValue}
-                      onChange={(e) =>
-                        handleAttemptsInputChange(e.target.value)
+                      disableUnselected={
+                        onselectSystemAttempts ? false : onselectAttempts
                       }
+                      onSeleted={onSeletedSelectorTestAttempts}
                     />
+
+                    {!onselectAttempts && !onselectSystemAttempts ? (
+                      <InputText
+                        hasError={false}
+                        placeholder="Custom"
+                        sizes="md"
+                        value={attemptsValue}
+                        onChange={handleInputChangeAttempts}
+                        onEnterPress={handleAttemptsTitleChange}
+                      />
+                    ) : (
+                      <Selector
+                        title={attemptsValue}
+                        type={'sm'}
+                        isSelected={
+                          onselectSystemAttempts ? false : onselectAttempts
+                        }
+                        onClick={onSeletedSelectorAttempts}
+                      />
+                    )}
                   </Grid>
                 </GridItem>
               </Grid>
@@ -252,9 +372,11 @@ export const PathExperience = (props: Props) => {
             <ModuleSelector
               placeholder={'Title'}
               dataMenu={dataModule}
-              valueHeading={'Game'}
-              valueText={`Allow users to compete in the path's knowledge-based game. Unlock the initial game start mode for even more user engagement.`}
               readOnly={true}
+              setValueText={setValueTextGame}
+              valueText={valueTextGame}
+              setValueHeading={setValueHeadingGame}
+              valueHeading={valueHeadingGame}
             >
               <Grid
                 gap="50px"
@@ -277,19 +399,39 @@ export const PathExperience = (props: Props) => {
                     justifyContent="center"
                   >
                     <SelectorSystem
-                      selectorData={selectorAttempts}
+                      selectorData={selectorModuleGame?.selectorsAttemts}
                       type={'sm'}
                       selectionType={'single'}
                       selectedDefault={1}
+                      disableUnselected={
+                        isGameAttemptsSystemSelected
+                          ? false
+                          : isGameAttemptsSelected
+                      }
+                      onSeleted={selectGameAttemptsSystem}
                     />
-
-                    <InputText
-                      hasError={false}
-                      placeholder="Custom attempts"
-                      sizes="md"
-                      value={attemptsValueGame}
-                      onChange={(e) => handleAttemptsInputGame(e.target.value)}
-                    />
+                    {!isGameAttemptsSelected &&
+                    !isGameAttemptsSystemSelected ? (
+                      <InputText
+                        hasError={false}
+                        placeholder="Custom"
+                        sizes="md"
+                        value={gameAttemptsValue}
+                        onChange={handleGameAttemptsInputChange}
+                        onEnterPress={gameAttemptsTitleChange}
+                      />
+                    ) : (
+                      <Selector
+                        title={gameAttemptsValue}
+                        type={'sm'}
+                        isSelected={
+                          isGameAttemptsSystemSelected
+                            ? false
+                            : isGameAttemptsSelected
+                        }
+                        onClick={deselectGameAttempts}
+                      />
+                    )}
                   </Grid>
                 </GridItem>
               </Grid>
@@ -297,11 +439,11 @@ export const PathExperience = (props: Props) => {
             <ModuleSelector
               placeholder={'Title'}
               dataMenu={arrayTitle}
-              valueHeading={'Additional Materials'}
-              valueText={
-                'Complement your path with extra non-mandatory contents'
-              }
               readOnly={true}
+              setValueText={setValueTextMaterial}
+              valueText={valueTextMaterial}
+              setValueHeading={setValueHeadingMaterial}
+              valueHeading={valueHeadingMaterial}
             />
           </Box>
 
@@ -324,7 +466,7 @@ export const PathExperience = (props: Props) => {
               flexDir={'column'}
             >
               <Text textStyle={'lg'} mt="25px" color={'neGrey.600'}>
-                How will it start?
+                How will users navigate it?
               </Text>
               <Box
                 display={'flex'}
@@ -335,9 +477,9 @@ export const PathExperience = (props: Props) => {
                 h="100%"
               >
                 <SelectorSystem
-                  selectorData={selectorStart}
+                  selectorData={selectorNavigate}
                   type={'selectorBig'}
-                  selectionType={'multipleChoice'}
+                  selectionType={'single'}
                 />
               </Box>
             </Box>

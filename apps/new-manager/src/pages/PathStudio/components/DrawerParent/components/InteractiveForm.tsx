@@ -105,8 +105,7 @@ const InteractiveForm = memo((props: Props) => {
                 maxFiles={1}
                 maxSize={10 * 1000 * 1000}
                 type="image"
-                // placeholderSrc={cardElementSelected?.cover.filePath }
-                placeholderSrc={undefined}
+                placeholderSrc={cardElementSelected?.cover.filePath}
                 warning={false}
                 isDisabled={false}
                 hasError={false}
