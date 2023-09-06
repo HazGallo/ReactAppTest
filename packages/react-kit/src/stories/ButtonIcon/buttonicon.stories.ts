@@ -15,9 +15,15 @@ type Story = StoryObj<typeof meta>;
 export const content: Story = {
   args: {
     typeIcon: 'IconGhost',
+    isClicked: false,
+    isDisabledButton: false,
+    sizeButton: 'xl',
   },
   argTypes: {
     typeIcon: {
+      control: 'select',
+    },
+    sizeButton: {
       control: 'select',
     },
   },
