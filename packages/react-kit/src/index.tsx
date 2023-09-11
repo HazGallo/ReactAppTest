@@ -10,10 +10,14 @@ import { FC, PropsWithChildren } from 'react';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { theme } from './theme';
 
+import { CardItem } from './components/CardItem';
+
 import { Button } from './components/Button';
+
+import { ButtonIcon } from './components/ButtonIcon';
 
 const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
   return <ChakraProvider theme={theme}>{children}</ChakraProvider>;
 };
 
-export { Button, ThemeProvider, theme };
+export { Button, ThemeProvider, theme, CardItem, ButtonIcon };

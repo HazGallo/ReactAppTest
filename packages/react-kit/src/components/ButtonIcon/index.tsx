@@ -1,4 +1,4 @@
-import { Box, IconButton, Icon, filter } from '@chakra-ui/react';
+import { Box, IconButton, Icon } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { types, IconsTypes } from '../../shared/iconsTypes/icons';
 
@@ -45,7 +45,7 @@ export const ButtonIcon = ({
             ? { filter: '', color: '' }
             : { filter: 'brightness(90%)', color: 'gray' }
         }
-        outline={isDisabled ? '' : isActive ? '2px solid' : ''}
+        outline={isDisabled ? '' : isActive ? '3px solid' : ''}
         outlineColor={isActive ? 'gray.200' : ''}
         color={isActive ? 'neAccent.500' : ''}
         onClick={handleButtonIconClick}

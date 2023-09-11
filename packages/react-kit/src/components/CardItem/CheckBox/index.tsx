@@ -1,7 +1,13 @@
 import { Box, Checkbox } from '@chakra-ui/react';
 import React from 'react';
 
-export const CBox = ({ isHovered, isCheck, handleCheckboxChange }) => {
+interface props {
+  isHovered: boolean;
+  isCheck: boolean;
+  handleCheckboxChange: () => void;
+}
+
+export const CBox = ({ isHovered, isCheck, handleCheckboxChange }: props) => {
   return (
     <Box>
       {isHovered ? (

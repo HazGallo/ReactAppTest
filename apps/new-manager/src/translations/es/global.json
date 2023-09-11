@@ -1,0 +1,18 @@
+{
+  "SearchInput": {
+    "Busca-ciudad": "Busca tu ciudad"
+  },
+
+  "CloudsDesc": {
+    "clearSky": "cielo limpio",
+    "scatteredCloud": "nubes dispersas",
+    "brokenClouds": "nubes rotas",
+    "fewClouds": "pocas nubes",
+    "overCast": "nubes cubiertas"
+  },
+
+  "Temp": {
+    "tempMax": "Temperatura Maxima",
+    "tempMin": "Temperatura Minima"
+  }
+}
