@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Heading, Text } from '@chakra-ui/react';
-import { Card } from './components/Card';
-import { Button } from './components/button';
+// import { Card } from './components/Card';
+// import { Button } from './components/button';
 import SearchInput from './components/SearchInput';
 import { useWeather } from './hooks/useWeather';
 import useInputStore from './store/weatherlyStore';
 import { DataWeatherInfo } from './components/DataWeatherInfo';
 import { TransButton } from './components/TransButton';
+
+// ES6 Modules or TypeScript
+import Swal from 'sweetalert2';
 
 function App({}) {
   // Initialize inputValue from localStorage or an empty string
@@ -23,37 +26,38 @@ function App({}) {
   const { isError, isLoading, data, mutate, isSuccess } = useWeather();
   const { dataWeather, setDataWeather } = useInputStore();
 
-  useEffect(() => {
-    mutate({ city: inputValue ? inputValue : 'London' });
-  }, [inputValue, mutate]);
+  const [pageLoaded, setPageLoaded] = useState(true);
 
   useEffect(() => {
-    console.log('UseEffectDataWeather');
-    console.log(data);
-    console.log(isSuccess);
-    console.log(isError);
-    console.log(Error);
+    // This effect will run only once when the component is mounted
+    setPageLoaded(false);
+  }, []);
+
+  // Use localStorage to save and load inputValue
+  useEffect(() => {
+    localStorage.setItem('inputValue', inputValue);
+  }, [inputValue]);
+
+  useEffect(() => {
+    if (pageLoaded) {
+      return; // Don't make the API call and show loading message
+    }
+    mutate({ city: inputValue ? inputValue : 'London' });
+  }, [inputValue, mutate, pageLoaded]);
+
+  useEffect(() => {
+    if (isError) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+        footer: 'Please Enter A valid city name',
+      });
+    }
     if (data && isSuccess) {
       setDataWeather(data);
     }
-  }, [data, isSuccess, setDataWeather, isError, Error]);
-
-  if (isLoading) {
-    return (
-      <Box
-        display={'flex'}
-        justifyContent={'center'}
-        alignItems={'center'}
-        w={'100%'}
-        h={'100vh'}
-      >
-        <Heading>Loading..</Heading>
-      </Box>
-    );
-  }
-  if (isError) {
-    return <Heading>Error</Heading>;
-  }
+  }, [data, isSuccess, setDataWeather, isError]);
 
   return (
     <Box
@@ -66,6 +70,7 @@ function App({}) {
       gap={'20px'}
     >
       <TransButton />
+
       {/* Weather Api */}
       <Box
         display={'flex'}
@@ -73,8 +78,8 @@ function App({}) {
         justifyContent={'center'}
         gap={'10px'}
         p={'1rem'}
-        w={'70%'}
-        h={'65%'}
+        w={['100%', '70%']}
+        h={['75%', '65%']}
       >
         {/* Weather */}
         <Box
@@ -87,7 +92,7 @@ function App({}) {
           boxShadow={'0px 3px 6px'}
         >
           <Box
-            mb={'20px'}
+            mb={['5px', '10px']}
             justifyContent={'center'}
             width={'100%'}
             display={'flex'}
@@ -96,30 +101,11 @@ function App({}) {
               inputValue={inputValue}
               handleChange={handleInputChange}
             />
-            <Button />
           </Box>
           <Box color={'black'}>
             <DataWeatherInfo />
           </Box>
         </Box>
-        {/* Cards */}
-        {/* <Box
-          className="overflow"
-          display={'flex'}
-          alignItems={'center'}
-          gap={'10px'}
-          bg={'white'}
-          borderRadius={'md'}
-          p={'1rem'}
-          w={'35%'}
-          h={'100%'}
-          color={'bgShadow'}
-          boxShadow={'0px 3px 6px'}
-          overflowX={'scroll'}
-          justifyContent={'center'}
-        >
-          <Card />
-        </Box> */}
       </Box>
     </Box>
   );

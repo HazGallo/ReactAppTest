@@ -8,7 +8,9 @@
     "scatteredCloud": "scattered clouds",
     "brokenClouds": "broken clouds",
     "fewClouds": "few clouds",
-    "overCast": "overcast clouds"
+    "overCast": "overcast clouds",
+    "lightRain": "light rain",
+    "lightIntensity": "light intensity drizzle"
   },
 
   "Temp": {

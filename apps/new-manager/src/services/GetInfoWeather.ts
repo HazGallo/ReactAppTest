@@ -6,7 +6,8 @@ export const GetInfoWeather = async ({
 }: InfoCityWeather): Promise<PropsDataWeather> => {
   // TODO: Recordar usar variables de entorno para la URL y el apikey
   const resp = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=b37458401b415a652387e52d4883efb4`,
+    // I put units=metric to have the temp in celsius.
+    `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=b37458401b415a652387e52d4883efb4`,
     {
       method: 'GET',
     }

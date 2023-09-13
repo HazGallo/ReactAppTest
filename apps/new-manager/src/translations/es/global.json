@@ -8,7 +8,9 @@
     "scatteredCloud": "nubes dispersas",
     "brokenClouds": "nubes rotas",
     "fewClouds": "pocas nubes",
-    "overCast": "nubes cubiertas"
+    "overCast": "nubes cubiertas",
+    "lightRain": "lluvia ligera",
+    "lightIntensity": "llovizna de intensidad ligera"
   },
 
   "Temp": {

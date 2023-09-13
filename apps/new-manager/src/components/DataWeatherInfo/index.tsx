@@ -10,9 +10,9 @@ export const DataWeatherInfo = () => {
   const { dataWeather, setDataWeather } = weatherlyStore();
 
   const timestamp = dataWeather.dt;
-  const date = new Date(timestamp * 1000); // funcion para sacar la fecha de dt
-  let hours = date.getHours(); // funcion para sacar la hora de dt
-  const minutes = date.getMinutes(); // funcion para sacar los minutos de dt
+  const date = new Date(timestamp * 1000);
+  let hours = date.getHours();
+  const minutes = date.getMinutes();
 
   console.log(dataWeather);
   console.log(dataWeather.weather);
@@ -23,7 +23,6 @@ export const DataWeatherInfo = () => {
 
   let amOrPm = 'AM';
 
-  // si es AM o PM y ajustar las horas en consecuencia
   if (hours >= 12) {
     amOrPm = 'PM';
     if (hours > 12) {
@@ -31,24 +30,16 @@ export const DataWeatherInfo = () => {
     }
   }
 
-  // let clouds = () => {
-  //   const description = dataWeather?.weather?.map((element) => {
-  //     return element.description;
-  //   });
-
-  //   return description ? description.join(', ') : '';
-  // };
-
-  // switch (clouds()) {
-  //   case 'clear sky':
-  //     break;
-  //   case '':
-  //     break;
-  // }
-
-  // const showClouds = {
-  //   'clear sky': () => t('CloudsDesc.clearSky'),
-  // };
+  // Crear un objeto que mapea descripciones a claves de traducción
+  const cloudDescriptions: Record<string, string> = {
+    'clear sky': 'CloudsDesc.clearSky',
+    'scattered clouds': 'CloudsDesc.scatteredCloud',
+    'broken clouds': 'CloudsDesc.brokenClouds',
+    'few clouds': 'CloudsDesc.fewClouds',
+    'overcast clouds': 'CloudsDesc.overCast',
+    'light rain': 'CloudsDesc.lightRain',
+    'light intensity drizzle': 'CloudsDesc.lightIntensity',
+  };
 
   return (
     <Box display={'block'} justifyContent={'center'} alignItems={'center'}>
@@ -62,25 +53,30 @@ export const DataWeatherInfo = () => {
         {dataWeather.name}
       </Heading>
 
-      <Box display={'flex'} justifyContent={'center'} alignItems={'center'}>
+      <Box
+        display={['block', 'flex']}
+        justifyContent={'center'}
+        alignItems={'center'}
+      >
         <Box
-          w={'50%'}
+          borderRightWidth={['0px', '2px']}
+          borderRightColor={['transparent', 'neAccent.500']}
+          w={['100%', '50%']}
           h={'100%'}
-          borderRightWidth="2px"
-          borderRightColor="neAccent.500"
         >
-          <UnorderedList p={'1rem'}>
+          <UnorderedList p={['0rem', '1rem']}>
             {dataWeather?.weather?.map((element) => (
               <Box
                 listStyleType={'none'}
                 key={element.id}
                 display={'flex'}
                 flexDirection={'column'}
+                alignItems={['center', 'initial']}
                 gap={'10px'}
                 textTransform={'capitalize'}
               >
                 <ListItem fontWeight={'bold'}>
-                  {date.toLocaleDateString()} {hours}:{minutes} {amOrPm}
+                  {date.toLocaleDateString()} <br /> {hours}:{minutes} {amOrPm}
                 </ListItem>
 
                 <ListItem
@@ -89,29 +85,31 @@ export const DataWeatherInfo = () => {
                   w={'50%'}
                   fontWeight={'bold'}
                 >
-                  {element.description === 'clear sky'
-                    ? t('CloudsDesc.clearSky')
-                    : element.description === 'scattered clouds'
-                    ? t('CloudsDesc.scatteredCloud')
-                    : element.description === 'broken clouds'
-                    ? t('CloudsDesc.brokenClouds')
-                    : element.description === 'few clouds'
-                    ? t('CloudsDesc.fewClouds')
-                    : element.description === 'overcast clouds'
-                    ? t('CloudsDesc.overCast')
-                    : ''}
-                  <Image src={iconUrl} />
+                  {cloudDescriptions[element.description] !== undefined // Comprobamos si existe una traducción
+                    ? t(cloudDescriptions[element.description]) // Si existe, traducimos
+                    : element.description}
                 </ListItem>
 
-                <ListItem color={'yellow.500'} fontWeight={'bold'}>
+                <ListItem
+                  display={'flex'}
+                  alignItems={'center'}
+                  color={'yellow.500'}
+                  fontWeight={'bold'}
+                >
                   {dataWeather.main.temp}°C
+                  <Image src={iconUrl} />
                 </ListItem>
               </Box>
             ))}
           </UnorderedList>
         </Box>
 
-        <Box w={'50%'} h={'100%'}>
+        <Box
+          w={['100%', '50%']}
+          h={'100%'}
+          borderTopWidth={['2px', '0px']}
+          borderTopColor={['neAccent.500', 'transparent']}
+        >
           <UnorderedList p={'1rem'}>
             {dataWeather?.weather?.map((element) => (
               <Box
@@ -119,15 +117,17 @@ export const DataWeatherInfo = () => {
                 display={'flex'}
                 flexDirection={'column'}
                 gap={'10px'}
+                alignItems={['center', 'initial']}
               >
                 <ListItem
                   display={'flex'}
                   alignItems={'center'}
                   gap={'5px'}
-                  fontSize={'sm'}
+                  fontSize={['sm', 'md']}
                   fontWeight={'bold'}
+                  textAlign={['center', 'initial']}
                 >
-                  <Image w={'8%'} src={IconMaxTemp} />
+                  <Image w={['15%', '8%']} src={IconMaxTemp} />
                   {t('Temp.tempMax')}: <br /> {dataWeather.main.temp_max}°C
                 </ListItem>
 
@@ -135,10 +135,11 @@ export const DataWeatherInfo = () => {
                   display={'flex'}
                   alignItems={'center'}
                   gap={'5px'}
-                  fontSize={'sm'}
+                  fontSize={['sm', 'md']}
                   fontWeight={'bold'}
+                  textAlign={['center', 'initial']}
                 >
-                  <Image w={'8%'} src={IconMinTemp} />
+                  <Image w={['15%', '8%']} src={IconMinTemp} />
                   {t('Temp.tempMin')}: <br /> {dataWeather.main.temp_max}°C
                 </ListItem>
               </Box>

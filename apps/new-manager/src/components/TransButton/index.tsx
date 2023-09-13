@@ -1,6 +1,9 @@
 import { Box, Button } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { IconButton } from '@chakra-ui/react';
+import EnButton from './EnButton';
+import EsButton from './EsButton';
 
 export const TransButton = () => {
   const [t, i18n] = useTranslation('global');
@@ -20,9 +23,22 @@ export const TransButton = () => {
   }, []);
 
   return (
-    <Box mt={'5px'} display={'flex'} gap={'5px'} ml={'80%'}>
-      <Button onClick={() => changeLanguage('es')}>ES</Button>
-      <Button onClick={() => changeLanguage('en')}>EN</Button>
+    <Box mt={'5px'} display={'flex'} gap={'5px'} ml={['60%', '80%']}>
+      <Button
+        _hover={{ transform: 'translateY(-5px)', background: 'transparent' }}
+        bg={'transparent'}
+        onClick={() => changeLanguage('es')}
+      >
+        <EsButton />
+      </Button>
+
+      <Button
+        _hover={{ transform: 'translateY(-5px)', background: 'transparent' }}
+        bg={'transparent'}
+        onClick={() => changeLanguage('en')}
+      >
+        <EnButton />
+      </Button>
     </Box>
   );
 };
